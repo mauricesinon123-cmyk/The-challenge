@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--dit is de basis pagina, dit is de grondlegger voor alle pagina's, de rest bouwt hier op verder-->
+<html>
+    <head>
+        <meta charset="utf-8" /> <!--karakter set-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!--zorgt dat de pagina goed schaalt op verschillende schermen-->
+        <link 
+          rel = "stylesheet"
+          href = "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous"
+        /> <!--link naar bootstrap css voor stijlen-->
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          crossorigin="anonymous"
+        />  <!--link naar font awesome voor iconen-->
+
+        <title>{% block title %}Home{% endblock %}</title> <!--titel van de pagina, kan per pagina aangepast worden-->
+    </head>
+   
+   
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <!--navigatie balk bovenaan de pagina-->
+            <button
+                class = "navbar-toggler"
+                type = "button"
+                data-toggle = "collapse"
+                data-target = "#navbar"
+            > <!--knop voor mobiele weergave-->
+                <span class="navbar-toggler-icon"></span>
+            </button> <!--icoon voor de knop-->
+
+            <div class="collapse navbar-collapse" id="navbar">
+                <div class="navbar-nav">
+                  {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" id="home" href="/">Home</a>  
+                    <a class="nav-item nav-link" id="projects" href="/projects">Projecten</a>
+                    <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                  {% else %}
+                    <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
+                  {% endif %}
+                    
+                </div> <!--links in de navigatie balk-->
+            </div> <!--einde van de collapsible navigatie-->
+        </nav> <!--einde van de navigatie balk-->
+
+        {% with messages = get_flashed_messages(with_categories=true)%} <!--haal de flash berichten op-->
+        {% if messages %} <!--als er berichten zijn, toon ze-->
+          {% for category, message in messages %} <!--loop door de berichten-->
+          {%if category == 'error' %} <!--als het een error bericht is, toon een rode alert-->
+            <div class="alert alert-danger alert-dismissable fade show" role="alert"> <!--rode alert voor error berichten-->
+              {{message}}
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% else %} <!--anders, toon een groene alert voor succes berichten-->
+            <div class="alert alert-success alert-dismissable fade show" role="alert">
+              {{message}}
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endif %} 
+          {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="container"> <!--container voor de hoofdinhoud van de pagina-->
+          {%block content%} <!--blok voor de inhoud van de pagina, kan per pagina aangepast worden-->
+          {%endblock%} 
+        </div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script> <!--link naar jquery voor javascript functionaliteit-->
+    
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script> <!--link naar popper.js voor javascript functionaliteit-->
+    
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script> <!--link naar bootstrap js voor javascript functionaliteit-->
+
+    <script
+        type="text/javascript"
+        src="{{url_for('static', filename='main.js')}}"
+        ></script> <!--link naar eigen javascript bestand-->
+    </body>
+
+</html> 
