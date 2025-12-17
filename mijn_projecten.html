@@ -1,25 +1,357 @@
-{% extends "base.html"%} {% block title %}Mijn Projecten{% endblock %} {% block content 
-%}
+{% extends "base.html"%} {% block title %}Mijn Projecten{% endblock %}
 
+{% block content %}
+<style>
+    .project-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    
+    .project-content {
+        flex: 1;
+    }
+    
+    .project-buttons {
+        margin-left: 15px;
+        white-space: nowrap;
+    }
+    
+    .edit-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 5px;
+    }
+    
+    .edit-button:hover {
+        background-color: #0056b3;
+    }
+    
+    .delete-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 5px;
+        display: none;
+    }
+    
+    .delete-button:hover {
+        background-color: #c82333;
+    }
+    
+    .delete-button.show {
+        display: inline-block;
+    }
+    
+    .edit-form {
+        display: none;
+        margin-top: 10px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+    }
+    
+    .edit-form.show {
+        display: block;
+    }
+    
+    .edit-form input,
+    .edit-form textarea,
+    .edit-form select {
+        margin-bottom: 10px;
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    
+    .edit-form-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    .save-button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        flex: 1;
+    }
+    
+    .save-button:hover {
+        background-color: #218838;
+    }
+    
+    .cancel-edit-button {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        flex: 1;
+    }
+    
+    .cancel-edit-button:hover {
+        background-color: #5a6268;
+    }
+    
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .modal-overlay.show {
+        display: flex;
+    }
+    
+    .modal-content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 90%;
+    }
+    
+    .modal-content h4 {
+        margin-bottom: 20px;
+    }
+    
+    .modal-project-title {
+        font-weight: bold;
+        color: #333;
+        margin: 15px 0;
+    }
+    
+    .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+    
+    .modal-confirm {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    
+    .modal-confirm:hover {
+        background-color: #c82333;
+    }
+    
+    .modal-cancel {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .modal-cancel:hover {
+        background-color: #5a6268;
+    }
+</style>
 
-<h1 align="center">Mijn Projecten</h1>
+<h1>Mijn Projecten</h1>
+<p>Hier kunt u uw projecten beheren en nieuwe projecten toevoegen.</p>
 
-<ul class="list-group list-group-flush" id="project-list">
-    {% for project in user.projects %}
-    <li class="list-group-item">{{ project.text }}
-        <button type="button" class="close" onclick="deleteProject('{{ project.id }}')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </li>
-
-    {% endfor %}
-</ul>
-<form method = "POST">
-    <textarea name="project" id="project" class="form-control"></textarea>
-    <br />
-    <div align="center">
-        <button type="submit" class="btn btn-primary">Voeg project toe</button>
+<form method="POST">
+    <h3>Creeër een nieuw project</h3>
+    <div class="form-group">
+        <label for="projectTitle">Project Titel</label>
+        <input type="text" class="form-control" id="projectTitle" name="projectTitle" required>
     </div>
+    <div class="form-group">
+        <label for="projectText">Project Beschrijving</label>
+        <textarea class="form-control" id="projectText" name="projectText" rows="3" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="projectGroup">SDG (1-16)</label>
+        <select class="form-control" id="projectGroup" name="projectGroup" required>
+            {% for i in range(1, 17) %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Voeg project toe</button>
 </form>
 
-{%endblock%}
+<h3>Your Projects</h3>
+{% if user.projects %}
+<ul class="list-group">
+    {% for project in user.projects %}
+    <li class="list-group-item">
+        <div class="project-item">
+            <div class="project-content">
+                <div id="view-{{ project.id }}">
+                    <strong>{{ project.title }}</strong> (Group {{ project.group }}) - {{ project.date.strftime('%Y-%m-%d') }}
+                    <div class="mt-2">{{ project.text }}</div>
+                </div>
+                <div class="edit-form" id="edit-form-{{ project.id }}">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="edit-title" id="title-{{ project.id }}" value="{{ project.title }}" />
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="edit-text" id="text-{{ project.id }}" rows="3">{{ project.text }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Group (1-16)</label>
+                        <select class="edit-group" id="group-{{ project.id }}">
+                            {% for i in range(1, 17) %}
+                            <option value="{{ i }}" {% if project.group == i %}selected{% endif %}>{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="edit-form-buttons">
+                        <button type="button" class="save-button" onclick="saveProject('{{ project.id }}')">Save</button>
+                        <button type="button" class="cancel-edit-button" onclick="cancelEdit('{{ project.id }}')">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="project-buttons">
+                <button type="button" class="edit-button" onclick="enableEditMode(this, '{{ project.id }}')">Edit</button>
+                <button type="button" class="delete-button" onclick="openDeleteModal('{{ project.id }}', '{{ project.title }}')">Delete</button>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No projects yet.</p>
+{% endif %}
+
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-content">
+        <h4>Delete Project</h4>
+        <p>Are you sure you want to delete this project?</p>
+        <div class="modal-project-title" id="modalProjectTitle"></div>
+        <div class="modal-buttons">
+            <button class="modal-cancel" onclick="closeDeleteModal()">Cancel</button>
+            <button class="modal-confirm" onclick="confirmDelete()">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let deleteProjectId = null;
+
+function enableEditMode(button, projectId) {
+    const deleteButton = button.nextElementSibling;
+    deleteButton.classList.add('show');
+    
+    const viewDiv = document.getElementById('view-' + projectId);
+    const editForm = document.getElementById('edit-form-' + projectId);
+    
+    button.style.display = 'none';
+    viewDiv.style.display = 'none';
+    editForm.classList.add('show');
+}
+
+function cancelEdit(projectId) {
+    const viewDiv = document.getElementById('view-' + projectId);
+    const editForm = document.getElementById('edit-form-' + projectId);
+    const editButton = document.querySelector(`button[onclick*="enableEditMode"][onclick*="'${projectId}'"]`);
+    const deleteButton = editButton.nextElementSibling;
+    
+    editButton.style.display = 'inline-block';
+    viewDiv.style.display = 'block';
+    editForm.classList.remove('show');
+    deleteButton.classList.remove('show');
+}
+
+function saveProject(projectId) {
+    const title = document.getElementById('title-' + projectId).value.trim();
+    const text = document.getElementById('text-' + projectId).value.trim();
+    const group = document.getElementById('group-' + projectId).value;
+    
+    if (!title || !text || !group) {
+        alert('All fields are required!');
+        return;
+    }
+    
+    fetch('/edit-project', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            projectId: projectId,
+            title: title,
+            text: text,
+            group: group
+        })
+    }).then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              location.reload();
+          } else {
+              alert('Error: ' + (data.message || 'Failed to save project'));
+          }
+      }).catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while saving the project.');
+      });
+}
+
+function openDeleteModal(projectId, projectTitle) {
+    deleteProjectId = projectId;
+    document.getElementById('modalProjectTitle').textContent = projectTitle;
+    document.getElementById('deleteModal').classList.add('show');
+}
+
+function closeDeleteModal() {
+    deleteProjectId = null;
+    document.getElementById('deleteModal').classList.remove('show');
+}
+
+function confirmDelete() {
+    if (deleteProjectId) {
+        fetch('/delete-project', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ projectId: deleteProjectId })
+        }).then(response => {
+            if (response.ok) {
+                location.reload();
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the project.');
+            closeDeleteModal();
+        });
+    }
+}
+
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeDeleteModal();
+    }
+});
+</script>
+{% endblock %}

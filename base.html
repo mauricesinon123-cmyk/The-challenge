@@ -17,11 +17,67 @@
         />  <!--link naar font awesome voor iconen-->
 
         <title>{% block title %}Home{% endblock %}</title> <!--titel van de pagina, kan per pagina aangepast worden-->
+        <style>
+            .account-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            
+            .dropdown-menu-custom {
+                display: none;
+                position: absolute;
+                right: 0;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                padding: 12px 16px;
+                z-index: 1;
+                border-radius: 4px;
+                top: 100%;
+                margin-top: 5px;
+            }
+            
+            .dropdown-menu-custom a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                margin: -12px -16px;
+                padding: 12px 16px;
+                border-radius: 4px;
+            }
+            
+            .dropdown-menu-custom a:hover {
+                background-color: #f1f1f1;
+                text-decoration: none;
+            }
+            
+            .dropdown-menu-custom a.logout {
+                color: #dc3545;
+            }
+            
+            .dropdown-menu-custom a.logout:hover {
+                background-color: #f8d7da;
+                color: #c82333;
+            }
+            
+            .account-dropdown.show .dropdown-menu-custom {
+                display: block;
+            }
+            
+            .account-toggle {
+                cursor: pointer;
+                user-select: none;
+            }
+        </style>
     </head>
    
    
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <!--navigatie balk bovenaan de pagina-->
+            {% if user.is_authenticated and user.profile_picture_path %}
+                <img src="{{ url_for('static', filename=user.profile_picture_path) }}" alt="Profile" class="navbar-brand" style="max-width: 40px; max-height: 40px; border-radius: 50%; margin-right: 15px;" />
+            {% endif %}
             <button
                 class = "navbar-toggler"
                 type = "button"
@@ -36,7 +92,14 @@
                   {% if user.is_authenticated %}
                     <a class="nav-item nav-link" id="home" href="/">Home</a>  
                     <a class="nav-item nav-link" id="projects" href="/projects">Projecten</a>
-                    <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                    <a class="nav-item nav-link" id="help" href="/help">Help</a>
+                    <div class="nav-item account-dropdown" id="accountDropdown">
+                        <a class="nav-link account-toggle" id="accountToggle">Account</a>
+                        <div class="dropdown-menu-custom">
+                            <a href="/account">Profiel</a>
+                            <a href="/logout" class="logout">Logout</a>
+                        </div>
+                    </div>
                   {% else %}
                     <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
                     <a class="nav-item nav-link" id="login" href="/login">Login</a>
@@ -94,6 +157,26 @@
         type="text/javascript"
         src="{{url_for('static', filename='main.js')}}"
         ></script> <!--link naar eigen javascript bestand-->
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accountToggle = document.getElementById('accountToggle');
+            const accountDropdown = document.getElementById('accountDropdown');
+            
+            if (accountToggle) {
+                accountToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    accountDropdown.classList.toggle('show');
+                });
+                
+                document.addEventListener('click', function(e) {
+                    if (!accountDropdown.contains(e.target)) {
+                        accountDropdown.classList.remove('show');
+                    }
+                });
+            }
+        });
+    </script>
     </body>
 
 </html> 
