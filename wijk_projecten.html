@@ -1,6 +1,278 @@
-{% extends "base.html"%} {% block title %}Wijk Projecten{% endblock %} {% block content 
-%}
+{% extends "base.html"%} {% block title %}Wijk Projecten{% endblock %}
 
-<h1 align="center">Wijk Projecten</h1>
+{% block content %}
+<style>
+.own-project {
+    color: #6c757d;
+    font-style: italic;
+}
 
-{%endblock%}
+.sort-dropdown {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .sort-dropdown {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .sort-controls {
+        flex-direction: column;
+    }
+    
+    .sort-controls label {
+        margin-bottom: 0.5rem;
+    }
+    
+    .sort-controls select {
+        width: 100% !important;
+    }
+}
+
+.collapse-button i {
+    transition: transform 0.3s ease;
+}
+
+.collapse-button[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+</style>
+
+<div class="sort-dropdown">
+    <div>
+        <h1>Wijk Projecten</h1>
+        <p>Projects from the neighborhood.</p>
+    </div>
+    <div class="sort-controls">
+        <label for="sortSelect" class="mb-0 mr-2">Sort by:</label>
+        <select id="sortSelect" class="form-control" style="width: auto;">
+            <option value="date">Date</option>
+            <option value="group">SDG</option>
+            <option value="alphabetical">Alphabetically</option>
+        </select>
+    </div>
+</div>
+
+{% if projects %}
+<div class="row" id="projectsContainer">
+    {% for project in projects %}
+    <div class="col-md-6 mb-4 project-card-wrapper" 
+         data-project-id="{{ project.id }}" 
+         data-user-id="{{ project.user_id }}" 
+         data-title="{{ project.title }}" 
+         data-group="{{ project.group }}" 
+         data-date="{{ project.date.isoformat() }}">
+        <div class="card">
+            <div class="card-body {% if project.user_id == user.id %}own-project{% endif %}">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center" style="gap: 10px;">
+                        {% if project.user.profile_picture_path %}
+                            <img src="{{ url_for('static', filename=project.user.profile_picture_path) }}" alt="Profile" style="max-width: 40px; max-height: 40px; border-radius: 50%;" />
+                        {% else %}
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #e9ecef; display: flex; align-items: center; justify-content: center; color: #6c757d; font-weight: bold;">{{ project.user.first_name[0].upper() if project.user.first_name else '?' }}</div>
+                        {% endif %}
+                        <div>
+                            <h5 class="card-title mb-0">{{ project.title }}</h5>
+                            <small class="text-muted">
+                                {{ project.user.first_name }} | {{ project.date.strftime('%Y-%m-%d') }} | Group {{ project.group }}{% if project.user.region %} | {{ project.user.region }}{% endif %}
+                            </small>
+                        </div>
+                    </div>
+                    <button class="btn btn-link p-0 collapse-button" type="button" data-toggle="collapse" data-target="#desc-{{ project.id }}" aria-expanded="false">
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="collapse mt-2" id="desc-{{ project.id }}">
+                    <p>{{ project.text }}</p>
+                    {% if project.user_id != user.id %}
+                    <button class="btn btn-primary help-btn" data-group="{{ project.group }}" data-project-id="{{ project.id }}">Help {{ project.user.first_name }}</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No projects yet.</p>
+{% endif %}
+
+<script>
+/* noinspection JSUnresolvedVariable */
+const currentUserId = parseInt("{{ user.id or 0 }}");
+
+function getProjectCards() {
+    return Array.from(document.querySelectorAll('.project-card-wrapper'));
+}
+
+function sortProjectsByDate(cards) {
+    const own = cards.filter(a => parseInt(a.getAttribute('data-user-id')) === currentUserId);
+    const notOwn = cards.filter(a => parseInt(a.getAttribute('data-user-id')) !== currentUserId);
+    
+    notOwn.sort((a, b) => {
+        const dateA = new Date(a.getAttribute('data-date'));
+        const dateB = new Date(b.getAttribute('data-date'));
+        return dateB - dateA;
+    });
+    
+    own.sort((a, b) => {
+        const dateA = new Date(a.getAttribute('data-date'));
+        const dateB = new Date(b.getAttribute('data-date'));
+        return dateB - dateA;
+    });
+    
+    return [...notOwn, ...own];
+}
+
+function sortProjectsByGroup(cards) {
+    const own = cards.filter(a => parseInt(a.getAttribute('data-user-id')) === currentUserId);
+    const notOwn = cards.filter(a => parseInt(a.getAttribute('data-user-id')) !== currentUserId);
+    
+    notOwn.sort((a, b) => {
+        const groupA = parseInt(a.getAttribute('data-group'));
+        const groupB = parseInt(b.getAttribute('data-group'));
+        return groupA - groupB;
+    });
+    
+    own.sort((a, b) => {
+        const groupA = parseInt(a.getAttribute('data-group'));
+        const groupB = parseInt(b.getAttribute('data-group'));
+        return groupA - groupB;
+    });
+    
+    return [...notOwn, ...own];
+}
+
+function sortProjectsAlphabetically(cards) {
+    const own = cards.filter(a => parseInt(a.getAttribute('data-user-id')) === currentUserId);
+    const notOwn = cards.filter(a => parseInt(a.getAttribute('data-user-id')) !== currentUserId);
+    
+    notOwn.sort((a, b) => {
+        const titleA = a.getAttribute('data-title').toLowerCase();
+        const titleB = b.getAttribute('data-title').toLowerCase();
+        return titleA.localeCompare(titleB);
+    });
+    
+    own.sort((a, b) => {
+        const titleA = a.getAttribute('data-title').toLowerCase();
+        const titleB = b.getAttribute('data-title').toLowerCase();
+        return titleA.localeCompare(titleB);
+    });
+    
+    return [...notOwn, ...own];
+}
+
+function applySort(sortType) {
+    const container = document.getElementById('projectsContainer');
+    if (!container) return;
+    
+    const cards = getProjectCards();
+    let sortedCards;
+    
+    switch(sortType) {
+        case 'date':
+            sortedCards = sortProjectsByDate(cards);
+            break;
+        case 'group':
+            sortedCards = sortProjectsByGroup(cards);
+            break;
+        case 'alphabetical':
+            sortedCards = sortProjectsAlphabetically(cards);
+            break;
+        default:
+            sortedCards = sortProjectsByDate(cards);
+    }
+    
+    sortedCards.forEach(card => {
+        container.appendChild(card);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    applySort('date');
+    
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function(e) {
+            applySort(e.target.value);
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (e.target !== sortSelect) {
+                sortSelect.blur();
+            }
+        });
+    }
+    
+    document.querySelectorAll('.project-card-wrapper').forEach(card => {
+        const collapses = card.querySelectorAll('.collapse');
+        const buttons = card.querySelectorAll('.collapse-button');
+        
+        collapses.forEach(collapse => {
+            collapse.addEventListener('show.bs.collapse', function() {
+                const button = card.querySelector(`[data-target="#${this.id}"]`);
+                if (button) button.setAttribute('aria-expanded', 'true');
+            });
+            
+            collapse.addEventListener('hide.bs.collapse', function() {
+                const button = card.querySelector(`[data-target="#${this.id}"]`);
+                if (button) button.setAttribute('aria-expanded', 'false');
+            });
+        });
+    });
+    
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.project-card-wrapper')) {
+            document.querySelectorAll('.collapse.show').forEach(collapse => {
+                const collapseInstance = new (window.bootstrap ? window.bootstrap.Collapse : $.fn.collapse.Constructor)(collapse);
+                collapseInstance.hide();
+            });
+        }
+    });
+    
+    document.querySelectorAll('.help-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const group = this.getAttribute('data-group');
+            const projectId = this.getAttribute('data-project-id');
+            document.getElementById('loading').style.display = 'block';
+            fetch('/help', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `mode=help&group=${group}&project_id=${projectId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+                if (data.success) {
+                    window.location.href = '/';
+                } else {
+                    alert('Error occurred. Check messages.');
+                }
+            })
+            .catch(error => {
+                document.getElementById('loading').style.display = 'none';
+                alert('An error occurred. Please try again.');
+            });
+        });
+    });
+});
+</script>
+
+<div id="loading" style="display: none;" class="alert alert-info">
+    <strong>Flashing microbit...</strong> Please wait while the hex file is being sent.
+</div>
+{% endblock %}
