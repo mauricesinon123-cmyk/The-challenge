@@ -4,7 +4,7 @@ function deleteProject(projectId){
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({projectId: projectId}),
 	} ).then((_res) => {
-		window.location.href = "/projects"
+		window.location.href = "/mijn_projecten"
 	}
 	);
 }

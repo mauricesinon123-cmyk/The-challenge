@@ -98,4 +98,24 @@ def projects():
             flash('Project toegevoegd!', category='success')
     return render_template("projects.html", user=current_user)
 
-    
+@auth.route('/mijn_projecten', methods=['GET', 'POST'])
+@login_required
+def mijn_projecten():
+    if request.method == 'POST':
+        project_text = request.form.get('project', '')
+        project_text = project_text.strip() if project_text is not None else ''
+
+        if len(project_text) < 4:
+            flash('Project beschrijving is te kort!', category='error')
+        else:
+            new_project = Pdescription(text=project_text, user_id=current_user.id)
+            db.session.add(new_project)
+            db.session.commit()
+            flash('Project toegevoegd!', category='success')
+    return render_template("mijn_projecten.html", user=current_user)
+
+
+@auth.route('/wijk_projecten', methods=['GET', 'POST'])
+@login_required
+def wijk_projecten():
+    return render_template("wijk_projecten.html", user=current_user)

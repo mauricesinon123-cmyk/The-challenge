@@ -1,0 +1,25 @@
+{% extends "base.html"%} {% block title %}Mijn Projecten{% endblock %} {% block content 
+%}
+
+
+<h1 align="center">Mijn Projecten</h1>
+
+<ul class="list-group list-group-flush" id="project-list">
+    {% for project in user.projects %}
+    <li class="list-group-item">{{ project.text }}
+        <button type="button" class="close" onclick="deleteProject('{{ project.id }}')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+
+    {% endfor %}
+</ul>
+<form method = "POST">
+    <textarea name="project" id="project" class="form-control"></textarea>
+    <br />
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Voeg project toe</button>
+    </div>
+</form>
+
+{%endblock%}
