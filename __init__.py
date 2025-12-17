@@ -11,6 +11,7 @@ DB_NAME = "database.db"
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'IAmASecretKeySoDontTellAnyoneWhatItIsOkay?' # Nodig voor sessies en beveiliging
+    app.instance_path = os.path.join(os.path.dirname(__file__), 'instance')
     # Ensure the instance folder exists and place the DB there
     os.makedirs(app.instance_path, exist_ok=True)
     db_path = os.path.join(app.instance_path, DB_NAME)
