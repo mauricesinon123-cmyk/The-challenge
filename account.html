@@ -1,0 +1,164 @@
+{% extends "base.html"%} {% block title %}Account Setup{% endblock %}
+
+{% block content %}
+<style>
+    .edit-button-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .form-disabled {
+        opacity: 0.7;
+        pointer-events: none;
+    }
+    
+    .form-enabled {
+        opacity: 1;
+        pointer-events: auto;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3 align="center">Account Information</h3>
+            <div class="edit-button-container">
+                <button type="button" class="btn btn-primary" id="editBtn" onclick="enableEditMode()" {% if is_first_setup %}style="display: none;"{% endif %}>Edit</button>
+                <button type="button" class="btn btn-secondary" id="cancelBtn" onclick="disableEditMode()" {% if not is_first_setup %}style="display: none;"{% endif %}>Cancel</button>
+            </div>
+            <form method="POST" id="accountForm" enctype="multipart/form-data" {% if is_first_setup %}class="form-enabled"{% else %}class="form-disabled"{% endif %}>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        value="{{ user.first_name or '' }}"
+                        {% if not is_first_setup %}disabled{% endif %}
+                        required
+                    />
+                    <small class="form-text text-muted">Required. At least 2 characters.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input
+                        type="date"
+                        class="form-control"
+                        id="dateOfBirth"
+                        name="dateOfBirth"
+                        {% if user.date_of_birth %}
+                            value="{{ user.date_of_birth.isoformat() }}"
+                        {% endif %}
+                        {% if not is_first_setup %}disabled{% endif %}
+                        required
+                        onchange="validateAge()"
+                    />
+                    <small class="form-text text-muted">Required. You must be at least 18 years old.</small>
+                    <div id="ageError" class="text-danger mt-2" style="display:none;">
+                        You must be at least 18 years old.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="region">Region</label>
+                    <select
+                        class="form-control"
+                        id="region"
+                        name="region"
+                        {% if not is_first_setup %}disabled{% endif %}
+                        required
+                    >
+                        <option value="">-- Select a region --</option>
+                        {% for r in regions %}
+                            <option value="{{ r }}" {% if user.region == r %}selected{% endif %}>{{ r }}</option>
+                        {% endfor %}
+                    </select>
+                    <small class="form-text text-muted">Required. Choose your region.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="profilePicture">Profile Picture</label>
+                    <input
+                        type="file"
+                        class="form-control-file"
+                        id="profilePicture"
+                        name="profilePicture"
+                        accept="image/jpeg,image/png"
+                        {% if not is_first_setup %}disabled{% endif %}
+                    />
+                    <small class="form-text text-muted">Optional. JPG or PNG only. Keep file size reasonable.</small>
+                    {% if user.profile_picture_path %}
+                        <div class="mt-2">
+                            <small class="form-text text-muted">Current picture: <img src="{{ url_for('static', filename=user.profile_picture_path) }}" alt="Profile" style="max-width: 100px; max-height: 100px; margin-top: 5px;" /></small>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <br />
+                <button type="submit" class="btn btn-success btn-block" id="submitBtn" {% if not is_first_setup %}style="display: none;"{% endif %}>Save Account Information</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function enableEditMode() {
+    document.getElementById('name').disabled = false;
+    document.getElementById('dateOfBirth').disabled = false;
+    document.getElementById('region').disabled = false;
+    document.getElementById('profilePicture').disabled = false;
+    document.getElementById('submitBtn').style.display = 'block';
+    document.getElementById('editBtn').style.display = 'none';
+    document.getElementById('cancelBtn').style.display = 'inline-block';
+    document.getElementById('accountForm').classList.remove('form-disabled');
+    document.getElementById('accountForm').classList.add('form-enabled');
+}
+
+function disableEditMode() {
+    document.getElementById('name').disabled = true;
+    document.getElementById('dateOfBirth').disabled = true;
+    document.getElementById('region').disabled = true;
+    document.getElementById('profilePicture').disabled = true;
+    document.getElementById('submitBtn').style.display = 'none';
+    document.getElementById('editBtn').style.display = 'inline-block';
+    document.getElementById('cancelBtn').style.display = 'none';
+    document.getElementById('accountForm').classList.remove('form-enabled');
+    document.getElementById('accountForm').classList.add('form-disabled');
+}
+
+function validateAge() {
+    const dobInput = document.getElementById('dateOfBirth').value;
+    const ageError = document.getElementById('ageError');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    if (!dobInput) {
+        ageError.style.display = 'none';
+        return;
+    }
+    
+    const dob = new Date(dobInput);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+    }
+    
+    if (age < 18) {
+        ageError.style.display = 'block';
+        submitBtn.disabled = true;
+    } else {
+        ageError.style.display = 'none';
+        submitBtn.disabled = false;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    validateAge();
+});
+</script>
+{%endblock%}
