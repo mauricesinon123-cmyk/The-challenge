@@ -1,0 +1,81 @@
+{% extends "base.html"%} {% block title %}Help{% endblock %}
+
+{% block content %}
+<h1>Help Page</h1>
+<p>Select your mode and group to configure the microbit.</p>
+
+<div id="loading" style="display: none;" class="alert alert-info">
+    <strong>Overzetten op microbit...</strong> Even geduld alstublieft.
+</div>
+
+<div class="mb-3">
+    <button id="help-btn" class="btn btn-primary">Helpen</button>
+    <button id="need-btn" class="btn btn-secondary">Hulp nodig</button>
+</div>
+
+<div id="group-selection" style="display: none;">
+    <h3>Kies een SDG</h3>
+    <div class="row">
+        {% for i in range(1, 17) %}
+        <div class="col-md-3 mb-3">
+            <div class="card group-card" data-group="{{ i }}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">SDG {{ i }}</h5>
+                    <button class="btn btn-primary select-btn">Kies</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+let selectedMode = null;
+
+document.getElementById('help-btn').addEventListener('click', function() {
+    selectedMode = 'help';
+    document.getElementById('group-selection').style.display = 'block';
+    document.getElementById('help-btn').classList.add('btn-success');
+    document.getElementById('need-btn').classList.remove('btn-success');
+});
+
+document.getElementById('need-btn').addEventListener('click', function() {
+    selectedMode = 'need';
+    document.getElementById('group-selection').style.display = 'block';
+    document.getElementById('need-btn').classList.add('btn-success');
+    document.getElementById('help-btn').classList.remove('btn-success');
+});
+
+document.querySelectorAll('.select-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        if (!selectedMode) {
+            alert('Please select a mode first (Help or Need Help).');
+            return;
+        }
+        const group = this.closest('.group-card').getAttribute('data-group');
+        document.getElementById('loading').style.display = 'block';
+        fetch('/help', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `mode=${selectedMode}&group=${group}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('loading').style.display = 'none';
+            if (data.success) {
+                window.location.href = '/';
+            } else {
+                alert('Error occurred. Check messages.');
+            }
+        })
+        .catch(error => {
+            document.getElementById('loading').style.display = 'none';
+            alert('An error occurred. Please try again.');
+        });
+    });
+});
+</script>
+{% endblock %}</content>
+<parameter name="filePath">c:\Users\mauri\IdeaProjects\PythonProject\templates\help.html
