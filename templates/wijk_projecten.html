@@ -2,30 +2,178 @@
 
 {% block content %}
 <style>
-.own-project {
-    color: #6c757d;
-    font-style: italic;
+:root {
+    --primary-green: #2d6a4f;
+    --secondary-green: #40916c;
+    --light-green: #52b788;
+    --lighter-green: #b7e4c7;
+    --very-light-green: #d8f3dc;
+    --off-white: #f0f5f3;
+    --light-gray: #f1f3f0;
+    --text-dark: #1b3a2e;
+}
+
+.page-header {
+    margin-bottom: 3rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.page-header p {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
 }
 
 .sort-dropdown {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .sort-controls {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
+}
+
+.sort-controls label {
+    color: var(--text-dark);
+    font-weight: 500;
+    margin: 0;
+}
+
+.sort-controls select {
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--lighter-green);
+    border-radius: 6px;
+    background-color: white;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sort-controls select:hover {
+    border-color: var(--light-green);
+    box-shadow: 0 2px 8px rgba(45, 106, 79, 0.1);
+}
+
+.sort-controls select:focus {
+    outline: none;
+    border-color: var(--light-green);
+    box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.1);
+}
+
+.project-card-wrapper {
+    margin-bottom: 2.5rem;
+}
+
+.card {
+    border: 2px solid var(--very-light-green);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(45, 106, 79, 0.06);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    box-shadow: 0 8px 24px rgba(45, 106, 79, 0.12);
+    transform: translateY(-2px);
+    border-color: var(--lighter-green);
+}
+
+.card-body {
+    padding: 1.8rem;
+}
+
+.own-project {
+    background-color: var(--very-light-green);
+    border-color: var(--lighter-green);
+}
+
+.card-title {
+    color: var(--primary-green);
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem !important;
+}
+
+.card-body small {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.collapse-button {
+    color: var(--light-green) !important;
+    padding: 0.5rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.collapse-button:hover {
+    color: var(--secondary-green) !important;
+}
+
+.collapse-button i {
+    transition: transform 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.collapse-button[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+.collapse {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--very-light-green);
+}
+
+.collapse p {
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.help-btn {
+    background-color: var(--light-green);
+    border: none;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.help-btn:hover {
+    background-color: var(--secondary-green);
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(64, 145, 108, 0.3);
+}
+
+#projectsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
 }
 
 @media (max-width: 768px) {
     .sort-dropdown {
         flex-direction: column;
         align-items: stretch;
+        gap: 1rem;
     }
     
     .sort-controls {
@@ -37,38 +185,40 @@
     }
     
     .sort-controls select {
-        width: 100% !important;
+        width: 100%;
     }
-}
-
-.collapse-button i {
-    transition: transform 0.3s ease;
-}
-
-.collapse-button[aria-expanded="true"] i {
-    transform: rotate(180deg);
+    
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    #projectsContainer {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 
+<div class="page-header">
+    <h1>Wijk Projecten</h1>
+    <p>Projecten van andere gebruikers waarbij u kunt helpen.</p>
+</div>
+
 <div class="sort-dropdown">
-    <div>
-        <h1>Wijk Projecten</h1>
-        <p>Projects from the neighborhood.</p>
-    </div>
+    <div style="flex: 1;"></div>
     <div class="sort-controls">
-        <label for="sortSelect" class="mb-0 mr-2">Sort by:</label>
+        <label for="sortSelect" class="mb-0">Sorteren op:</label>
         <select id="sortSelect" class="form-control" style="width: auto;">
-            <option value="date">Date</option>
+            <option value="date">Datum</option>
             <option value="group">SDG</option>
-            <option value="alphabetical">Alphabetically</option>
+            <option value="alphabetical">Alfabetisch</option>
         </select>
     </div>
 </div>
 
 {% if projects %}
-<div class="row" id="projectsContainer">
+<div id="projectsContainer">
     {% for project in projects %}
-    <div class="col-md-6 mb-4 project-card-wrapper" 
+    <div class="project-card-wrapper" 
          data-project-id="{{ project.id }}" 
          data-user-id="{{ project.user_id }}" 
          data-title="{{ project.title }}" 
@@ -79,14 +229,14 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center" style="gap: 10px;">
                         {% if project.user.profile_picture_path %}
-                            <img src="{{ url_for('static', filename=project.user.profile_picture_path) }}" alt="Profile" style="max-width: 40px; max-height: 40px; border-radius: 50%;" />
+                            <img src="{{ url_for('static', filename=project.user.profile_picture_path) }}" alt="Profile" class="profile-picture-small" />
                         {% else %}
                             <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #e9ecef; display: flex; align-items: center; justify-content: center; color: #6c757d; font-weight: bold;">{{ project.user.first_name[0].upper() if project.user.first_name else '?' }}</div>
                         {% endif %}
                         <div>
                             <h5 class="card-title mb-0">{{ project.title }}</h5>
                             <small class="text-muted">
-                                {{ project.user.first_name }} | {{ project.date.strftime('%Y-%m-%d') }} | Group {{ project.group }}{% if project.user.region %} | {{ project.user.region }}{% endif %}
+                                {{ project.user.first_name }} | {{ project.date.strftime('%Y-%m-%d') }} | SDG {{ project.group }}{% if project.user.region %} | {{ project.user.region }}{% endif %}
                             </small>
                         </div>
                     </div>
@@ -106,7 +256,7 @@
     {% endfor %}
 </div>
 {% else %}
-<p>No projects yet.</p>
+<p>Nog geen projecten.</p>
 {% endif %}
 
 <script>
@@ -219,11 +369,28 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.project-card-wrapper').forEach(card => {
         const collapses = card.querySelectorAll('.collapse');
         const buttons = card.querySelectorAll('.collapse-button');
+        const cardElement = card.querySelector('.card');
+        
+        cardElement.addEventListener('click', function(e) {
+            if (!e.target.closest('.collapse-button') && !e.target.closest('.help-btn')) {
+                const collapseButton = card.querySelector('.collapse-button');
+                if (collapseButton) {
+                    collapseButton.click();
+                }
+            }
+        });
         
         collapses.forEach(collapse => {
             collapse.addEventListener('show.bs.collapse', function() {
                 const button = card.querySelector(`[data-target="#${this.id}"]`);
                 if (button) button.setAttribute('aria-expanded', 'true');
+                
+                document.querySelectorAll('.collapse.show').forEach(otherCollapse => {
+                    if (otherCollapse !== collapse) {
+                        const collapseInstance = new (window.bootstrap ? window.bootstrap.Collapse : $.fn.collapse.Constructor)(otherCollapse);
+                        collapseInstance.hide();
+                    }
+                });
             });
             
             collapse.addEventListener('hide.bs.collapse', function() {
@@ -243,7 +410,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.querySelectorAll('.help-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
             const group = this.getAttribute('data-group');
             const projectId = this.getAttribute('data-project-id');
             document.getElementById('loading').style.display = 'block';
@@ -258,14 +426,23 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 document.getElementById('loading').style.display = 'none';
                 if (data.success) {
-                    window.location.href = '/';
+                    if (data.message) {
+                        showAlert(data.message, 'success');
+                    }
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
                 } else {
-                    alert('Error occurred. Check messages.');
+                    if (data.error) {
+                        showAlert(data.error, 'error');
+                    } else {
+                        showAlert('An error occurred. Please try again.', 'error');
+                    }
                 }
             })
             .catch(error => {
                 document.getElementById('loading').style.display = 'none';
-                alert('An error occurred. Please try again.');
+                showAlert('An error occurred. Please try again.', 'error');
             });
         });
     });
