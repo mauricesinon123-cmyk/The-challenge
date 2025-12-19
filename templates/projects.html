@@ -1,35 +1,122 @@
-{% extends "base.html"%} {% block title %}Projecten{% endblock %} {% block content 
-%}
-<h1 align="center">Projecten</h1>
+{% extends "base.html"%} {% block title %}Projecten{% endblock %} {% block content %}
+<style>
+    :root {
+        --primary-green: #2d6a4f;
+        --secondary-green: #40916c;
+        --light-green: #52b788;
+        --lighter-green: #b7e4c7;
+        --very-light-green: #d8f3dc;
+    }
+    
+    .projects-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .projects-header h1 {
+        color: var(--primary-green);
+        font-weight: 600;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .card-deck {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .card {
+        border: 2px solid var(--very-light-green);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(45, 106, 79, 0.06);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+    }
+    
+    .card:hover {
+        box-shadow: 0 8px 24px rgba(45, 106, 79, 0.12);
+        transform: translateY(-2px);
+        border-color: var(--lighter-green);
+    }
+    
+    .card-img-top {
+        max-width: 300px;
+        max-height: 300px;
+        padding: 2rem 1rem 1rem 1rem;
+        margin: 0 auto;
+    }
+    
+    .card-body {
+        flex: 1;
+        padding: 1.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .card-title {
+        color: var(--primary-green);
+        font-weight: 600;
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .card-text {
+        color: #666;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    .card .btn {
+        align-self: flex-start;
+    }
+</style>
 
+<div class="projects-header">
+    <h1>Projecten</h1>
+</div>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src=".../100px180/?text=Wijk icoon" alt="Wijk icoon">
-        <div class="card-body">
+<div class="card-deck">
+  <div class="card">
+    <img class="card-img-top" src="{{ url_for('static', filename='icons/houses.png') }}" alt="Wijk icoon">
+    <div class="card-body">
+      <div>
         <h5 class="card-title">Wijk projecten</h5>
         <p class="card-text">Bekijk hier de projecten van uw wijk.</p>
-        <a href="#" class="btn btn-primary">Wijk projecten</a>
-<div class="card-deck" style="display: flex; gap: 20px;">
-  <div class="card" style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-    <img class="card-img-top" src="{{ url_for('static', filename='icons/houses.png') }}" style="max-width:400px; max-height:400px;" alt="Wijk icoon">
-    <div class="card-body">
-      <h5 class="card-title">Wijk projecten</h5>
-      <p class="card-text">Bekijk hier de projecten van uw wijk.</p>
-      <a href="/wijk-projecten" class="btn btn-primary">Wijk projecten</a>
+      </div>
+      <a href="/wijk-projecten" class="btn btn-primary" onclick="event.stopPropagation();">Wijk projecten</a>
     </div>
   </div>
   
-  <div class="card" style="flex: 1; display: flex; flex-direction: column; align-items: center;">
-    <img class="card-img-top" src="{{ url_for('static', filename='icons/home.png') }}" style="max-width: 400px; max-height: 400px;" align="center" alt="Huis icoon">
+  <div class="card">
+    <img class="card-img-top" src="{{ url_for('static', filename='icons/home.png') }}" alt="Huis icoon">
     <div class="card-body">
-      <h5 class="card-title">Mijn projecten</h5>
-      <p class="card-text">Bekijk hier uw projecten.</p>
-      <a href="/mijn-projecten" class="btn btn-primary">Mijn projecten</a>
+      <div>
+        <h5 class="card-title">Mijn projecten</h5>
+        <p class="card-text">Bekijk hier uw projecten.</p>
+      </div>
+      <a href="/mijn-projecten" class="btn btn-primary" onclick="event.stopPropagation();">Mijn projecten</a>
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.card-deck .card').forEach(card => {
+        card.addEventListener('click', function() {
+            const link = this.querySelector('a.btn');
+            if (link) {
+                window.location.href = link.href;
+            }
+        });
+    });
+});
+</script>
 
 {% endblock %}
     
