@@ -159,15 +159,13 @@ def help_page():
         group = request.form.get('group')
         project_id = request.form.get('project_id')
         if not mode or not group:
-            flash('Invalid request', category='error')
-            return jsonify({'success': False})
+            return jsonify({'success': False, 'error': 'Invalid request'})
         try:
             group_num = int(group)
             if group_num < 1 or group_num > 16:
                 raise ValueError
         except ValueError:
-            flash('Invalid group', category='error')
-            return jsonify({'success': False})
+            return jsonify({'success': False, 'error': 'Invalid group'})
         
         # Determine file
         if mode == 'help':
@@ -175,19 +173,16 @@ def help_page():
         elif mode == 'need':
             filename = f'receive_{group_num}.hex'
         else:
-            flash('Invalid mode', category='error')
-            return jsonify({'success': False})
+            return jsonify({'success': False, 'error': 'Invalid mode'})
         
         hex_path = os.path.join(os.path.dirname(__file__), 'hex_files', filename)
         if not os.path.exists(hex_path):
-            flash('Hex file not found', category='error')
-            return jsonify({'success': False})
+            return jsonify({'success': False, 'error': 'Hex file not found'})
         
         # Find microbit drive
         microbit_drive = find_microbit_drive()
         if not microbit_drive:
-            flash('Microbit not connected', category='error')
-            return jsonify({'success': False})
+            return jsonify({'success': False, 'error': 'Microbit not connected'})
         
         # Copy file
         dest = os.path.join(microbit_drive, filename)
@@ -210,11 +205,9 @@ def help_page():
                         db.session.commit()
                 except ValueError:
                     pass  # Ignore invalid project_id
-            flash('Hex file sent to microbit!', category='success')
-            return jsonify({'success': True})
+            return jsonify({'success': True, 'message': 'Hex file sent to microbit!'})
         except PermissionError:
-            flash('Microbit drive is busy. Please wait a moment and try again, or reconnect the microbit.', category='error')
-            return jsonify({'success': False})
+            return jsonify({'success': False, 'error': 'Microbit drive is busy. Please wait a moment and try again, or reconnect the microbit.'})
     
     return render_template("help.html", user=current_user)
 
