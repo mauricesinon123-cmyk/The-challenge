@@ -14,8 +14,8 @@ import time
 views = Blueprint('views', __name__)
 
 REGIONS = [
-    'Region 1', 'Region 2', 'Region 3', 'Region 4', 'Region 5',
-    'Region 6', 'Region 7', 'Region 8', 'Region 9', 'Region 10', 'Region 11'
+    'Buytenwegh', 'De Leyens', 'Dorp', 'Driemanspolder', 'Meerzicht',
+    'Noordhove', 'Oosterheem', 'Palenstein', 'Rokkeveen', 'Seghwaert', 'Stadscentrum'
 ]
 
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
@@ -283,3 +283,4 @@ def edit_project():
         return jsonify({'success': True})
     except (ValueError, TypeError):
         return jsonify({'success': False, 'message': 'Invalid data'}), 400
+
