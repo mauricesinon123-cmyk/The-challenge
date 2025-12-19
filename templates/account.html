@@ -2,13 +2,48 @@
 
 {% block content %}
 <style>
+    :root {
+        --primary-green: #2d6a4f;
+        --secondary-green: #40916c;
+        --light-green: #52b788;
+        --lighter-green: #b7e4c7;
+        --very-light-green: #d8f3dc;
+    }
+    
+    .account-container {
+        max-width: 500px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: white;
+        border-radius: 12px;
+        border: 2px solid var(--very-light-green);
+        box-shadow: 0 2px 8px rgba(45, 106, 79, 0.06);
+    }
+    
+    .account-container h3 {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    
     .edit-button-container {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+    
+    .edit-button-container .btn {
+        padding: 0.7rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 500;
     }
     
     .form-disabled {
-        opacity: 0.7;
+        opacity: 0.6;
         pointer-events: none;
     }
     
@@ -16,12 +51,52 @@
         opacity: 1;
         pointer-events: auto;
     }
+    
+    .form-group label {
+        color: var(--text-dark);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+    
+    .form-text {
+        color: #888;
+        font-size: 0.85rem;
+    }
+    
+    .form-text.text-muted {
+        color: #999;
+    }
+    
+    .text-danger {
+        color: #d64045 !important;
+        font-weight: 500;
+    }
+    
+    select.form-control {
+        color: var(--text-dark) !important;
+        background-color: white !important;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232d6a4f' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px;
+        padding-right: 2.5rem !important;
+    }
+    
+    select.form-control option {
+        color: var(--text-dark) !important;
+        background-color: white !important;
+        padding: 0.5rem;
+    }
+    
+    select.form-control option:checked {
+        background-color: var(--very-light-green) !important;
+        color: var(--text-dark) !important;
+    }
 </style>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h3 align="center">Account Information</h3>
+<div class="account-container">
+            <h3>Account Information</h3>
             <div class="edit-button-container">
                 <button type="button" class="btn btn-primary" id="editBtn" onclick="enableEditMode()" {% if is_first_setup %}style="display: none;"{% endif %}>Edit</button>
                 <button type="button" class="btn btn-secondary" id="cancelBtn" onclick="disableEditMode()" {% if not is_first_setup %}style="display: none;"{% endif %}>Cancel</button>
@@ -92,7 +167,8 @@
                     <small class="form-text text-muted">Optional. JPG or PNG only. Keep file size reasonable.</small>
                     {% if user.profile_picture_path %}
                         <div class="mt-2">
-                            <small class="form-text text-muted">Current picture: <img src="{{ url_for('static', filename=user.profile_picture_path) }}" alt="Profile" style="max-width: 100px; max-height: 100px; margin-top: 5px;" /></small>
+                            <small class="form-text text-muted">Current picture:</small>
+                            <img src="{{ url_for('static', filename=user.profile_picture_path) }}" alt="Profile" class="profile-picture-medium" style="margin-top: 8px; display: block;" />
                         </div>
                     {% endif %}
                 </div>
@@ -101,8 +177,6 @@
                 <button type="submit" class="btn btn-success btn-block" id="submitBtn" {% if not is_first_setup %}style="display: none;"{% endif %}>Save Account Information</button>
             </form>
         </div>
-    </div>
-</div>
 
 <script>
 function enableEditMode() {
