@@ -17,33 +17,47 @@
         white-space: nowrap;
     }
     
+    :root {
+        --primary-green: #2d6a4f;
+        --secondary-green: #40916c;
+        --light-green: #52b788;
+        --lighter-green: #b7e4c7;
+        --very-light-green: #d8f3dc;
+    }
+    
     .edit-button {
-        background-color: #007bff;
+        background-color: var(--light-green);
         color: white;
         border: none;
-        padding: 5px 15px;
-        border-radius: 4px;
+        padding: 8px 16px;
+        border-radius: 6px;
         cursor: pointer;
         margin-left: 5px;
+        font-weight: 500;
+        transition: all 0.2s ease;
     }
     
     .edit-button:hover {
-        background-color: #0056b3;
+        background-color: var(--secondary-green);
+        box-shadow: 0 4px 12px rgba(64, 145, 108, 0.3);
     }
     
     .delete-button {
-        background-color: #dc3545;
+        background-color: #d64045;
         color: white;
         border: none;
-        padding: 5px 15px;
-        border-radius: 4px;
+        padding: 8px 16px;
+        border-radius: 6px;
         cursor: pointer;
         margin-left: 5px;
         display: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
     }
     
     .delete-button:hover {
         background-color: #c82333;
+        box-shadow: 0 4px 12px rgba(200, 35, 51, 0.3);
     }
     
     .delete-button.show {
@@ -54,8 +68,9 @@
         display: none;
         margin-top: 10px;
         padding: 15px;
-        background-color: #f8f9fa;
-        border-radius: 4px;
+        background-color: var(--very-light-green);
+        border-radius: 6px;
+        border: 1px solid var(--lighter-green);
     }
     
     .edit-form.show {
@@ -63,14 +78,47 @@
     }
     
     .edit-form input,
-    .edit-form textarea,
+    .edit-form textarea {
+        margin-bottom: 10px;
+        width: 100%;
+        padding: 8px 12px;
+        border: 2px solid var(--lighter-green);
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.2s ease;
+        background-color: white;
+        color: var(--text-dark);
+    }
+    
     .edit-form select {
         margin-bottom: 10px;
         width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
+        padding: 8px 12px;
+        border: 2px solid var(--lighter-green);
+        border-radius: 6px;
         font-size: 14px;
+        transition: all 0.2s ease;
+        background-color: white !important;
+        color: var(--text-dark) !important;
+    }
+    
+    .edit-form select option {
+        color: var(--text-dark) !important;
+        background-color: white !important;
+        padding: 5px;
+    }
+    
+    .edit-form select option:checked {
+        background-color: var(--very-light-green) !important;
+        color: var(--text-dark) !important;
+    }
+    
+    .edit-form input:focus,
+    .edit-form textarea:focus,
+    .edit-form select:focus {
+        outline: none;
+        border-color: var(--light-green);
+        box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.1);
     }
     
     .edit-form-buttons {
@@ -80,31 +128,38 @@
     }
     
     .save-button {
-        background-color: #28a745;
+        background-color: var(--light-green);
         color: white;
         border: none;
-        padding: 8px 15px;
-        border-radius: 4px;
+        padding: 10px 16px;
+        border-radius: 6px;
         cursor: pointer;
         flex: 1;
+        font-weight: 500;
+        transition: all 0.2s ease;
     }
     
     .save-button:hover {
-        background-color: #218838;
+        background-color: var(--secondary-green);
+        box-shadow: 0 4px 12px rgba(64, 145, 108, 0.3);
     }
     
     .cancel-edit-button {
-        background-color: #6c757d;
-        color: white;
+        background-color: var(--lighter-green);
+        color: var(--primary-green);
         border: none;
-        padding: 8px 15px;
-        border-radius: 4px;
+        padding: 10px 16px;
+        border-radius: 6px;
         cursor: pointer;
         flex: 1;
+        font-weight: 500;
+        transition: all 0.2s ease;
     }
     
     .cancel-edit-button:hover {
-        background-color: #5a6268;
+        background-color: var(--light-green);
+        color: white;
+        box-shadow: 0 4px 12px rgba(82, 183, 136, 0.3);
     }
     
     .modal-overlay {
@@ -126,21 +181,27 @@
     
     .modal-content {
         background-color: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
         max-width: 400px;
         width: 90%;
+        border: 2px solid var(--very-light-green);
     }
     
     .modal-content h4 {
-        margin-bottom: 20px;
+        margin-bottom: 1rem;
+        color: var(--primary-green);
+        font-weight: 600;
     }
     
     .modal-project-title {
-        font-weight: bold;
-        color: #333;
-        margin: 15px 0;
+        font-weight: 600;
+        color: var(--primary-green);
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: var(--very-light-green);
+        border-radius: 6px;
     }
     
     .modal-buttons {
@@ -151,37 +212,86 @@
     }
     
     .modal-confirm {
-        background-color: #dc3545;
+        background-color: #d64045;
         color: white;
         border: none;
         padding: 10px 20px;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
-        font-weight: bold;
+        font-weight: 500;
+        transition: all 0.2s ease;
     }
     
     .modal-confirm:hover {
         background-color: #c82333;
+        box-shadow: 0 4px 12px rgba(200, 35, 51, 0.3);
     }
     
     .modal-cancel {
-        background-color: #6c757d;
-        color: white;
+        background-color: var(--lighter-green);
+        color: var(--primary-green);
         border: none;
         padding: 10px 20px;
-        border-radius: 4px;
+        border-radius: 6px;
         cursor: pointer;
+        font-weight: 500;
+        transition: all 0.2s ease;
     }
     
     .modal-cancel:hover {
-        background-color: #5a6268;
+        background-color: var(--light-green);
+        color: white;
+        box-shadow: 0 4px 12px rgba(82, 183, 136, 0.3);
+    }
+    
+    .page-header {
+        margin-bottom: 2.5rem;
+    }
+    
+    .page-header h1 {
+        color: var(--primary-green);
+        font-weight: 600;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .page-header p {
+        color: #666;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+    
+    .form-section {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        border: 2px solid var(--very-light-green);
+        margin-bottom: 2.5rem;
+    }
+    
+    .form-section h3 {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+    
+    .list-group-item {
+        border: 2px solid var(--very-light-green);
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .list-group-item strong {
+        color: var(--primary-green);
     }
 </style>
 
-<h1>Mijn Projecten</h1>
-<p>Hier kunt u uw projecten beheren en nieuwe projecten toevoegen.</p>
+<div class="page-header">
+    <h1>Mijn Projecten</h1>
+    <p>Hier kunt u uw projecten beheren en nieuwe projecten toevoegen.</p>
+</div>
 
-<form method="POST">
+<form method="POST" class="form-section">
     <h3>Creeër een nieuw project</h3>
     <div class="form-group">
         <label for="projectTitle">Project Titel</label>
@@ -202,7 +312,8 @@
     <button type="submit" class="btn btn-primary">Voeg project toe</button>
 </form>
 
-<h3>Your Projects</h3>
+<div class="form-section">
+    <h3>Your Projects</h3>
 {% if user.projects %}
 <ul class="list-group">
     {% for project in user.projects %}
@@ -247,6 +358,7 @@
 {% else %}
 <p>No projects yet.</p>
 {% endif %}
+</div>
 
 <div class="modal-overlay" id="deleteModal">
     <div class="modal-content">
@@ -273,6 +385,10 @@ function enableEditMode(button, projectId) {
     button.style.display = 'none';
     viewDiv.style.display = 'none';
     editForm.classList.add('show');
+    
+    setTimeout(() => {
+        editForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
 }
 
 function cancelEdit(projectId) {
