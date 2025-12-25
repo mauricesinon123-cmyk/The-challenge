@@ -310,17 +310,17 @@
                   {% if user.is_authenticated %}
                     <a class="nav-item nav-link" id="home" href="/">Home</a>  
                     <a class="nav-item nav-link" id="projects" href="/projects">Projecten</a>
-                    <a class="nav-item nav-link" id="help" href="/help">Help</a>
+                    <a class="nav-item nav-link" id="help" href="/help">Microbit</a>
                     <div class="nav-item account-dropdown" id="accountDropdown">
                         <a class="nav-link account-toggle" id="accountToggle">Account</a>
                         <div class="dropdown-menu-custom">
                             <a href="/account">Profiel</a>
-                            <a href="/logout" class="logout">Logout</a>
+                            <a href="/logout" class="logout">Afmelden</a>
                         </div>
                     </div>
                   {% else %}
-                    <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
-                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
+                    <a class="nav-item nav-link" id="signUp" href="/sign-up">Registreren</a>
+                    <a class="nav-item nav-link" id="login" href="/login">Inloggen</a>
                   {% endif %}
                     
                 </div> <!--links in de navigatie balk-->
@@ -443,7 +443,7 @@
                 });
             }
 
-            const alerts = document.querySelectorAll('.alert');
+            const alerts = document.querySelectorAll('.alert:not(#loading)');
             alerts.forEach(alert => {
                 setTimeout(() => {
                     const rect = alert.getBoundingClientRect();
@@ -462,5 +462,4 @@
         });
     </script>
     </body>
-
-</html> 
+</html>
