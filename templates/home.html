@@ -1,6 +1,162 @@
-{% extends "base.html"%} {% block title %}BioBit{% endblock %}
+{% extends "base.html" %}
+{% block title %}BioBit - Home{% endblock %}
 
 {% block content %}
-<h1>Welkom bij BioBit</h1>
-<p>De nieuwe manier om elkaar te helpen en banden te creeëren in jouw wijk!</p>
-{%endblock%}
+<style>
+    :root {
+        --primary-green: #2d6a4f;
+        --secondary-green: #40916c;
+        --light-green: #52b788;
+        --lighter-green: #b7e4c7;
+        --very-light-green: #d8f3dc;
+    }
+    
+    .welcome-section {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: linear-gradient(135deg, var(--very-light-green) 0%, white 100%);
+        border-radius: 12px;
+        border: 2px solid var(--lighter-green);
+    }
+    
+    .welcome-section h1 {
+        color: var(--primary-green);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+    
+    .welcome-section p {
+        color: #555;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .features-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+    
+    .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        border: 2px solid var(--very-light-green);
+        box-shadow: 0 2px 8px rgba(45, 106, 79, 0.08);
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        box-shadow: 0 8px 24px rgba(45, 106, 79, 0.12);
+        transform: translateY(-4px);
+        border-color: var(--light-green);
+    }
+    
+    .feature-card h3 {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+    }
+    
+    .feature-card p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+    }
+    
+    .action-buttons a {
+        padding: 0.8rem 1.8rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        display: inline-block;
+    }
+    
+    .btn-primary-home {
+        background-color: var(--light-green);
+        color: white;
+    }
+    
+    .btn-primary-home:hover {
+        background-color: var(--secondary-green);
+        box-shadow: 0 4px 12px rgba(64, 145, 108, 0.3);
+    }
+    
+    .btn-secondary-home {
+        background-color: var(--lighter-green);
+        color: var(--primary-green);
+    }
+    
+    .btn-secondary-home:hover {
+        background-color: var(--light-green);
+        color: white;
+        box-shadow: 0 4px 12px rgba(82, 183, 136, 0.3);
+    }
+    
+    .info-section {
+        background: var(--very-light-green);
+        padding: 2rem;
+        border-radius: 12px;
+        border-left: 4px solid var(--light-green);
+        margin-top: 3rem;
+    }
+    
+    .info-section h3 {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .info-section p {
+        color: #555;
+        line-height: 1.6;
+    }
+</style>
+
+<div class="welcome-section">
+    <h1>Welkom bij BioBit</h1>
+    <p>De nieuwe manier om elkaar te helpen en banden te creëren in jouw wijk!</p>
+    <p style="font-size: 1rem; color: #888; margin-top: 1rem;">BioBit brengt buurtbewoners samen om projecten te delen en elkaar te helpen met de SDG doelstellingen.</p>
+</div>
+
+<div class="features-section">
+    <div class="feature-card">
+        <h3>📋 Projecten Beheren</h3>
+        <p>Maak je eigen projecten aan en beheer ze eenvoudig. Deel je ideeën en werkzaamheden met de buurt.</p>
+        <a href="/mijn-projecten" class="btn-primary-home" style="display: inline-block; padding: 0.6rem 1.2rem; text-decoration: none; font-weight: 500;">Naar mijn projecten</a>
+    </div>
+    
+    <div class="feature-card">
+        <h3>🤝 Help Verlenen</h3>
+        <p>Wil je anderen helpen? Bekijk de projecten van anderen en bied je hulp aan waar je kan.</p>
+        <a href="/wijk-projecten" class="btn-primary-home" style="display: inline-block; padding: 0.6rem 1.2rem; text-decoration: none; font-weight: 500;">Buurtprojecten</a>
+    </div>
+    
+    <div class="feature-card">
+        <h3>🔧 Microbit Help</h3>
+        <p>Heb je hulp nodig met de Microbit? Of wil je anderen helpen? Gebruik onze Microbit functionaliteit.</p>
+        <a href="/help" class="btn-primary-home" style="display: inline-block; padding: 0.6rem 1.2rem; text-decoration: none; font-weight: 500;">Microbit hulp</a>
+    </div>
+</div>
+
+<div class="info-section">
+    <h3>📖 Hulp Nodig?</h3>
+    <p>Als je niet zeker weet hoe je BioBit moet gebruiken, hebben we een uitgebreide handleiding voor je gemaakt. 
+    Wij hebben stap-voor-stap instructies voor zowel jongere als oudere gebruikers.</p>
+    <a href="/instructies" class="btn-secondary-home" style="display: inline-block; padding: 0.8rem 1.6rem; margin-top: 1rem; text-decoration: none; font-weight: 500;">Lees de handleiding</a>
+</div>
+
+{% endblock %}
