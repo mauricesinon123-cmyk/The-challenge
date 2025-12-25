@@ -173,10 +173,15 @@
     }
 </style>
 
+
 <div class="help-header">
     <h1>Help anderen of vraag om hulp</h1>
     <p>Kies een SDG waar u hulp bij nodig heeft, of bij wilt helpen.</p>
-    <p><span style="font-size: 0.rem; color: #444; font-style: italic;">Zorg ervoor dat uw microbit is aangesloten wanneer u een SDG kiest.</span></p>
+    <p>
+        <span style="font-size: 0.9rem; color: #444; font-style: italic;">
+            Zorg ervoor dat uw microbit is aangesloten wanneer u een SDG kiest.
+        </span>
+    </p>
 </div>
 
 <div id="loading" style="display: none;" class="alert alert-primary">
@@ -184,125 +189,67 @@
 </div>
 
 <div class="card-deck">
-  <div class="card" data-button="need-btn">
-    <img class="card-img-top" src="{{ url_for('static', filename='icons/Open_Hand_Illustration.png') }}" alt="Open hand">
-    <div class="card-body">
-      <div>
-        <h5 class="card-title">Hulp nodig</h5>
-        <p class="card-text">Druk hier als u hulp wilt ontvangen bij een specifieke SDG.</p>
-      </div>
-      <button id="need-btn" class="btn btn-primary">Hulp nodig</button>
-    </div>
-  </div>
-  <div class="card" data-button="help-btn">
-    <img class="card-img-top" src="{{ url_for('static', filename='icons/Hand_Shake.png') }}" alt="Twee handen die een handdruk geven">
-    <div class="card-body">
-      <div>
-        <h5 class="card-title">Hulp verlenen</h5>
-        <p class="card-text">Druk hier als u in de wijk bij een speciefeke SDG wilt helpen.</p>
-      </div>
-      <button id="help-btn" class="btn btn-primary">Hulp verlenen</button>
-    </div>
-  </div>
-</div>
-
-<div id="group-selection" style="display: none;">
-    <h3>Kies een SDG</h3>
-    <div class="row">
-        {% for i in range(1, 17) %}
-        <div class="col-md-3 mb-4">
-            <div class="card group-card" data-group="{{ i }}">
-                <div class="card-body text-center">
-                    <img src="{{ url_for('static', filename='icons/SDG' ~ i ~ '.png') }}" alt="SDG {{ i }}" class="group-card-icon">
-                    <button class="btn btn-primary select-btn">SDG {{ i }}</button>
-                </div>
+    <div class="card" data-mode="need">
+        <img class="card-img-top"
+             src="{{ url_for('static', filename='icons/Open_Hand_Illustration.png') }}"
+             alt="Open hand">
+        <div class="card-body">
+            <div>
+                <h5 class="card-title">Hulp nodig</h5>
+                <p class="card-text">
+                    Druk hier als u hulp wilt ontvangen bij een specifieke SDG.
+                </p>
             </div>
+            <button id="need-btn" class="btn btn-primary action-btn">Hulp nodig</button>
         </div>
-        {% endfor %}
+    </div>
+
+    <div class="card" data-mode="help">
+        <img class="card-img-top"
+             src="{{ url_for('static', filename='icons/Hand_Shake.png') }}"
+             alt="Twee handen die een handdruk geven">
+        <div class="card-body">
+            <div>
+                <h5 class="card-title">Hulp verlenen</h5>
+                <p class="card-text">
+                    Druk hier als u in de wijk bij een specifieke SDG wilt helpen.
+                </p>
+            </div>
+            <button id="help-btn" class="btn btn-primary action-btn">Hulp verlenen</button>
+        </div>
     </div>
 </div>
 
 <script>
-let selectedMode = null;
-
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Kaartklik → simuleer knopklik
     document.querySelectorAll('.card-deck .card').forEach(card => {
         card.addEventListener('click', function(e) {
             e.stopPropagation();
-            const buttonId = this.getAttribute('data-button');
-            document.getElementById(buttonId).click();
+            const btn = this.querySelector('.action-btn');
+            if (btn) btn.click();
         });
     });
 
-    document.getElementById('help-btn').addEventListener('click', function() {
-        selectedMode = 'help';
-        document.getElementById('group-selection').style.display = 'block';
-        document.getElementById('help-btn').classList.add('btn-success');
-        document.getElementById('need-btn').classList.remove('btn-success');
-        setTimeout(() => {
-            document.getElementById('group-selection').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 50);
-    });
+    // Knopklik (Hulp nodig / Hulp verlenen)
+    document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
 
-    document.getElementById('need-btn').addEventListener('click', function() {
-        selectedMode = 'need';
-        document.getElementById('group-selection').style.display = 'block';
-        document.getElementById('need-btn').classList.add('btn-success');
-        document.getElementById('help-btn').classList.remove('btn-success');
-        setTimeout(() => {
-            document.getElementById('group-selection').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 50);
-    });
+            const card = this.closest('.card');
+            const mode = card.getAttribute('data-mode');  // 'help' of 'need'
+            const loadingDiv = document.getElementById('loading');
 
-    document.querySelectorAll('.group-card').forEach(card => {
-        card.addEventListener('click', function(e) {
-            if (!e.target.closest('.select-btn')) {
-                const btn = this.querySelector('.select-btn');
-                if (btn) btn.click();
-            }
-        });
-    });
-
-    document.getElementById('group-selection').addEventListener('click', function(e) {
-        const btn = e.target.closest('.select-btn');
-        if (!btn) return;
-        
-        e.stopPropagation();
-        if (!selectedMode) {
-            showAlert('Selecteer eerst een modus (Hulp verlenen of Hulp nodig).', 'error');
-            return;
-        }
-        const group = btn.closest('.group-card').getAttribute('data-group');
-        const loadingDiv = document.getElementById('loading');
-        
-        fetch('/check-microbit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (!data.connected) {
-                showAlert('Microbit niet verbonden', 'error');
-                return;
-            }
-            
+            // Microbit checken
             loadingDiv.style.display = 'block';
             document.body.classList.add('loading-active');
-            loadingDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            fetch('/help', {
+
+            fetch('/check-microbit', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `mode=${selectedMode}&group=${group}`
+                    'Content-Type': 'application/json',
+                }
             })
             .then(response => {
                 if (!response.ok) {
@@ -311,35 +258,69 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
-                if (data.success) {
-                    document.getElementById('loading').style.display = 'none';
+                if (!data.connected) {
+                    loadingDiv.style.display = 'none';
                     document.body.classList.remove('loading-active');
-                    if (data.message) {
-                        showAlert(data.message, 'success');
-                    }
-                    setTimeout(() => {
-                        window.location.href = '/';
-                    }, 2000);
-                } else {
-                    document.body.classList.remove('loading-active');
-                    if (data.error) {
-                        showAlert(data.error, 'error');
-                    } else {
-                        showAlert('Er is een fout opgetreden. Probeer het opnieuw.', 'error');
-                    }
+                    showAlert('Microbit niet verbonden', 'error');
+                    return;
                 }
+
+                // Microbit is verbonden → bestand overzetten (mode bepaalt zender/ontvanger)
+                const skip = localStorage.getItem("skipHandleiding") === "true" ? "true" : "false";
+                
+                fetch('/help', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    
+                    body: `mode=${encodeURIComponent(mode)}&group=1&skipHandleiding=${skip}`
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    loadingDiv.style.display = 'none';
+                    document.body.classList.remove('loading-active');
+
+                    if (data.success) {
+                        if (data.message) {
+                            showAlert(data.message, 'success');
+                        }
+                        // Na korte pauze door naar handleiding
+                        setTimeout(() => {
+                            if (data.skip === true) {
+                                return;
+                            }
+                            window.location.href = '/handleiding';
+                        }, 2000);
+                    } else {
+                        if (data.error) {
+                            showAlert(data.error, 'error');
+                        } else {
+                            showAlert('Er is een fout opgetreden. Probeer het opnieuw.', 'error');
+                        }
+                    }
+                })
+                .catch(error => {
+                    loadingDiv.style.display = 'none';
+                    document.body.classList.remove('loading-active');
+                    console.error('Error:', error);
+                    showAlert('Er is een fout opgetreden. Probeer het opnieuw.', 'error');
+                });
             })
             .catch(error => {
+                loadingDiv.style.display = 'none';
                 document.body.classList.remove('loading-active');
-                console.error('Error:', error);
-                showAlert('Er is een fout opgetreden. Probeer het opnieuw.', 'error');
+                console.error('Error checking microbit:', error);
+                showAlert('Fout bij het controleren van de microbit-verbinding.', 'error');
             });
-        })
-        .catch(error => {
-            console.error('Error checking microbit:', error);
-            showAlert('Fout bij het controleren van de microbit-verbinding.', 'error');
         });
     });
 });
 </script>
+
 {% endblock %}
