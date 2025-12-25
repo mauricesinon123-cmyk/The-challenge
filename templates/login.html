@@ -1,4 +1,5 @@
-{% extends "base.html"%} {% block title %}Login BioBit{% endblock %}
+{% extends "base.html" %}
+{% block title %}Inloggen - BioBit{% endblock %}
 
 {% block content %}
 <style>
@@ -41,30 +42,30 @@
 
 <div class="auth-container">
     <form method="POST">
-        <h3>Login</h3>
+        <h3>Inloggen</h3>
         <div class="form-group">
-            <label for="email">Email address</label>
+            <label for="email">E-mailadres</label>
             <input
                 type="email"
                 class="form-control"
                 id="email"
                 name="email"
-                placeholder="Enter email"
+                placeholder="Voer e-mailadres in"
                 required
             />
         </div>
         <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">Wachtwoord</label>
             <input
                 type="password"
                 class="form-control"
                 id="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder="Voer wachtwoord in"
                 required
             />
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Inloggen</button>
     </form>
 </div>
-{%endblock%}
+{% endblock %}
