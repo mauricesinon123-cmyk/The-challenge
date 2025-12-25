@@ -1,466 +1,345 @@
-<!DOCTYPE html>
-<!--dit is de basis pagina, dit is de grondlegger voor alle pagina's, de rest bouwt hier op verder-->
-<html>
-    <head>
-        <meta charset="utf-8" /> <!--karakter set-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!--zorgt dat de pagina goed schaalt op verschillende schermen-->
-        <link 
-          rel = "stylesheet"
-          href = "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous"
-        /> <!--link naar bootstrap css voor stijlen-->
-        <link
-          rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          crossorigin="anonymous"
-        />  <!--link naar font awesome voor iconen-->
+{% extends "base.html" %}
+{% block title %}Help{% endblock %}
 
-        <title>{% block title %}Home{% endblock %}</title> <!--titel van de pagina, kan per pagina aangepast worden-->
-        <style>
-            :root {
-                --primary-green: #2d6a4f;
-                --secondary-green: #40916c;
-                --light-green: #52b788;
-                --lighter-green: #b7e4c7;
-                --very-light-green: #d8f3dc;
-                --off-white: #f8faf7;
-                --light-gray: #f1f3f0;
-                --text-dark: #1b3a2e;
-            }
-            
-            body {
-                background-color: #f0f5f3;
-                color: var(--text-dark);
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            }
-            
-            .navbar {
-                background-color: var(--primary-green) !important;
-                box-shadow: 0 2px 8px rgba(45, 106, 79, 0.08);
-                padding: 1rem 0;
-            }
-            
-            .navbar-nav {
-                width: 100%;
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-            }
-            
-            .navbar-brand,
-            .nav-link {
-                color: white !important;
-                font-weight: 500;
-                letter-spacing: 0.3px;
-            }
-            
-            .nav-link:hover {
-                color: var(--lighter-green) !important;
-                transition: color 0.2s ease;
-            }
-            
-            .account-dropdown {
-                position: relative;
-                display: inline-block;
-            }
-            
-            .dropdown-menu-custom {
-                display: none;
-                position: absolute;
-                right: 0;
-                background-color: white;
-                min-width: 160px;
-                box-shadow: 0 8px 24px rgba(45, 106, 79, 0.12);
-                padding: 8px 0;
-                z-index: 1;
-                border-radius: 8px;
-                top: 100%;
-                margin-top: 8px;
-                border: 1px solid var(--very-light-green);
-            }
-            
-            .dropdown-menu-custom a {
-                color: var(--text-dark);
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-                border-radius: 4px;
-            }
-            
-            .dropdown-menu-custom a:hover {
-                background-color: var(--very-light-green);
-                text-decoration: none;
-                color: var(--primary-green);
-            }
-            
-            .dropdown-menu-custom a.logout {
-                color: #d64045;
-            }
-            
-            .dropdown-menu-custom a.logout:hover {
-                background-color: #ffe5e5;
-                color: #c82333;
-            }
-            
-            .account-dropdown.show .dropdown-menu-custom {
-                display: block;
-            }
-            
-            .account-toggle {
-                cursor: pointer;
-                user-select: none;
-            }
-            
-            .alert {
-                border: none;
-                border-radius: 8px;
-                margin-bottom: 2rem;
-                animation: fadeIn 0.3s ease-in;
-            }
-            
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            @keyframes fadeOut {
-                from {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-                to {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-            }
-            
-            .alert.fade-out {
-                animation: fadeOut 0.3s ease-out forwards;
-            }
-            
-            .alert-success {
-                background-color: var(--very-light-green);
-                color: var(--primary-green);
-            }
-            
-            .alert-danger {
-                background-color: #ffe5e5;
-                color: #c82333;
-            }
-            
-            .container {
-                padding: 2rem 0;
-            }
-            
-            .btn-primary {
-                background-color: var(--light-green) !important;
-                border-color: var(--light-green) !important;
-                color: white !important;
-                font-weight: 500;
-            }
-            
-            .btn-primary:hover {
-                background-color: var(--secondary-green) !important;
-                border-color: var(--secondary-green) !important;
-                box-shadow: 0 4px 12px rgba(64, 145, 108, 0.3);
-            }
-            
-            .btn-primary:active,
-            .btn-primary.active {
-                background-color: var(--primary-green) !important;
-                border-color: var(--primary-green) !important;
-            }
-            
-            .btn-secondary {
-                background-color: var(--lighter-green) !important;
-                border-color: var(--lighter-green) !important;
-                color: var(--primary-green) !important;
-                font-weight: 500;
-            }
-            
-            .btn-secondary:hover {
-                background-color: var(--light-green) !important;
-                border-color: var(--light-green) !important;
-                color: white !important;
-                box-shadow: 0 4px 12px rgba(82, 183, 136, 0.3);
-            }
-            
-            .btn-secondary:active,
-            .btn-secondary.active {
-                background-color: var(--secondary-green) !important;
-                border-color: var(--secondary-green) !important;
-            }
-            
-            .btn-success {
-                background-color: var(--light-green) !important;
-                border-color: var(--light-green) !important;
-                color: white !important;
-                font-weight: 500;
-            }
-            
-            .btn-success:hover {
-                background-color: var(--secondary-green) !important;
-                border-color: var(--secondary-green) !important;
-                box-shadow: 0 4px 12px rgba(64, 145, 108, 0.3);
-            }
-            
-            .btn-success:active,
-            .btn-success.active {
-                background-color: var(--primary-green) !important;
-                border-color: var(--primary-green) !important;
-            }
-            
-            .form-control {
-                border: 2px solid var(--lighter-green);
-                border-radius: 6px;
-                padding: 0.7rem 1rem;
-                font-size: 0.95rem;
-                transition: all 0.2s ease;
-                background-color: white;
-                color: var(--text-dark);
-            }
-            
-            .form-control::placeholder {
-                color: #999;
-                opacity: 1;
-            }
-            
-            .form-control:focus {
-                border-color: var(--light-green);
-                box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.1);
-                color: var(--text-dark);
-                background-color: white;
-            }
-            
-            .form-control:disabled {
-                background-color: var(--very-light-green);
-                color: #999;
-            }
-            
-            select.form-control {
-                color: var(--text-dark) !important;
-                background-color: white !important;
-                appearance: none;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232d6a4f' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-                background-repeat: no-repeat;
-                background-position: right 0.75rem center;
-                background-size: 16px;
-                padding-right: 2.5rem !important;
-            }
-            
-            select.form-control option {
-                color: var(--text-dark) !important;
-                background-color: white !important;
-                padding: 0.5rem;
-            }
-            
-            select.form-control option:checked {
-                background-color: var(--very-light-green) !important;
-                color: var(--text-dark) !important;
-            }
-            
-            .form-control-file {
-                border: 2px solid var(--lighter-green);
-                border-radius: 6px;
-                padding: 0.7rem;
-            }
-            
-            .profile-picture-small {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                object-fit: cover;
-                object-position: center;
-            }
-            
-            .profile-picture-medium {
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                object-fit: cover;
-                object-position: center;
-            }
-        </style>
-    </head>
-   
-   
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <!--navigatie balk bovenaan de pagina-->
-            {% if user.is_authenticated and user.profile_picture_path %}
-                <img src="{{ url_for('static', filename=user.profile_picture_path) }}" alt="Profile" class="profile-picture-small" style="margin-right: 15px;" />
-            {% endif %}
-            <button
-                class = "navbar-toggler"
-                type = "button"
-                data-toggle = "collapse"
-                data-target = "#navbar"
-            > <!--knop voor mobiele weergave-->
-                <span class="navbar-toggler-icon"></span>
-            </button> <!--icoon voor de knop-->
+{% block content %}
+<style>
+    :root {
+        --primary-green: #2d6a4f;
+        --secondary-green: #40916c;
+        --light-green: #52b788;
+        --lighter-green: #b7e4c7;
+        --very-light-green: #d8f3dc;
+    }
+    
+    .help-header {
+        margin-bottom: 2.5rem;
+    }
+    
+    .help-header h1 {
+        color: var(--primary-green);
+        font-weight: 600;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .help-header p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .mode-buttons {
+        margin-bottom: 2.5rem;
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .mode-buttons .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 6px;
+    }
+    
+    #group-selection {
+        margin-top: 2rem;
+    }
+    
+    #group-selection h3 {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+    }
+    
+    .group-card {
+        border: 2px solid var(--very-light-green);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        height: 100%;
+        cursor: pointer;
+    }
+    
+    .group-card:hover {
+        border-color: var(--light-green);
+        box-shadow: 0 8px 24px rgba(45, 106, 79, 0.12);
+        transform: translateY(-2px);
+    }
+    
+    .group-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .group-card .card-title {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .group-card .select-btn {
+        width: 100%;
+    }
+    
+    .group-card-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 1rem;
+        object-fit: contain;
+    }
+    
+    .alert-info {
+        background-color: var(--very-light-green);
+        color: var(--primary-green);
+        border: none;
+        border-radius: 8px;
+    }
+    
+    .alert-primary {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: none;
+        border-radius: 8px;
+    }
+    
+    #loading {
+        animation: none !important;
+    }
+    
+    body.loading-active {
+        pointer-events: none;
+    }
+    
+    body.loading-active a,
+    body.loading-active button {
+        pointer-events: none;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+    
+    .card-deck {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .card-deck .card {
+        border: 2px solid var(--very-light-green);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(45, 106, 79, 0.06);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+    }
+    
+    .card-deck .card:hover {
+        box-shadow: 0 8px 24px rgba(45, 106, 79, 0.12);
+        transform: translateY(-2px);
+        border-color: var(--lighter-green);
+    }
+    
+    .card-deck .card-img-top {
+        width: 280px;
+        height: 280px;
+        padding: 2rem 1rem 1rem 1rem;
+        margin: 0 auto;
+        object-fit: contain;
+        object-position: center;
+    }
+    
+    .card-deck .card-body {
+        flex: 1;
+        padding: 1.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .card-deck .card-title {
+        color: var(--primary-green);
+        font-weight: 600;
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .card-deck .card-text {
+        color: #666;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    .card-deck .btn {
+        align-self: flex-start;
+    }
+</style>
 
-            <div class="collapse navbar-collapse" id="navbar">
-                <div class="navbar-nav">
-                  {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" id="home" href="/">Home</a>  
-                    <a class="nav-item nav-link" id="projects" href="/projects">Projecten</a>
-                    <a class="nav-item nav-link" id="help" href="/help">Help</a>
-                    <div class="nav-item account-dropdown" id="accountDropdown">
-                        <a class="nav-link account-toggle" id="accountToggle">Account</a>
-                        <div class="dropdown-menu-custom">
-                            <a href="/account">Profiel</a>
-                            <a href="/logout" class="logout">Logout</a>
-                        </div>
-                    </div>
-                  {% else %}
-                    <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
-                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
-                  {% endif %}
-                    
-                </div> <!--links in de navigatie balk-->
-            </div> <!--einde van de collapsible navigatie-->
-        </nav> <!--einde van de navigatie balk-->
+<div class="help-header">
+    <h1>Help anderen of vraag om hulp</h1>
+    <p>Kies een SDG waar u hulp bij nodig heeft, of bij wilt helpen.</p>
+    <p><span style="font-size: 0.rem; color: #444; font-style: italic;">Zorg ervoor dat uw microbit is aangesloten wanneer u een SDG kiest.</span></p>
+</div>
 
-        {% with messages = get_flashed_messages(with_categories=true)%} <!--haal de flash berichten op-->
-        {% if messages %} <!--als er berichten zijn, toon ze-->
-          {% for category, message in messages %} <!--loop door de berichten-->
-          {%if category == 'error' %} <!--als het een error bericht is, toon een rode alert-->
-            <div class="alert alert-danger alert-dismissable fade show" role="alert"> <!--rode alert voor error berichten-->
-              {{message}}
-              <button type="button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span>
-              </button>
+<div id="loading" style="display: none;" class="alert alert-primary">
+    <strong>Overzetten op microbit...</strong> Even geduld alstublieft.
+</div>
+
+<div class="card-deck">
+  <div class="card" data-button="need-btn">
+    <img class="card-img-top" src="{{ url_for('static', filename='icons/Open_Hand_Illustration.png') }}" alt="Open hand">
+    <div class="card-body">
+      <div>
+        <h5 class="card-title">Hulp nodig</h5>
+        <p class="card-text">Druk hier als u hulp wilt ontvangen bij een specifieke SDG.</p>
+      </div>
+      <button id="need-btn" class="btn btn-primary">Hulp nodig</button>
+    </div>
+  </div>
+  <div class="card" data-button="help-btn">
+    <img class="card-img-top" src="{{ url_for('static', filename='icons/Hand_Shake.png') }}" alt="Twee handen die een handdruk geven">
+    <div class="card-body">
+      <div>
+        <h5 class="card-title">Hulp verlenen</h5>
+        <p class="card-text">Druk hier als u in de wijk bij een speciefeke SDG wilt helpen.</p>
+      </div>
+      <button id="help-btn" class="btn btn-primary">Hulp verlenen</button>
+    </div>
+  </div>
+</div>
+
+<div id="group-selection" style="display: none;">
+    <h3>Kies een SDG</h3>
+    <div class="row">
+        {% for i in range(1, 17) %}
+        <div class="col-md-3 mb-4">
+            <div class="card group-card" data-group="{{ i }}">
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename='icons/SDG' ~ i ~ '.png') }}" alt="SDG {{ i }}" class="group-card-icon">
+                    <button class="btn btn-primary select-btn">SDG {{ i }}</button>
+                </div>
             </div>
-          {% else %} <!--anders, toon een groene alert voor succes berichten-->
-            <div class="alert alert-success alert-dismissable fade show" role="alert">
-              {{message}}
-              <button type="button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-          {% endif %} 
-          {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        <div class="container"> <!--container voor de hoofdinhoud van de pagina-->
-          {%block content%} <!--blok voor de inhoud van de pagina, kan per pagina aangepast worden-->
-          {%endblock%} 
         </div>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script> <!--link naar jquery voor javascript functionaliteit-->
-    
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script> <!--link naar popper.js voor javascript functionaliteit-->
-    
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script> <!--link naar bootstrap js voor javascript functionaliteit-->
+        {% endfor %}
+    </div>
+</div>
 
-    <script
-        type="text/javascript"
-        src="{{url_for('static', filename='main.js')}}"
-        ></script> <!--link naar eigen javascript bestand-->
-    
-    <script>
-        function showAlert(message, category) {
-            const container = document.querySelector('.container');
-            if (!container) return;
+<script>
+let selectedMode = null;
 
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${category === 'error' ? 'danger' : 'success'} alert-dismissable fade show`;
-            alertDiv.setAttribute('role', 'alert');
-            const closeBtn = document.createElement('button');
-            closeBtn.type = 'button';
-            closeBtn.className = 'close';
-            closeBtn.setAttribute('aria-label', 'Close');
-            closeBtn.innerHTML = '<span aria-hidden="true">&times;</span>';
-            closeBtn.addEventListener('click', function() {
-                alertDiv.classList.add('fade-out');
-                setTimeout(() => {
-                    alertDiv.remove();
-                }, 300);
-            });
-
-            alertDiv.appendChild(document.createTextNode(message));
-            alertDiv.appendChild(closeBtn);
-            
-            container.insertBefore(alertDiv, container.firstChild);
-
-            setTimeout(() => {
-                const rect = alertDiv.getBoundingClientRect();
-                if (rect.top < 0 || rect.top > window.innerHeight) {
-                    alertDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 0);
-
-            const timeoutId = setTimeout(() => {
-                if (alertDiv && alertDiv.parentNode) {
-                    alertDiv.classList.add('fade-out');
-                    setTimeout(() => {
-                        if (alertDiv && alertDiv.parentNode) {
-                            alertDiv.remove();
-                        }
-                    }, 300);
-                }
-            }, 5000);
-
-            alertDiv.addEventListener('click', function(e) {
-                if (e.target.closest('.close')) {
-                    clearTimeout(timeoutId);
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const accountToggle = document.getElementById('accountToggle');
-            const accountDropdown = document.getElementById('accountDropdown');
-            
-            if (accountToggle) {
-                accountToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    accountDropdown.classList.toggle('show');
-                });
-                
-                document.addEventListener('click', function(e) {
-                    if (!accountDropdown.contains(e.target)) {
-                        accountDropdown.classList.remove('show');
-                    }
-                });
-            }
-
-            const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(alert => {
-                setTimeout(() => {
-                    const rect = alert.getBoundingClientRect();
-                    if (rect.top < 0 || rect.top > window.innerHeight) {
-                        alert.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }, 0);
-
-                setTimeout(() => {
-                    alert.classList.add('fade-out');
-                    setTimeout(() => {
-                        alert.remove();
-                    }, 300);
-                }, 5000);
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.card-deck .card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const buttonId = this.getAttribute('data-button');
+            document.getElementById(buttonId).click();
         });
-    </script>
-    </body>
+    });
 
-</html> 
+    document.getElementById('help-btn').addEventListener('click', function() {
+        selectedMode = 'help';
+        document.getElementById('group-selection').style.display = 'block';
+        document.getElementById('help-btn').classList.add('btn-success');
+        document.getElementById('need-btn').classList.remove('btn-success');
+        setTimeout(() => {
+            document.getElementById('group-selection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+    });
+
+    document.getElementById('need-btn').addEventListener('click', function() {
+        selectedMode = 'need';
+        document.getElementById('group-selection').style.display = 'block';
+        document.getElementById('need-btn').classList.add('btn-success');
+        document.getElementById('help-btn').classList.remove('btn-success');
+        setTimeout(() => {
+            document.getElementById('group-selection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+    });
+
+    document.querySelectorAll('.group-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (!e.target.closest('.select-btn')) {
+                const btn = this.querySelector('.select-btn');
+                if (btn) btn.click();
+            }
+        });
+    });
+
+    document.getElementById('group-selection').addEventListener('click', function(e) {
+        const btn = e.target.closest('.select-btn');
+        if (!btn) return;
+        
+        e.stopPropagation();
+        if (!selectedMode) {
+            showAlert('Selecteer eerst een modus (Hulp verlenen of Hulp nodig).', 'error');
+            return;
+        }
+        const group = btn.closest('.group-card').getAttribute('data-group');
+        const loadingDiv = document.getElementById('loading');
+        
+        fetch('/check-microbit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data.connected) {
+                showAlert('Microbit niet verbonden', 'error');
+                return;
+            }
+            
+            loadingDiv.style.display = 'block';
+            document.body.classList.add('loading-active');
+            loadingDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            fetch('/help', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `mode=${selectedMode}&group=${group}`
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('loading').style.display = 'none';
+                    document.body.classList.remove('loading-active');
+                    if (data.message) {
+                        showAlert(data.message, 'success');
+                    }
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    document.body.classList.remove('loading-active');
+                    if (data.error) {
+                        showAlert(data.error, 'error');
+                    } else {
+                        showAlert('Er is een fout opgetreden. Probeer het opnieuw.', 'error');
+                    }
+                }
+            })
+            .catch(error => {
+                document.body.classList.remove('loading-active');
+                console.error('Error:', error);
+                showAlert('Er is een fout opgetreden. Probeer het opnieuw.', 'error');
+            });
+        })
+        .catch(error => {
+            console.error('Error checking microbit:', error);
+            showAlert('Fout bij het controleren van de microbit-verbinding.', 'error');
+        });
+    });
+});
+</script>
+{% endblock %}
