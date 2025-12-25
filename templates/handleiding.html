@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% block title %}Handleiding{% endblock %}
+
+{% block content %}
+<body>
+
+<style>
+
+    h1, h2 {
+        color: #2e7d32;
+        font-weight: 600;
+        scroll-margin-top: 80px;
+    }
+
+    h3 {
+        color: #388e3c;
+        font-weight: 500;
+        margin-top: 25px;
+    }
+
+    hr {
+        border: none;
+        border-top: 1px solid #c8e6c9;
+        margin: 30px 0;
+    }
+
+    .toc {
+        background: #e8f5e9;
+        padding: 15px;
+        border-radius: 6px;
+        border-left: 4px solid #2e7d32;
+        margin-bottom: 30px;
+    }
+
+    .toc a {
+        text-decoration: none;
+        color: #2e7d32;
+        font-weight: 500;
+    }
+
+    .toc a:hover {
+        text-decoration: underline;
+    }
+
+    .step {
+        background: #e8f5e9;
+        padding: 12px;
+        border-left: 4px solid #2e7d32;
+        border-radius: 4px;
+        margin-bottom: 15px;
+    }
+
+    .image-box {
+        margin: 10px 0;
+        padding: 14px;
+        background: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        text-align: center;
+        font-style: italic;
+        color: #555;
+    }
+
+    .sdg-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 10px;
+        margin: 15px 0;
+    }
+
+    .sdg-icon {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 10px;
+        text-align: center;
+        font-size: 14px;
+        color: #333;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            margin: 10px;
+        }
+        .toc {
+            font-size: 0.95rem;
+        }
+    }
+</style>
+
+<h1>📘 Micro:bit Handleiding</h1>
+<p>Deze handleiding legt in eenvoudige taal uit hoe je de micro:bit gebruikt tijdens het lopen door de wijk. De micro:bit zoekt automatisch naar andere micro:bits in dezelfde groep. Je hoeft niets te installeren of technisch te doen.</p>
+
+<hr>
+
+<div class="toc">
+    <strong>📚 Inhoudsopgave</strong>
+    <ul>
+        <li><a href="#sdg">1. Kies jouw SDG</a></li>
+        <li><a href="#modus">2. Kies: Zender of Ontvanger</a></li>
+        <li><a href="#zender">3. De zender gebruiken</a></li>
+        <li><a href="#ontvanger">4. De ontvanger gebruiken</a></li>
+        <li><a href="#symbolen">5. Afstandssymbolen</a></li>
+        <li><a href="#problemen">6. Problemen oplossen</a></li>
+    </ul>
+</div>
+
+<hr>
+
+<h2 id="sdg">🌍 1. Kies jouw SDG</h2>
+<p>Iedere micro:bit hoort bij één van de <strong>17 Sustainable Development Goals (SDG’s)</strong>. Kies de SDG waar jij aan wilt bijdragen, of de SDG die hoort bij het project van iemand anders. (Deze kunt u vinden onder de "wijk projecten" pagina)</p>
+
+<p>Hieronder zie je alle SDG’s:</p>
+
+<ol>
+    <li>Geen armoede</li>
+    <li>Geen honger</li>
+    <li>Goede gezondheid</li>
+    <li>Kwaliteitsonderwijs</li>
+    <li>Gendergelijkheid</li>
+    <li>Schoon water</li>
+    <li>Betaalbare energie</li>
+    <li>Eerlijk werk</li>
+    <li>Innovatie</li>
+    <li>Minder ongelijkheid</li>
+    <li >Duurzame steden</li>
+    <li>Verantwoorde consumptie</li>
+    <li>Klimaatactie</li>
+    <li>Leven in het water</li>
+    <li>Leven op het land</li>
+    <li>Vrede & recht</li>
+    <li>Partnerschappen</li>
+</ol>
+
+<p>De micro:bit die je krijgt kan je zelf instellen op elk moment, hieronder staat dat verder uitgelegd.</p>
+
+<hr>
+
+<h2 id="modus">🔄 2. Kies: Zender of Ontvanger</h2>
+<p>De micro:bit kan twee dingen doen:</p>
+
+<ul>
+    <li>📡 <strong>Zenden</strong> – jouw micro:bit stuurt een signaal uit</li>
+    <li>📶 <strong>Ontvangen</strong> – jouw micro:bit zoekt naar andere micro:bits</li>
+</ul>
+
+<div class="step">
+    <strong>Zo wissel je tussen zender en ontvanger:</strong><br>
+    • Ga naar microbit in het menu.<br>
+    • Kies of je wilt zenden (helpen) of ontvangen (hulp nodig).<br>
+    • De micro:bit is nu klaar voor gebruik!<br>
+    • Als je wilt wisselen, herhaal deze stap en kies dan de andere modus.<br>
+</div>
+
+<p>Iedereen kan dus zelf kiezen wat hij of zij wil doen of nodig heeft.</p>
+
+<hr>
+
+<h2 id="zender">📡 3. De zender gebruiken</h2>
+
+<h3>🎛️ Knoppen</h3>
+<ul>
+    <li><strong>A:</strong> ⬇️ Groep omlaag (1–16)</li>
+    <li><strong>B:</strong> ⬆️ Groep omhoog (1–16)</li>
+    <li><strong>Het logo aanraken:</strong> ▶️ Start / ⏹ Stop zenden</li>
+</ul>
+
+<div class="image-box">
+    🔢 (Hier kun je jouw custom afbeeldingen voor groep 10–16 tonen)
+</div>
+
+<h3>📺 Wat zie je op het scherm?</h3>
+<ul>
+    <li>📡 <strong>Zenden aan:</strong> het groepsnummer wordt getoond</li>
+    <li>⚪ <strong>Zenden uit:</strong> het scherm is leeg</li>
+</ul>
+
+<hr>
+
+<h2 id="ontvanger">📶 4. De ontvanger gebruiken</h2>
+
+<h3>🎛️ Knoppen</h3>
+<ul>
+    <li><strong>A:</strong> ⬇️ Groep omlaag (1–16)</li>
+    <li><strong>B:</strong> ⬆️ Groep omhoog (1–16)</li>
+</ul>
+
+<h3>📺 Wat zie je op het scherm?</h3>
+<ul>
+    <li>🔢 <strong>Groepsnummer:</strong> wordt één keer getoond wanneer je van groep wisselt</li>
+    <li>📡 <strong>Afstandssymbool:</strong> verschijnt wanneer een zender dichtbij is</li>
+    <li>⚪ <strong>Leeg scherm:</strong> als er 3 seconden geen signaal is</li>
+</ul>
+
+<hr>
+
+<h2 id="symbolen">📍 5. Afstandssymbolen</h2>
+<p>De ontvanger laat verschillende symbolen zien afhankelijk van hoe dichtbij een andere micro:bit is:</p>
+
+<ul>
+    <li>🔴 <strong>Dichtbij:</strong> Jouw groepsnummer</li>
+    <li>🟠 <strong>Middel:</strong> een grote diamant</li>
+    <li>🟡 <strong>Ver:</strong> een kleine diamant</li>
+    <li>⚪ <strong>Heel ver:</strong> een klein puntje</li>
+    <li>⚫ <strong>Niet bereikbaar:</strong> een leeg scherm</li>
+    <li>🔊 <strong>Geluid:</strong> Ook hoor je steeds sneller een geluidje als iemand dichterbij komt!</li>
+</ul>
+
+<hr>
+
+<h2 id="problemen">🛠️ 6. Problemen oplossen</h2>
+<ul>
+    <li>❌ Geen signaal? Misschien zijn er geen andere microbits met dezelfde doelstelling in de buurt.</li>
+    <li>⏸ Zender stuurt niets? Tik op het logo om te starten.</li>
+    <li>⚪ Ontvanger blijft leeg? Wacht 3 seconden of loop een stukje verder.</li>
+    <li>❓ Heb je vragen? Neem contact op met uw beheerder.</li>
+</ul>
+
+<hr>
+
+<p><em>Veel plezier tijdens het lopen door de wijk!</em> 🌱</p>
+
+<!-- TOGGLE: Handleiding overslaan -->
+<div style="margin-top: 2rem;">
+    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+        <input type="checkbox" id="skipHandleidingToggle">
+        Handleiding overslaan in de toekomst
+    </label>
+</div>
+
+<!-- HIDDEN FIELD: Wordt meegestuurd naar backend -->
+<input type="hidden" id="skipHandleidingField" name="skipHandleiding" value="false">
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("skipHandleidingToggle");
+    const hiddenField = document.getElementById("skipHandleidingField");
+
+    // Als gebruiker eerder heeft gekozen → toggle aanzetten
+    if (localStorage.getItem("skipHandleiding") === "true") {
+        toggle.checked = true;
+        hiddenField.value = "true";   // backend krijgt juiste waarde
+    }
+
+    // Wanneer gebruiker toggelt → opslaan + hidden field updaten
+    toggle.addEventListener("change", () => {
+        if (toggle.checked) {
+            localStorage.setItem("skipHandleiding", "true");
+            hiddenField.value = "true";
+        } else {
+            localStorage.removeItem("skipHandleiding");
+            hiddenField.value = "false";
+        }
+    });
+});
+</script>
+
+</body>
+{% endblock %}
