@@ -1,0 +1,409 @@
+{% extends "base.html" %}
+{% block title %}Instructies - BioBit{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-green: #2d6a4f;
+        --secondary-green: #40916c;
+        --light-green: #52b788;
+        --lighter-green: #b7e4c7;
+        --very-light-green: #d8f3dc;
+    }
+    
+    .instructions-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: linear-gradient(135deg, var(--very-light-green) 0%, white 100%);
+        border-radius: 12px;
+        border: 2px solid var(--lighter-green);
+    }
+    
+    .instructions-header h1 {
+        color: var(--primary-green);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+    
+    .instructions-header p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .toc {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        border: 2px solid var(--very-light-green);
+        margin-bottom: 2rem;
+    }
+    
+    .toc h3 {
+        color: var(--primary-green);
+        margin-bottom: 1rem;
+    }
+    
+    .toc ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .toc li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .toc a {
+        color: var(--light-green);
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .toc a:hover {
+        text-decoration: underline;
+    }
+    
+    .instruction-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        border: 2px solid var(--very-light-green);
+        margin-bottom: 2rem;
+    }
+    
+    .instruction-section h2 {
+        color: var(--primary-green);
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--lighter-green);
+    }
+    
+    .instruction-section h3 {
+        color: var(--secondary-green);
+        font-size: 1.3rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .step {
+        background: var(--very-light-green);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border-left: 4px solid var(--light-green);
+    }
+    
+    .step strong {
+        color: var(--primary-green);
+    }
+    
+    .instruction-text {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+    }
+    
+    .tip {
+        background: #fff3cd;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        border-left: 4px solid #ffc107;
+    }
+    
+    .tip strong {
+        color: #856404;
+    }
+    
+    .tip p {
+        margin: 0;
+        color: #856404;
+    }
+    
+    .list-steps {
+        margin-left: 1rem;
+    }
+    
+    .list-steps ol, .list-steps ul {
+        margin-bottom: 1rem;
+    }
+    
+    .list-steps li {
+        margin-bottom: 0.5rem;
+        color: #555;
+    }
+</style>
+
+<div class="instructions-header">
+    <h1>📖 BioBit Instructies</h1>
+    <p>Welkom! Hier vindt u stap-voor-stap instructies om BioBit te gebruiken.</p>
+</div>
+
+<div class="toc">
+    <h3>📑 Inhoudsopgave</h3>
+    <ul>
+        <li><a href="#getting-started">Aan de slag</a></li>
+        <li><a href="#account">Uw account instellen</a></li>
+        <li><a href="#projects">Projecten beheren</a></li>
+        <li><a href="#help-others">Anderen helpen</a></li>
+        <li><a href="#microbit">Microbit gebruiken</a></li>
+        <li><a href="#faq">Veelgestelde vragen</a></li>
+    </ul>
+</div>
+
+<div class="instruction-section" id="getting-started">
+    <h2>1. Aan de slag</h2>
+    
+    <h3>Uw eerste stappen</h3>
+    <p class="instruction-text">
+        Welkom op BioBit! BioBit is een platform waar buurtbewoners samen kunnen werken aan projecten 
+        gericht op de Sustainable Development Goals (SDG's). Hier kunt u uw eigen projecten starten, 
+        anderen helpen, en deel uitmaken van een ondersteunende gemeenschap.
+    </p>
+    
+    <h3>Inloggen</h3>
+    <div class="list-steps">
+        <ol>
+            <li>Ga naar de login pagina</li>
+            <li>Voer uw e-mailadres in</li>
+            <li>Voer uw wachtwoord in</li>
+            <li>Klik op "Inloggen"</li>
+        </ol>
+    </div>
+    
+    <div class="tip">
+        <strong>💡 Tip:</strong>
+        <p>Bent u uw wachtwoord vergeten? Neem contact op met uw beheerder.</p>
+    </div>
+</div>
+
+<div class="instruction-section" id="account">
+    <h2>2. Uw account instellen</h2>
+    
+    <h3>Account informatie aanvullen</h3>
+    <p class="instruction-text">
+        Na uw eerste keer inloggen wordt u naar uw account pagina geleid. Hier kunt u uw profiel aanvullen. U kunt deze informatie later altijd nog aanpassen.
+    </p>
+    
+    <div class="list-steps">
+        <ol>
+            <li>Voer uw volledige naam in</li>
+            <li>Selecteer uw geboortedatum</li>
+            <li>Kies uw regio (wijk)</li>
+            <li>U kunt optioneel een profielfoto toevoegen</li>
+            <li>Klik op "Opslaan" om uw gegevens op te slaan</li>
+        </ol>
+    </div>
+    
+    <h3>Profielfoto toevoegen</h3>
+    <p class="instruction-text">
+        Uw profielfoto helpt anderen u te herkennen in de wijk. U kunt een JPG of PNG afbeelding gebruiken.
+        De afbeelding mag niet groter zijn dan 5MB.
+    </p>
+    
+    <div class="tip">
+        <strong>💡 Tip:</strong>
+        <p>Kies een duidelijke afbeelding, zodat mensen u ook kunnen herkennen. (Het gebruik van een profielfoto is niet verplicht!)</p>
+    </div>
+</div>
+
+<div class="instruction-section" id="projects">
+    <h2>3. Projecten beheren</h2>
+    
+    <h3>Een nieuw project aanmaken</h3>
+    <p class="instruction-text">
+        Op de "Mijn Projecten" pagina kunt u uw eigen projecten beheren en nieuwe projecten aanmaken.
+    </p>
+    
+    <div class="list-steps">
+        <ol>
+            <li>Klik op "Projecten" in het menu</li>
+            <li>Klik op "Mijn Projecten" (U kunt op de homepagina ook meteen drukken op "Mijn projecten")</li>
+            <li>Scroll naar boven en vul het formulier in:
+                <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                    <li><strong>Project Titel:</strong> Een duidelijke naam voor uw project</li>
+                    <li><strong>Project Beschrijving:</strong> Beschrijf wat uw project inhoudt</li>
+                    <li><strong>SDG (1-16):</strong> Kies welk doel uw project ondersteunt</li>
+                </ul>
+            </li>
+            <li>Klik op "Voeg project toe"</li>
+        </ol>
+    </div>
+    
+    <h3>Een project bewerken</h3>
+    <div class="list-steps">
+        <ol>
+            <li>Ga naar "Mijn Projecten"</li>
+            <li>Zoek uw project in de lijst</li>
+            <li>Klik op de "Bewerken" knop</li>
+            <li>Wijzig de gegevens die u wilt aanpassen</li>
+            <li>Klik op "Opslaan" om de wijzigingen op te slaan</li>
+            <li>Klik op "Annuleren" om terug te gaan zonder wijzigingen</li>
+        </ol>
+    </div>
+    
+    <h3>Een project verwijderen</h3>
+    <div class="list-steps">
+        <ol>
+            <li>Ga naar "Mijn Projecten"</li>
+            <li>Zoek uw project in de lijst</li>
+            <li>Klik op de "Verwijderen" knop</li>
+            <li>Bevestig dat u het project wilt verwijderen</li>
+            <li>Het project zal onmiddellijk verwijderd worden</li>
+        </ol>
+    </div>
+    
+    <div class="tip">
+        <strong>⚠️ Waarschuwing:</strong>
+        <p>Wanneer u een project verwijdert, kan het niet meer worden hersteld. Wees voorzichtig!</p>
+    </div>
+</div>
+
+<div class="instruction-section" id="help-others">
+    <h2>4. Anderen helpen</h2>
+    
+    <h3>Buurtprojecten bekijken</h3>
+    <p class="instruction-text">
+        Op de "Buurtprojecten" pagina kunt u projecten zien van anderen in uw buurt.
+    </p>
+    
+    <div class="list-steps">
+        <ol>
+            <li>Klik op "Projecten" in het menu</li>
+            <li>Klik op "Buurtprojecten"</li>
+            <li>U ziet alle projecten van anderen in uw regio</li>
+            <li>Lees de projectbeschrijvingen om te zien waar u mogelijk kunt helpen</li>
+        </ol>
+    </div>
+    
+    <h3>Anderen helpen via Microbit</h3>
+    <p class="instruction-text">
+        Als u wilt helpen met een project, kunt u dit doen via de Microbit functionaliteit. Voer de SDG doelstelling in waarmee u kunt helpen.
+        De instructies zullen naar uw Microbit worden verzonden.
+    </p>
+    
+    <div class="list-steps">
+        <ol>
+            <li>Klik op "Microbit" in het menu</li>
+            <li>Klik op "Hulp verlenen"</li>
+            <li>Zorg ervoor dat uw microbit is aangesloten via USB</li>
+            <li>Selecteer een SDG doelstelling</li>
+            <li>Het scherm laat zien wanner uw microbit werkt!</li>
+        </ol>
+    </div>
+</div>
+
+<div class="instruction-section" id="microbit">
+    <h2>5. Microbit gebruiken</h2>
+    
+    <h3>Wat is een Microbit?</h3>
+    <p class="instruction-text">
+        De BBC Microbit is een kleine programmeerbare computer die u kan gebruiken voor educatieve projecten. 
+        BioBit helpt u om Microbit-gebaseerde projecten makkelijk te delen met anderen in uw buurt.
+        De BioBit maakt gebruik van radiosignalen om zo u te informeren wanneer er iemand in de buurt is met dezelfde doelstelling!
+    </p>
+
+    <h3>Microbit in de wijk</h3>
+    <p class="instruction-text">
+        Als u er voor kiest om hulp te verlenen zijn er nog een paar stappen die u moet volgen:
+        <ol>
+            <li>Zodra het bestand op uw microbit staat kunt u de microbit ontkoppelen.</li>
+            <li>Sluit uw microbit aan op de battery pack</li>
+            <li>Als u nu op de "A" knop drukt zal uw microbit radiosignalen verzenden</li>
+            <li>Stop uw microbit in uw zak en loop een rondje door de wijk, de microbit zal geluid maken als er iemand in de buurt is met dezelfde doelstelling</li>
+            <li>Als u weer thuis bent, of bij iemand staat en u wil geen geluid meer horen, druk dan op de "B" knop</li>
+            <li>Als u op de "B" knop drukt zal uw microbit stoppen met het versturen van radiosignalen, u kunt nu de microbit ontkoppelen van de battery pack</li>
+            <li>U kunt nu uw microbit weer opnieuw instellen via USB en de website!</li>
+        </ol>
+        <div class="tip">
+        <strong>💡 Tip:</strong>
+        <p>Zorg ervoor dat uw Microbit met een USB-kabel aan uw computer is verbonden voordat u de Microbit functionaliteit gebruikt.</p>
+        <p>Zorg ervoor dat de battery pack niet is aangesloten als u de microbit instelt.</p>
+    </div>
+    </p>
+    
+    <h3>Hulp nodig met Microbit?</h3>
+    <div class="list-steps">
+        <ol>
+            <li>Ga naar "Microbit" in het menu</li>
+            <li>Klik op "Hulp nodig"</li>
+            <li>Selecteer het SDG waar u hulp bij nodig heeft</li>
+            <li>Zorg ervoor dat uw Microbit is verbonden met de USB-kabel</li>
+            <li>Wacht tot de instructies naar uw Microbit zijn verzonden</li>
+        </ol>
+    </div>
+    
+    <h3>Hulp verlenen met Microbit?</h3>
+    <div class="list-steps">
+        <ol>
+            <li>Ga naar "Microbit" in het menu</li>
+            <li>Klik op "Hulp verlenen"</li>
+            <li>Selecteer het SDG waar u hulp bij kan geven</li>
+            <li>Zorg ervoor dat uw Microbit is verbonden met de USB-kabel</li>
+            <li>De instructies zullen naar uw Microbit worden verzonden</li>
+        </ol>
+    </div>
+    
+    <div class="tip">
+        <strong>💡 Tip:</strong>
+        <p>Zorg ervoor dat uw Microbit met een USB-kabel aan uw computer is verbonden voordat u de Microbit functionaliteit gebruikt.</p>
+    </div>
+</div>
+
+<div class="instruction-section" id="faq">
+    <h2>6. Veelgestelde vragen</h2>
+    
+    <h3>Kan ik mijn wachtwoord veranderen?</h3>
+    <p class="instruction-text">
+        U kunt uw wachtwoord veranderen via uw accountpagina. Klik op "Account" in het menu en zoek naar de optie "Wachtwoord veranderen".
+    </p>
+    
+    <h3>Hoe verwijder ik mijn account?</h3>
+    <p class="instruction-text">
+        Als u uw account wilt verwijderen, neem dan contact op met een beheerder. Zij kunnen u helpen met het verwijderingsproces.
+    </p>
+    
+    <h3>Kan ik mijn profielfoto wijzigen?</h3>
+    <p class="instruction-text">
+        Ja! Ga naar uw accountpagina en upload een nieuwe profielfoto. U kunt JPG of PNG afbeeldingen gebruiken.
+    </p>
+    
+    <h3>Wat zijn de SDG's?</h3>
+    <p class="instruction-text">
+        De Sustainable Development Goals (SDG's) zijn 17 doelstellingen van de Verenigde Naties om een betere toekomst voor iedereen te bereiken. 
+        Wanneer u een project aanmaakt, selecteert u welk doel uw project ondersteunt.
+    </p>
+    
+    <h3>Kan ik zien wie mijn project wil helpen?</h3>
+    <p class="instruction-text">
+        Ja! Alle projecten zijn zichtbaar voor anderen in uw regio. Wanneer iemand uw project via Microbit ondersteunt, 
+        zal hun informatie beschikbaar zijn in uw account.
+    </p>
+    
+    <h3>Ik zie geen Microbit gedetecteerd - wat nu?</h3>
+    <p class="instruction-text">
+        Zorg ervoor dat:
+    </p>
+    <div class="list-steps">
+        <ul>
+            <li>Uw Microbit is aangesloten via een USB-kabel</li>
+            <li>De USB-poort goed functioneert</li>
+            <li>U de juiste driver hebt geïnstalleerd</li>
+            <li>Probeer een ander USB-poort als het probleem blijft optreden</li>
+        </ul>
+    </div>
+    
+    <h3>Nog meer vragen?</h3>
+    <p class="instruction-text">
+        Als u nog vragen heeft die hier niet worden beantwoord, neem dan contact op met uw buurtcoördinator of beheerder.
+    </p>
+</div>
+
+<div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--very-light-green); border-radius: 12px;">
+    <h3 style="color: var(--primary-green);">Veel plezier met BioBit! 🌱</h3>
+    <p style="color: #666;">Samen maken we ons dorp en onze regio nog beter.</p>
+</div>
+
+{% endblock %}
