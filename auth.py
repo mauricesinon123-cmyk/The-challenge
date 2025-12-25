@@ -44,7 +44,7 @@ def login():
                 db.session.commit()
                 
                 flash('Ingelogd!', category='success')
-                login_user(user, remember=True, duration=timedelta(days=1))
+                login_user(user, remember=True, duration=timedelta(days=7))
                 record_login_attempt(email, success=True)
                 log_audit_event(user.id, 'LOGIN', 'USER', user.id)
                 logger.info(f'Successful login: {email}')
@@ -127,3 +127,22 @@ def profile():
 def settings():
     return "<p>Settings</p>"
 
+@auth.route("/upload", methods=["POST"])
+def upload_hex():
+    file = request.files.get("hexfile")
+
+    if not file:
+        flash("Geen bestand geselecteerd.", category="error")
+        return redirect(url_for("views.home"))
+
+    skip = request.form.get("skipHandleiding")
+
+    if skip == "true":
+        return redirect(url_for("views.home"))
+    else:
+        return redirect(url_for("auth.handleiding"))
+
+
+@auth.route("/handleiding")
+def handleiding():
+    return render_template("handleiding.html", user=current_user)
