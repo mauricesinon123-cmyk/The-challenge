@@ -205,6 +205,8 @@ def help_page():
         mode = request.form.get('mode')  # 'help' or 'need'
         group = request.form.get('group')
         project_id = request.form.get('project_id')
+        skip = request.form.get('skipHandleiding')  # <-- HIER TOEGEVOEGD
+
         if not mode or not group:
             return jsonify({'success': False, 'error': 'Invalid request'})
         try:
@@ -216,9 +218,9 @@ def help_page():
         
         # Determine file
         if mode == 'help':
-            filename = f'send_{group_num}.hex'
+            filename = 'full_send.hex'
         elif mode == 'need':
-            filename = f'receive_{group_num}.hex'
+            filename = 'full_receive.hex'
         else:
             return jsonify({'success': False, 'error': 'Invalid mode'})
         
@@ -264,7 +266,10 @@ def help_page():
         except Exception:
             pass  # Ignore any errors in database operations
         
-        return jsonify({'success': True, 'message': 'Hex file sent to microbit!'})
+        if skip == "true":
+            return jsonify({'success': True, 'message': 'Overgezet naar microbit!', 'skip': True})
+
+        return jsonify({'success': True, 'message': 'Overgezet naar microbit!', 'skip': False})
     
     return render_template("help.html", user=current_user)
 
