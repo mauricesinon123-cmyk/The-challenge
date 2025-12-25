@@ -4,6 +4,6 @@ import os
 app = create_app()
 
 if __name__ == '__main__':
-    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    debug_mode = os.environ.get('FLASK_DEBUG', 'True').lower() == 'true'
     app.run(debug=debug_mode)
 
