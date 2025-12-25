@@ -1,0 +1,96 @@
+[2025-12-23 16:28:48] INFO in logger_config: Application startup
+[2025-12-23 16:29:41] INFO in logger_config: Application startup
+[2025-12-23 16:31:36] INFO in logger_config: Application startup
+[2025-12-23 16:33:50] INFO in logger_config: Application startup
+[2025-12-23 16:35:29] INFO in logger_config: Application startup
+[2025-12-23 16:36:21] INFO in logger_config: Application startup
+[2025-12-23 16:36:49] INFO in logger_config: Application startup
+[2025-12-23 16:37:13] INFO in logger_config: Application startup
+[2025-12-23 16:39:11] INFO in logger_config: Application startup
+[2025-12-23 16:39:18] INFO in logger_config: Application startup
+[2025-12-23 16:39:27] INFO in logger_config: Application startup
+[2025-12-23 16:39:35] INFO in logger_config: Application startup
+[2025-12-23 16:39:39] INFO in logger_config: Application startup
+[2025-12-23 16:39:48] INFO in logger_config: Application startup
+[2025-12-23 16:39:48] INFO in security_utils: Audit: User 1 LOGIN USER 1
+[2025-12-23 16:39:48] INFO in auth: Successful login: test@example.com
+[2025-12-23 16:39:55] INFO in logger_config: Application startup
+[2025-12-23 16:40:28] INFO in logger_config: Application startup
+[2025-12-23 16:41:51] INFO in logger_config: Application startup
+[2025-12-23 16:42:35] INFO in logger_config: Application startup
+[2025-12-23 16:42:48] INFO in logger_config: Application startup
+[2025-12-23 16:44:18] INFO in logger_config: Application startup
+[2025-12-23 16:46:14] INFO in logger_config: Application startup
+[2025-12-23 16:46:46] INFO in logger_config: Application startup
+[2025-12-23 16:47:28] INFO in logger_config: Application startup
+[2025-12-23 16:47:29] INFO in logger_config: Application startup
+[2025-12-23 16:48:32] INFO in logger_config: Application startup
+[2025-12-23 16:49:08] INFO in logger_config: Application startup
+[2025-12-23 16:49:08] INFO in logger_config: Application startup
+[2025-12-23 16:50:22] INFO in logger_config: Application startup
+[2025-12-23 16:50:37] INFO in logger_config: Application startup
+[2025-12-23 16:50:38] INFO in logger_config: Application startup
+[2025-12-23 16:51:45] INFO in logger_config: Application startup
+[2025-12-23 16:51:46] INFO in logger_config: Application startup
+[2025-12-23 16:52:22] INFO in logger_config: Application startup
+[2025-12-23 16:54:03] INFO in logger_config: Application startup
+[2025-12-23 16:54:04] INFO in logger_config: Application startup
+[2025-12-23 16:59:49] INFO in logger_config: Application startup
+[2025-12-23 16:59:50] INFO in logger_config: Application startup
+[2025-12-23 17:06:32] INFO in logger_config: Application startup
+[2025-12-23 17:06:33] INFO in logger_config: Application startup
+[2025-12-23 17:06:42] WARNING in auth: Login attempt with non-existent email: email@gmail.com
+[2025-12-23 17:06:56] INFO in security_utils: Audit: User 2 SIGNUP USER 2
+[2025-12-23 17:06:56] INFO in auth: New account created: email@gmail.com
+[2025-12-23 17:08:02] INFO in security_utils: Audit: User 2 LOGOUT USER 2
+[2025-12-23 17:08:02] INFO in auth: User logout: email@gmail.com
+[2025-12-23 17:08:38] INFO in security_utils: Audit: User 3 SIGNUP USER 3
+[2025-12-23 17:08:38] INFO in auth: New account created: hoi@gmail.com
+[2025-12-23 17:09:32] INFO in security_utils: Audit: User 3 CREATE PROJECT 1
+[2025-12-23 17:09:32] INFO in views: Project created by hoi@gmail.com: 1
+[2025-12-23 17:09:37] INFO in security_utils: Audit: User 3 UPDATE PROJECT 1
+[2025-12-23 17:09:37] INFO in views: Project updated by hoi@gmail.com: 1
+[2025-12-23 17:09:37] INFO in security_utils: Audit: User 3 CREATE PROJECT 2
+[2025-12-23 17:09:37] INFO in views: Project created by hoi@gmail.com: 2
+[2025-12-23 17:09:48] INFO in security_utils: Audit: User 3 UPDATE PROJECT 1
+[2025-12-23 17:09:48] INFO in views: Project updated by hoi@gmail.com: 1
+[2025-12-23 17:09:48] INFO in security_utils: Audit: User 3 CREATE PROJECT 3
+[2025-12-23 17:09:48] INFO in views: Project created by hoi@gmail.com: 3
+[2025-12-23 17:10:01] INFO in security_utils: Audit: User 3 DELETE PROJECT 1
+[2025-12-23 17:10:01] INFO in views: Project deleted by hoi@gmail.com: 1
+[2025-12-23 17:10:20] INFO in security_utils: Audit: User 3 LOGOUT USER 3
+[2025-12-23 17:10:20] INFO in auth: User logout: hoi@gmail.com
+[2025-12-23 17:11:02] INFO in security_utils: Audit: User 4 SIGNUP USER 4
+[2025-12-23 17:11:02] INFO in auth: New account created: hi@gmail.com
+[2025-12-23 17:11:39] INFO in security_utils: Audit: User 4 CREATE PROJECT 4
+[2025-12-23 17:11:39] INFO in views: Project created by hi@gmail.com: 4
+[2025-12-23 17:11:50] INFO in security_utils: Audit: User 4 UPDATE PROJECT 4
+[2025-12-23 17:11:50] INFO in views: Project updated by hi@gmail.com: 4
+[2025-12-23 17:11:50] INFO in security_utils: Audit: User 4 CREATE PROJECT 5
+[2025-12-23 17:11:50] INFO in views: Project created by hi@gmail.com: 5
+[2025-12-23 17:12:06] INFO in security_utils: Audit: User 4 LOGOUT USER 4
+[2025-12-23 17:12:06] INFO in auth: User logout: hi@gmail.com
+[2025-12-23 17:12:11] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-23 17:12:11] INFO in auth: Successful login: email@gmail.com
+[2025-12-23 17:12:33] INFO in security_utils: Audit: User 2 CREATE PROJECT 6
+[2025-12-23 17:12:33] INFO in views: Project created by email@gmail.com: 6
+[2025-12-23 17:12:38] INFO in security_utils: Audit: User 2 UPDATE PROJECT 6
+[2025-12-23 17:12:38] INFO in views: Project updated by email@gmail.com: 6
+[2025-12-23 17:12:38] INFO in security_utils: Audit: User 2 CREATE PROJECT 7
+[2025-12-23 17:12:38] INFO in views: Project created by email@gmail.com: 7
+[2025-12-25 12:26:54] INFO in logger_config: Application startup
+[2025-12-25 12:26:56] INFO in logger_config: Application startup
+[2025-12-25 12:27:21] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 12:27:21] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 12:31:14] INFO in logger_config: Application startup
+[2025-12-25 12:31:20] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 12:31:20] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 12:54:50] INFO in logger_config: Application startup
+[2025-12-25 12:54:54] INFO in logger_config: Application startup
+[2025-12-25 12:54:58] INFO in logger_config: Application startup
+[2025-12-25 12:55:03] INFO in logger_config: Application startup
+[2025-12-25 12:56:16] INFO in logger_config: Application startup
+[2025-12-25 12:56:49] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 12:56:49] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 13:01:46] INFO in security_utils: Audit: User 2 LOGOUT USER 2
+[2025-12-25 13:01:46] INFO in auth: User logout: email@gmail.com
