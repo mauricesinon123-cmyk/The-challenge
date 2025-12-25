@@ -97,14 +97,14 @@
 </style>
 
 <div class="account-container">
-            <h3>Account Information</h3>
+            <h3>Account Informatie</h3>
             <div class="edit-button-container">
-                <button type="button" class="btn btn-primary" id="editBtn" onclick="enableEditMode()" {% if is_first_setup %}style="display: none;"{% endif %}>Edit</button>
-                <button type="button" class="btn btn-secondary" id="cancelBtn" onclick="disableEditMode()" {% if not is_first_setup %}style="display: none;"{% endif %}>Cancel</button>
+                <button type="button" class="btn btn-primary" id="editBtn" onclick="enableEditMode()" {% if is_first_setup %}style="display: none;"{% endif %}>Pas aan</button>
+                <button type="button" class="btn btn-secondary" id="cancelBtn" onclick="disableEditMode()" {% if not is_first_setup %}style="display: none;"{% endif %}>Annuleer</button>
             </div>
             <form method="POST" id="accountForm" enctype="multipart/form-data" {% if is_first_setup %}class="form-enabled"{% else %}class="form-disabled"{% endif %}>
                 <div class="form-group">
-                    <label for="name">Full Name</label>
+                    <label for="name">Voornaam</label>
                     <input
                         type="text"
                         class="form-control"
@@ -115,11 +115,11 @@
                         {% if not is_first_setup %}disabled{% endif %}
                         required
                     />
-                    <small class="form-text text-muted">Required. At least 2 characters.</small>
+                    <small class="form-text text-muted">Verplicht. Ten minste 2 tekens.</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="dateOfBirth">Date of Birth</label>
+                    <label for="dateOfBirth">Geboorte datum</label>
                     <input
                         type="date"
                         class="form-control"
@@ -132,14 +132,14 @@
                         required
                         onchange="validateAge()"
                     />
-                    <small class="form-text text-muted">Required. You must be at least 18 years old.</small>
+                    <small class="form-text text-muted">Verplicht. Minimaal 18 jaar oud.</small>
                     <div id="ageError" class="text-danger mt-2" style="display:none;">
-                        You must be at least 18 years old.
+                        U moet minstens 18 jaar oud zijn om een account aan te maken.
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="region">Region</label>
+                    <label for="region">Regio</label>
                     <select
                         class="form-control"
                         id="region"
@@ -147,16 +147,16 @@
                         {% if not is_first_setup %}disabled{% endif %}
                         required
                     >
-                        <option value="">-- Select a region --</option>
+                        <option value="">-- Selecteer een regio --</option>
                         {% for r in regions %}
                             <option value="{{ r }}" {% if user.region == r %}selected{% endif %}>{{ r }}</option>
                         {% endfor %}
                     </select>
-                    <small class="form-text text-muted">Required. Choose your region.</small>
+                    <small class="form-text text-muted">Verplicht. Kies uw regio.</small>
                 </div>
 
                 <div class="form-group">
-                    <label for="profilePicture">Profile Picture</label>
+                    <label for="profilePicture">Profiel Foto</label>
                     <input
                         type="file"
                         class="form-control-file"
@@ -165,17 +165,17 @@
                         accept="image/jpeg,image/png"
                         {% if not is_first_setup %}disabled{% endif %}
                     />
-                    <small class="form-text text-muted">Optional. JPG or PNG only. Keep file size reasonable.</small>
+                    <small class="form-text text-muted">Optioneel. Alleen JPEG of PNG bestanden. Maximale grootte: 5MB.</small>
                     {% if user.profile_picture_path %}
                         <div class="mt-2">
-                            <small class="form-text text-muted">Current picture:</small>
+                            <small class="form-text text-muted">Huidige profiel foto:</small>
                             <img src="{{ url_for('static', filename=user.profile_picture_path) }}" alt="Profile" class="profile-picture-medium" style="margin-top: 8px; display: block;" />
                         </div>
                     {% endif %}
                 </div>
 
                 <br />
-                <button type="submit" class="btn btn-success btn-block" id="submitBtn" {% if not is_first_setup %}style="display: none;"{% endif %}>Save Account Information</button>
+                <button type="submit" class="btn btn-success btn-block" id="submitBtn" {% if not is_first_setup %}style="display: none;"{% endif %}>Opslaan</button>
             </form>
         </div>
 
