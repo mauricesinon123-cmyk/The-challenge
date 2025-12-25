@@ -1,4 +1,5 @@
-{% extends "base.html"%} {% block title %}Wijk Projecten{% endblock %}
+{% extends "base.html" %}
+{% block title %}Wijk Projecten{% endblock %}
 
 {% block content %}
 <style>
@@ -169,6 +170,28 @@
     gap: 2rem;
 }
 
+.alert-primary {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: none;
+    border-radius: 8px;
+}
+
+#loading {
+    animation: none !important;
+}
+
+body.loading-active {
+    pointer-events: none;
+}
+
+body.loading-active a,
+body.loading-active button {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
     .sort-dropdown {
         flex-direction: column;
@@ -201,6 +224,10 @@
 <div class="page-header">
     <h1>Wijk Projecten</h1>
     <p>Projecten van andere gebruikers waarbij u kunt helpen.</p>
+</div>
+
+<div id="loading" style="display: none;" class="alert alert-primary">
+    <strong>Overzetten op microbit...</strong> Even geduld alstublieft.
 </div>
 
 <div class="sort-dropdown">
@@ -409,12 +436,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    document.querySelectorAll('.help-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const group = this.getAttribute('data-group');
-            const projectId = this.getAttribute('data-project-id');
-            document.getElementById('loading').style.display = 'block';
+    document.addEventListener('click', function(e) {
+        const helpBtn = e.target.closest('.help-btn');
+        if (!helpBtn) return;
+        
+        e.stopPropagation();
+        const group = helpBtn.getAttribute('data-group');
+        const projectId = helpBtn.getAttribute('data-project-id');
+        const loadingDiv = document.getElementById('loading');
+        
+        fetch('/check-microbit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data.connected) {
+                showAlert('Microbit not connected', 'error');
+                return;
+            }
+            
+            loadingDiv.style.display = 'block';
+            document.body.classList.add('loading-active');
+            loadingDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
             fetch('/help', {
                 method: 'POST',
                 headers: {
@@ -422,17 +474,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 body: `mode=help&group=${group}&project_id=${projectId}`
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
-                document.getElementById('loading').style.display = 'none';
                 if (data.success) {
+                    document.getElementById('loading').style.display = 'none';
+                    document.body.classList.remove('loading-active');
                     if (data.message) {
                         showAlert(data.message, 'success');
                     }
                     setTimeout(() => {
                         window.location.href = '/';
-                    }, 1000);
+                    }, 2000);
                 } else {
+                    document.body.classList.remove('loading-active');
                     if (data.error) {
                         showAlert(data.error, 'error');
                     } else {
@@ -441,15 +500,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-                document.getElementById('loading').style.display = 'none';
+                document.body.classList.remove('loading-active');
+                console.error('Error:', error);
                 showAlert('An error occurred. Please try again.', 'error');
             });
+        })
+        .catch(error => {
+            console.error('Error checking microbit:', error);
+            showAlert('Error checking microbit connection.', 'error');
         });
     });
 });
 </script>
 
-<div id="loading" style="display: none;" class="alert alert-info">
-    <strong>Flashing microbit...</strong> Please wait while the hex file is being sent.
-</div>
+
 {% endblock %}
