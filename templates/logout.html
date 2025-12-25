@@ -1,34 +1,16 @@
-{% extends "page.html" %}
+{% extends "base.html" %}
+{% block title %}Logged Out{% endblock %}
 
-{# This template is rendered in response to an authenticated request, so the
-user is technically logged in. But when the user sees it, the cookie is
-cleared by the Javascript, so we should render this as if the user was logged
-out, without e.g. authentication tokens.
-#}
-{% set logged_in = False %}
+{% block content %}
+<div class="auth-container" style="text-align: center; margin-top: 5rem;">
+    <h3>You have been logged out successfully</h3>
+    <p>You will be redirected to the login page...</p>
+    <a href="/login" class="btn btn-primary">Back to Login</a>
+</div>
 
-{% block stylesheet %}
+<script>
+    setTimeout(function() {
+        window.location.href = '/login';
+    }, 2000);
+</script>
 {% endblock %}
-
-{% block site %}
-
-<div id="jupyter-main-app" class="container">
-
-  {% if message %}
-  {% for key in message %}
-  <div class="message {{key}}">
-    {{message[key]}}
-  </div>
-  {% endfor %}
-  {% endif %}
-
-  {% if not login_available %}
-  {% trans %}Proceed to the <a href="{{base_url}}">dashboard{% endtrans %}</a>.
-  {% else %}
-  {% trans %}Proceed to the <a href="{{base_url}}login">login page{% endtrans %}</a>.
-  {% endif %}
-
-
-  <div />
-
-  {% endblock %}
