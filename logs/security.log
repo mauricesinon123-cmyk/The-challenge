@@ -1,1 +1,39 @@
 [2025-12-23 17:06:42] WARNING in auth: Login attempt with non-existent email: email@gmail.com
+[2025-12-25 14:12:49] ERROR in app: Exception on /handleiding [GET]
+Traceback (most recent call last):
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "c:\Users\mauri\IdeaProjects\PythonProject\auth.py", line 147, in handleiding
+    return render_template("handleiding.html", user=current_user)
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\templating.py", line 151, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\mauri\IdeaProjects\PythonProject\templates\handleiding.html", line 4, in template
+    {% block content %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-12-25 15:49:06] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-25 16:38:11] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-25 17:07:23] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-25 17:45:33] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-26 21:06:47] WARNING in auth: Failed login attempt for email: email@gmail.com
