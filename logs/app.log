@@ -94,3 +94,113 @@
 [2025-12-25 12:56:49] INFO in auth: Successful login: email@gmail.com
 [2025-12-25 13:01:46] INFO in security_utils: Audit: User 2 LOGOUT USER 2
 [2025-12-25 13:01:46] INFO in auth: User logout: email@gmail.com
+[2025-12-25 13:22:48] INFO in logger_config: Application startup
+[2025-12-25 13:26:38] INFO in logger_config: Application startup
+[2025-12-25 13:30:31] INFO in logger_config: Application startup
+[2025-12-25 13:31:38] INFO in security_utils: Audit: User 5 SIGNUP USER 5
+[2025-12-25 13:31:38] INFO in auth: New account created: ewa@gmail.com
+[2025-12-25 13:34:36] INFO in logger_config: Application startup
+[2025-12-25 13:34:45] INFO in security_utils: Audit: User 5 LOGIN USER 5
+[2025-12-25 13:34:45] INFO in auth: Successful login: ewa@gmail.com
+[2025-12-25 13:35:46] INFO in security_utils: Audit: User 5 CREATE PROJECT 10
+[2025-12-25 13:35:46] INFO in views: Project created by ewa@gmail.com: 10
+[2025-12-25 13:35:56] INFO in security_utils: Audit: User 5 UPDATE PROJECT 10
+[2025-12-25 13:35:56] INFO in views: Project updated by ewa@gmail.com: 10
+[2025-12-25 13:35:56] INFO in security_utils: Audit: User 5 CREATE PROJECT 11
+[2025-12-25 13:35:56] INFO in views: Project created by ewa@gmail.com: 11
+[2025-12-25 13:47:42] INFO in logger_config: Application startup
+[2025-12-25 13:47:56] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 13:47:56] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 14:10:10] INFO in logger_config: Application startup
+[2025-12-25 14:10:17] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 14:10:17] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 14:11:53] INFO in logger_config: Application startup
+[2025-12-25 14:12:04] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 14:12:04] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 14:12:49] ERROR in app: Exception on /handleiding [GET]
+Traceback (most recent call last):
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "c:\Users\mauri\IdeaProjects\PythonProject\auth.py", line 147, in handleiding
+    return render_template("handleiding.html", user=current_user)
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\templating.py", line 151, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1081, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1010, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 969, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 768, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mauri\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 936, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "c:\Users\mauri\IdeaProjects\PythonProject\templates\handleiding.html", line 4, in template
+    {% block content %}
+jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was looking for the following tags: 'endblock'. The innermost block that needs to be closed is 'block'.
+[2025-12-25 15:48:54] INFO in logger_config: Application startup
+[2025-12-25 15:49:06] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-25 15:49:11] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 15:49:11] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 16:28:53] INFO in logger_config: Application startup
+[2025-12-25 16:29:06] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 16:29:06] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 16:34:25] INFO in logger_config: Application startup
+[2025-12-25 16:34:32] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 16:34:32] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 16:37:59] INFO in logger_config: Application startup
+[2025-12-25 16:38:11] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-25 16:39:47] INFO in logger_config: Application startup
+[2025-12-25 16:41:05] INFO in logger_config: Application startup
+[2025-12-25 16:42:16] INFO in logger_config: Application startup
+[2025-12-25 16:42:28] INFO in logger_config: Application startup
+[2025-12-25 16:42:29] INFO in logger_config: Application startup
+[2025-12-25 16:42:44] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 16:42:44] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 16:55:36] INFO in logger_config: Application startup
+[2025-12-25 16:55:37] INFO in logger_config: Application startup
+[2025-12-25 17:07:23] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-25 17:07:33] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 17:07:33] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 17:39:42] INFO in logger_config: Application startup
+[2025-12-25 17:39:55] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 17:39:55] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 17:44:10] INFO in logger_config: Application startup
+[2025-12-25 17:45:33] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-25 17:45:41] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 17:45:41] INFO in auth: Successful login: email@gmail.com
+[2025-12-25 17:49:45] INFO in logger_config: Application startup
+[2025-12-25 17:51:01] INFO in logger_config: Application startup
+[2025-12-25 17:51:18] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-25 17:51:18] INFO in auth: Successful login: email@gmail.com
+[2025-12-26 19:54:41] INFO in logger_config: Application startup
+[2025-12-26 19:54:42] INFO in logger_config: Application startup
+[2025-12-26 19:54:57] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-26 19:54:57] INFO in auth: Successful login: email@gmail.com
+[2025-12-26 19:55:38] INFO in security_utils: Audit: User 2 UPDATE PROJECT 6
+[2025-12-26 19:55:38] INFO in views: Project updated by email@gmail.com: 6
+[2025-12-26 19:55:48] INFO in security_utils: Audit: User 2 UPDATE PROJECT 7
+[2025-12-26 19:55:48] INFO in views: Project updated by email@gmail.com: 7
+[2025-12-26 20:00:45] INFO in logger_config: Application startup
+[2025-12-26 20:00:47] INFO in logger_config: Application startup
+[2025-12-26 20:01:01] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-26 20:01:01] INFO in auth: Successful login: email@gmail.com
+[2025-12-26 21:06:37] INFO in logger_config: Application startup
+[2025-12-26 21:06:38] INFO in logger_config: Application startup
+[2025-12-26 21:06:47] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-26 21:06:53] INFO in security_utils: Audit: User 2 LOGIN USER 2
+[2025-12-26 21:06:53] INFO in auth: Successful login: email@gmail.com
+[2025-12-26 21:40:46] INFO in security_utils: Audit: User 2 DELETE PROJECT 6
+[2025-12-26 21:40:46] INFO in views: Project deleted by email@gmail.com: 6
