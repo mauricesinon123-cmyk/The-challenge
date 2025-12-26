@@ -1,98 +1,486 @@
 {% extends "base.html" %}
-{% block title %}Sign Up{% endblock %}
+{% block title %}Wijk Projecten{% endblock %}
 
 {% block content %}
 <style>
-    :root {
-        --primary-green: #2d6a4f;
-        --light-green: #52b788;
-        --very-light-green: #d8f3dc;
+.page-header {
+    margin-bottom: 3rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.page-header p {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+}
+
+.sort-dropdown {
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sort-controls label {
+    color: var(--text-dark);
+    font-weight: 500;
+    margin: 0;
+}
+
+.sort-controls select {
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--lighter-green);
+    border-radius: 6px;
+    background-color: white;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sort-controls select:hover {
+    border-color: var(--light-green);
+    box-shadow: 0 2px 8px rgba(45, 106, 79, 0.1);
+}
+
+.sort-controls select:focus {
+    outline: none;
+    border-color: var(--light-green);
+    box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.1);
+}
+
+.project-card-wrapper {
+    margin-bottom: 2.5rem;
+}
+
+.own-project {
+    background-color: var(--very-light-green) !important;
+}
+
+.card-title {
+    color: var(--primary-green);
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem !important;
+}
+
+.card-body small {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.collapse-button {
+    color: var(--light-green) !important;
+    padding: 0.5rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.collapse-button:hover {
+    color: var(--secondary-green) !important;
+}
+
+.collapse-button .chevron-icon {
+    transition: transform 0.3s ease;
+}
+
+.collapse-button[aria-expanded="true"] .chevron-icon {
+    transform: rotate(180deg);
+}
+
+.collapse {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--very-light-green);
+}
+
+.collapse p {
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.help-btn {
+    background-color: var(--light-green);
+    border: none;
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.help-btn:hover {
+    background-color: var(--secondary-green);
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(64, 145, 108, 0.3);
+}
+
+#projectsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.alert-primary {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: none;
+    border-radius: 8px;
+}
+
+#loading {
+    animation: none !important;
+}
+
+body.loading-active {
+    pointer-events: none;
+}
+
+body.loading-active a,
+body.loading-active button {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .sort-dropdown {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
     }
     
-    .auth-container {
-        max-width: 400px;
-        margin: 3rem auto;
-        padding: 2.5rem;
-        background-color: white;
-        border-radius: 12px;
-        border: 2px solid var(--very-light-green);
-        box-shadow: 0 2px 8px rgba(45, 106, 79, 0.06);
+    .sort-controls {
+        flex-direction: column;
     }
     
-    .auth-container h3 {
-        color: var(--primary-green);
-        font-weight: 600;
-        margin-bottom: 2rem;
-        text-align: center;
-        font-size: 1.8rem;
+    .sort-controls label {
+        margin-bottom: 0.5rem;
     }
     
-    .auth-container .form-group label {
-        color: var(--primary-green);
-        font-weight: 500;
-    }
-    
-    .auth-container .btn {
+    .sort-controls select {
         width: 100%;
-        padding: 0.8rem;
-        font-weight: 500;
-        border-radius: 6px;
     }
+    
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    #projectsContainer {
+        grid-template-columns: 1fr;
+    }
+}
 </style>
 
-<div class="auth-container">
-    <form method="POST">
-        <h3>Registreer</h3>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input
-                type="email"
-                class="form-control"
-                id="email"
-                name="email"
-                placeholder="Voer Email in"
-                required
-            />
-        </div>
-        <div class="form-group">
-            <label for="firstName">Voornaam</label>
-            <input
-                type="text"
-                class="form-control"
-                id="firstName"
-                name="firstName"
-                placeholder="Vul uw voornaam in"
-                required
-            />
-        </div>
-        <div class="form-group">
-            <label for="password1">Wachtwoord</label>
-            <input
-                type="password"
-                class="form-control"
-                id="password1"
-                name="password1"
-                placeholder="Voer wachtwoord in"
-                required
-            />
-            {% if password_requirements %}
-            <small class="form-text text-muted" style="display: block; margin-top: 0.5rem;">
-                Wachtwoord vereisten: {{ password_requirements }}
-            </small>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <label for="password2">Bevestig wachtwoord</label>
-            <input
-                type="password"
-                class="form-control"
-                id="password2"
-                name="password2"
-                placeholder="Bevestig wachtwoord"
-                required
-            />
-        </div>
-        <button type="submit" class="btn btn-primary">Registreren</button>
-    </form>
+<div class="page-header text-center mb-5">
+    <h1 class="display-4 font-weight-bold" style="color: var(--primary-green);">Wijk Projecten</h1>
+    <p class="lead text-muted">Projecten van andere gebruikers waarbij u kunt helpen.</p>
 </div>
+
+<div id="loading" style="display: none;" class="alert alert-primary mb-4">
+    <strong>Overzetten op microbit...</strong> Even geduld alstublieft.
+</div>
+
+<div class="sort-dropdown glass-card py-3 mb-5">
+    <div style="flex: 1;"></div>
+    <div class="sort-controls">
+        <label for="sortSelect" class="mb-0 font-weight-bold">Sorteren op:</label>
+        <select id="sortSelect" class="form-control" style="width: auto;">
+            <option value="date">Datum</option>
+            <option value="group">SDG</option>
+            <option value="alphabetical">Alfabetisch</option>
+        </select>
+    </div>
+</div>
+
+{% if projects %}
+<div id="projectsContainer">
+    {% for project in projects %}
+    <div class="project-card-wrapper mb-4" 
+         data-project-id="{{ project.id }}" 
+         data-user-id="{{ project.user_id }}" 
+         data-title="{{ project.title }}" 
+         data-group="{{ project.group }}" 
+         data-date="{{ project.date.isoformat() }}">
+        <div class="glass-card h-100 p-0 overflow-hidden">
+            <div class="card-body {% if project.user_id == user.id %}own-project{% endif %} p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center" style="gap: 10px;">
+                        {% if project.user.profile_picture_path %}
+                            <img src="{{ url_for('static', filename=project.user.profile_picture_path) }}" alt="Profile" class="profile-picture-small" />
+                        {% else %}
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #e9ecef; display: flex; align-items: center; justify-content: center; color: #6c757d; font-weight: bold;">{{ project.user.first_name[0].upper() if project.user.first_name else '?' }}</div>
+                        {% endif %}
+                        <div>
+                            <h5 class="card-title mb-0">{{ project.title }}</h5>
+                            <small class="text-muted">
+                                {{ project.user.first_name }} | {{ project.date.strftime('%Y-%m-%d') }} | SDG {{ project.group }}{% if project.user.region %} | {{ project.user.region }}{% endif %}
+                            </small>
+                        </div>
+                    </div>
+                    <button class="btn btn-link p-0 collapse-button" type="button" data-toggle="collapse" data-target="#desc-{{ project.id }}" aria-expanded="false">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                </div>
+                <div class="collapse mt-2" id="desc-{{ project.id }}">
+                    <p>{{ project.text }}</p>
+                    {% if project.user_id != user.id %}
+                    <button class="btn btn-primary help-btn" data-group="{{ project.group }}" data-project-id="{{ project.id }}">Help {{ project.user.first_name }}</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>Nog geen projecten.</p>
+{% endif %}
+
+<script>
+/* noinspection JSUnresolvedVariable */
+const currentUserId = parseInt("{{ user.id or 0 }}");
+
+function getProjectCards() {
+    return Array.from(document.querySelectorAll('.project-card-wrapper'));
+}
+
+function sortProjectsByDate(cards) {
+    const own = cards.filter(a => parseInt(a.getAttribute('data-user-id')) === currentUserId);
+    const notOwn = cards.filter(a => parseInt(a.getAttribute('data-user-id')) !== currentUserId);
+    
+    notOwn.sort((a, b) => {
+        const dateA = new Date(a.getAttribute('data-date'));
+        const dateB = new Date(b.getAttribute('data-date'));
+        return dateB - dateA;
+    });
+    
+    own.sort((a, b) => {
+        const dateA = new Date(a.getAttribute('data-date'));
+        const dateB = new Date(b.getAttribute('data-date'));
+        return dateB - dateA;
+    });
+    
+    return [...notOwn, ...own];
+}
+
+function sortProjectsByGroup(cards) {
+    const own = cards.filter(a => parseInt(a.getAttribute('data-user-id')) === currentUserId);
+    const notOwn = cards.filter(a => parseInt(a.getAttribute('data-user-id')) !== currentUserId);
+    
+    notOwn.sort((a, b) => {
+        const groupA = parseInt(a.getAttribute('data-group'));
+        const groupB = parseInt(b.getAttribute('data-group'));
+        return groupA - groupB;
+    });
+    
+    own.sort((a, b) => {
+        const groupA = parseInt(a.getAttribute('data-group'));
+        const groupB = parseInt(b.getAttribute('data-group'));
+        return groupA - groupB;
+    });
+    
+    return [...notOwn, ...own];
+}
+
+function sortProjectsAlphabetically(cards) {
+    const own = cards.filter(a => parseInt(a.getAttribute('data-user-id')) === currentUserId);
+    const notOwn = cards.filter(a => parseInt(a.getAttribute('data-user-id')) !== currentUserId);
+    
+    notOwn.sort((a, b) => {
+        const titleA = a.getAttribute('data-title').toLowerCase();
+        const titleB = b.getAttribute('data-title').toLowerCase();
+        return titleA.localeCompare(titleB);
+    });
+    
+    own.sort((a, b) => {
+        const titleA = a.getAttribute('data-title').toLowerCase();
+        const titleB = b.getAttribute('data-title').toLowerCase();
+        return titleA.localeCompare(titleB);
+    });
+    
+    return [...notOwn, ...own];
+}
+
+function applySort(sortType) {
+    const container = document.getElementById('projectsContainer');
+    if (!container) return;
+    
+    const cards = getProjectCards();
+    let sortedCards;
+    
+    switch(sortType) {
+        case 'date':
+            sortedCards = sortProjectsByDate(cards);
+            break;
+        case 'group':
+            sortedCards = sortProjectsByGroup(cards);
+            break;
+        case 'alphabetical':
+            sortedCards = sortProjectsAlphabetically(cards);
+            break;
+        default:
+            sortedCards = sortProjectsByDate(cards);
+    }
+    
+    sortedCards.forEach(card => {
+        container.appendChild(card);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    applySort('date');
+    
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function(e) {
+            applySort(e.target.value);
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (e.target !== sortSelect) {
+                sortSelect.blur();
+            }
+        });
+    }
+    
+    document.querySelectorAll('.project-card-wrapper').forEach(card => {
+        const collapses = card.querySelectorAll('.collapse');
+        const buttons = card.querySelectorAll('.collapse-button');
+        const cardElement = card.querySelector('.card');
+        
+        cardElement.addEventListener('click', function(e) {
+            if (!e.target.closest('.collapse-button') && !e.target.closest('.help-btn')) {
+                const collapseButton = card.querySelector('.collapse-button');
+                if (collapseButton) {
+                    collapseButton.click();
+                }
+            }
+        });
+        
+        collapses.forEach(collapse => {
+            collapse.addEventListener('show.bs.collapse', function() {
+                const button = card.querySelector(`[data-target="#${this.id}"]`);
+                if (button) button.setAttribute('aria-expanded', 'true');
+                
+                document.querySelectorAll('.collapse.show').forEach(otherCollapse => {
+                    if (otherCollapse !== collapse) {
+                        const collapseInstance = new (window.bootstrap ? window.bootstrap.Collapse : $.fn.collapse.Constructor)(otherCollapse);
+                        collapseInstance.hide();
+                    }
+                });
+            });
+            
+            collapse.addEventListener('hide.bs.collapse', function() {
+                const button = card.querySelector(`[data-target="#${this.id}"]`);
+                if (button) button.setAttribute('aria-expanded', 'false');
+            });
+        });
+    });
+    
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.project-card-wrapper')) {
+            document.querySelectorAll('.collapse.show').forEach(collapse => {
+                const collapseInstance = new (window.bootstrap ? window.bootstrap.Collapse : $.fn.collapse.Constructor)(collapse);
+                collapseInstance.hide();
+            });
+        }
+    });
+    
+    document.addEventListener('click', function(e) {
+        const helpBtn = e.target.closest('.help-btn');
+        if (!helpBtn) return;
+        
+        e.stopPropagation();
+        const group = helpBtn.getAttribute('data-group');
+        const projectId = helpBtn.getAttribute('data-project-id');
+        const loadingDiv = document.getElementById('loading');
+        
+        fetch('/check-microbit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data.connected) {
+                showAlert('Microbit not connected', 'error');
+                return;
+            }
+            
+            loadingDiv.style.display = 'block';
+            document.body.classList.add('loading-active');
+            loadingDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            fetch('/help', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `mode=help&group=${group}&project_id=${projectId}`
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('loading').style.display = 'none';
+                    document.body.classList.remove('loading-active');
+                    if (data.message) {
+                        showAlert(data.message, 'success');
+                    }
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    document.body.classList.remove('loading-active');
+                    if (data.error) {
+                        showAlert(data.error, 'error');
+                    } else {
+                        showAlert('An error occurred. Please try again.', 'error');
+                    }
+                }
+            })
+            .catch(error => {
+                document.body.classList.remove('loading-active');
+                console.error('Error:', error);
+                showAlert('An error occurred. Please try again.', 'error');
+            });
+        })
+        .catch(error => {
+            console.error('Error checking microbit:', error);
+            showAlert('Error checking microbit connection.', 'error');
+        });
+    });
+});
+</script>
+
+
 {% endblock %}
