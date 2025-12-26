@@ -3,17 +3,6 @@
 
 {% block content %}
 <style>
-:root {
-    --primary-green: #2d6a4f;
-    --secondary-green: #40916c;
-    --light-green: #52b788;
-    --lighter-green: #b7e4c7;
-    --very-light-green: #d8f3dc;
-    --off-white: #f0f5f3;
-    --light-gray: #f1f3f0;
-    --text-dark: #1b3a2e;
-}
-
 .page-header {
     margin-bottom: 3rem;
 }
@@ -79,33 +68,14 @@
     margin-bottom: 2.5rem;
 }
 
-.card {
-    border: 2px solid var(--very-light-green);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(45, 106, 79, 0.06);
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.card:hover {
-    box-shadow: 0 8px 24px rgba(45, 106, 79, 0.12);
-    transform: translateY(-2px);
-    border-color: var(--lighter-green);
-}
-
-.card-body {
-    padding: 1.8rem;
-}
-
 .own-project {
-    background-color: var(--very-light-green);
-    border-color: var(--lighter-green);
+    background-color: var(--very-light-green) !important;
 }
 
 .card-title {
     color: var(--primary-green);
-    font-weight: 600;
-    font-size: 1.15rem;
+    font-weight: 700;
+    font-size: 1.25rem;
     margin-bottom: 0.5rem !important;
 }
 
@@ -126,12 +96,11 @@
     color: var(--secondary-green) !important;
 }
 
-.collapse-button i {
+.collapse-button .chevron-icon {
     transition: transform 0.3s ease;
-    font-size: 1.1rem;
 }
 
-.collapse-button[aria-expanded="true"] i {
+.collapse-button[aria-expanded="true"] .chevron-icon {
     transform: rotate(180deg);
 }
 
@@ -221,19 +190,19 @@ body.loading-active button {
 }
 </style>
 
-<div class="page-header">
-    <h1>Wijk Projecten</h1>
-    <p>Projecten van andere gebruikers waarbij u kunt helpen.</p>
+<div class="page-header text-center mb-5">
+    <h1 class="display-4 font-weight-bold" style="color: var(--primary-green);">Wijk Projecten</h1>
+    <p class="lead text-muted">Projecten van andere gebruikers waarbij u kunt helpen.</p>
 </div>
 
-<div id="loading" style="display: none;" class="alert alert-primary">
+<div id="loading" style="display: none;" class="alert alert-primary mb-4">
     <strong>Overzetten op microbit...</strong> Even geduld alstublieft.
 </div>
 
-<div class="sort-dropdown">
+<div class="sort-dropdown glass-card py-3 mb-5">
     <div style="flex: 1;"></div>
     <div class="sort-controls">
-        <label for="sortSelect" class="mb-0">Sorteren op:</label>
+        <label for="sortSelect" class="mb-0 font-weight-bold">Sorteren op:</label>
         <select id="sortSelect" class="form-control" style="width: auto;">
             <option value="date">Datum</option>
             <option value="group">SDG</option>
@@ -245,14 +214,14 @@ body.loading-active button {
 {% if projects %}
 <div id="projectsContainer">
     {% for project in projects %}
-    <div class="project-card-wrapper" 
+    <div class="project-card-wrapper mb-4" 
          data-project-id="{{ project.id }}" 
          data-user-id="{{ project.user_id }}" 
          data-title="{{ project.title }}" 
          data-group="{{ project.group }}" 
          data-date="{{ project.date.isoformat() }}">
-        <div class="card">
-            <div class="card-body {% if project.user_id == user.id %}own-project{% endif %}">
+        <div class="glass-card h-100 p-0 overflow-hidden">
+            <div class="card-body {% if project.user_id == user.id %}own-project{% endif %} p-4">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center" style="gap: 10px;">
                         {% if project.user.profile_picture_path %}
@@ -268,7 +237,7 @@ body.loading-active button {
                         </div>
                     </div>
                     <button class="btn btn-link p-0 collapse-button" type="button" data-toggle="collapse" data-target="#desc-{{ project.id }}" aria-expanded="false">
-                        <i class="fa fa-chevron-down"></i>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                 </div>
                 <div class="collapse mt-2" id="desc-{{ project.id }}">
