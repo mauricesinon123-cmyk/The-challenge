@@ -20,6 +20,89 @@
         border: 2px solid var(--lighter-green);
     }
     
+    .handleiding-section {
+        margin-bottom: 3rem;
+    }
+
+    .handleiding-section h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--primary-green);
+        margin-bottom: 1rem;
+        letter-spacing: -0.3px;
+    }
+
+    .handleiding-section p.section-intro {
+        color: #666;
+        margin-bottom: 2rem;
+    }
+
+    .handleiding-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 16px;
+        padding: 1.75rem;
+        box-shadow: 0 18px 40px rgba(15, 36, 24, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .items-grid {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .items-list h3 {
+        font-size: 1.2rem;
+        color: var(--primary-green);
+        margin-bottom: 0.75rem;
+    }
+
+    .items-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .items-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.4rem 0;
+        color: var(--text-dark);
+    }
+
+    .items-list li::before {
+        content: "•";
+        color: var(--light-green);
+        font-size: 1.4rem;
+    }
+
+    .items-visual {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        gap: 1rem;
+    }
+
+    .item-pill {
+        background: var(--very-light-green);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+
+    .item-pill-title {
+        font-weight: 600;
+        color: var(--primary-green);
+    }
+
+    .item-pill-sub {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
     .instructions-header h1 {
         color: var(--primary-green);
         font-size: 2.5rem;
@@ -163,6 +246,45 @@
         anderen helpen, en deel uitmaken van een ondersteunende gemeenschap.
     </p>
     
+        <section class="handleiding-section">
+        <h2>U heeft nodig</h2>
+        <p class="section-intro">
+            Voor dit project heeft u slechts een paar onderdelen nodig. Controleer of u alles klaar heeft liggen.
+        </p>
+
+        <div class="handleiding-card">
+            <div class="items-grid">
+                <div class="items-list">
+                    <h3>Onderdelen</h3>
+                    <ul>
+                        <li>1x Microbit v2</li>
+                        <li>1x USB kabel</li>
+                        <li>2x AA batterij</li>
+                        <li>1x Batterij pack</li>
+                    </ul>
+                </div>
+                <div class="items-visual">
+                    <div class="item-pill">
+                        <span class="item-pill-title">Microbit v2</span>
+                        <span class="item-pill-sub">De computer waarop uw programma draait.</span>
+                    </div>
+                    <div class="item-pill">
+                        <span class="item-pill-title">USB kabel</span>
+                        <span class="item-pill-sub">Verbindt de microbit met de computer.</span>
+                    </div>
+                    <div class="item-pill">
+                        <span class="item-pill-title">AA batterijen</span>
+                        <span class="item-pill-sub">Voeden de microbit als u niet met USB werkt.</span>
+                    </div>
+                    <div class="item-pill">
+                        <span class="item-pill-title">Batterij pack</span>
+                        <span class="item-pill-sub">Houder voor de batterijen met een schakelaar.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <h3>Inloggen</h3>
     <div class="list-steps">
         <ol>
