@@ -321,6 +321,7 @@ def mijn_projecten():
                     )
                     logger.info(f'Project created by {current_user.email}: {new_project.id}')
                     flash('Project toegevoegd!', category='success')
+                    return redirect(url_for('views.mijn_projecten'))
                 except Exception as e:
                     db.session.rollback()
                     logger.error(f'Project creation error: {str(e)}')
