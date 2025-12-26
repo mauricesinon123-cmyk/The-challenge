@@ -18,14 +18,6 @@
         white-space: nowrap;
     }
     
-    :root {
-        --primary-green: #2d6a4f;
-        --secondary-green: #40916c;
-        --light-green: #52b788;
-        --lighter-green: #b7e4c7;
-        --very-light-green: #d8f3dc;
-    }
-    
     .edit-button {
         background-color: var(--light-green);
         color: white;
@@ -287,13 +279,13 @@
     }
 </style>
 
-<div class="page-header">
-    <h1>Mijn Projecten</h1>
-    <p>Hier kunt u uw projecten beheren en nieuwe projecten toevoegen.</p>
+<div class="page-header text-center mb-5">
+    <h1 class="display-4 font-weight-bold" style="color: var(--primary-green);">Mijn Projecten</h1>
+    <p class="lead text-muted">Hier kunt u uw projecten beheren en nieuwe projecten toevoegen.</p>
 </div>
 
-<form method="POST" class="form-section">
-    <h3>Creeër een nieuw project</h3>
+<form method="POST" class="glass-card mb-5">
+    <h3 class="mb-4">Creeër een nieuw project</h3>
     <div class="form-group">
         <label for="projectTitle">Project Titel</label>
         <input type="text" class="form-control" id="projectTitle" name="projectTitle" required>
@@ -313,12 +305,12 @@
     <button type="submit" class="btn btn-primary">Voeg project toe</button>
 </form>
 
-<div class="form-section">
-    <h3>Uw Projecten</h3>
+<div class="glass-card">
+    <h3 class="mb-4">Uw Projecten</h3>
 {% if user.projects %}
-<ul class="list-group">
+<ul class="list-group list-group-flush">
     {% for project in user.projects %}
-    <li class="list-group-item">
+    <li class="list-group-item border-0 mb-3 glass-card" style="background: rgba(255,255,255,0.5);">
         <div class="project-item">
             <div class="project-content">
                 <div id="view-{{ project.id }}">
