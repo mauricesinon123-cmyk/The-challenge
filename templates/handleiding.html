@@ -2,258 +2,634 @@
 {% block title %}Handleiding{% endblock %}
 
 {% block content %}
-<body>
-
 <style>
+.handleiding-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+}
 
-    h1, h2 {
-        color: #2e7d32;
-        font-weight: 600;
-        scroll-margin-top: 80px;
+/* Shared visual language */
+.handleiding-section {
+    margin-bottom: 3rem;
+}
+
+.handleiding-section h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    letter-spacing: -0.3px;
+}
+
+.handleiding-section p.section-intro {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* Cards */
+.handleiding-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 1.75rem;
+    box-shadow: 0 18px 40px rgba(15, 36, 24, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+/* 1. U heeft nodig */
+
+.items-grid {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.items-list h3 {
+    font-size: 1.2rem;
+    color: var(--primary-green);
+    margin-bottom: 0.75rem;
+}
+
+.items-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.items-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+    color: var(--text-dark);
+}
+
+.items-list li::before {
+    content: "•";
+    color: var(--light-green);
+    font-size: 1.4rem;
+}
+
+/* Microbit item visuals */
+.items-visual {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.item-pill {
+    background: var(--very-light-green);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.item-pill-title {
+    font-weight: 600;
+    color: var(--primary-green);
+}
+
+.item-pill-sub {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Reusable microbit visual */
+
+.microbit {
+    width: 210px;
+    background: linear-gradient(145deg, #274734, #1b3225);
+    border-radius: 18px;
+    padding: 0.9rem 0.9rem 0.6rem 0.9rem;
+    position: relative;
+    color: #fff;
+    box-shadow: 0 18px 30px rgba(11, 28, 19, 0.4);
+    margin: 0 auto;
+}
+
+.microbit-top-triangle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 65px;
+    height: 65px;
+    background: linear-gradient(135deg, var(--light-green), var(--secondary-green));
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    opacity: 0.95;
+}
+
+.microbit-body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+/* Logo */
+.microbit-logo {
+    width: 32px;
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    margin: 0 auto;
+}
+
+/* LED grid */
+
+.led-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.18rem;
+    margin: 0.2rem auto 0.4rem auto;
+    width: 100px;
+}
+
+.led {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+.led.on {
+    background: #ff4b5c;
+    box-shadow:
+        0 0 8px rgba(255, 75, 92, 0.8),
+        inset 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Buttons */
+
+.microbit-buttons {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.4rem;
+
+}
+
+.microbit-button {
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.7);
+    position: relative;
+}
+
+.microbit-button::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Add labels */
+.microbit-button-label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.65rem;
+    font-weight: bold;
+    color: white;
+    pointer-events: none;
+}
+
+.microbit-button-label.a {
+    left: -1.2rem;
+}
+
+.microbit-button-label.b {
+    right: -1.2rem;
+}
+
+/* Pins */
+
+.microbit-pins {
+    margin-top: 0.4rem;
+    background: linear-gradient(180deg, #f8d77b, #eab04d);
+    border-radius: 12px;
+    padding: 0.35rem 0.4rem 0.25rem 0.4rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.35rem;
+}
+
+.microbit-pin {
+    flex: 1;
+    height: 14px;
+    border-radius: 7px;
+    background: rgba(0, 0, 0, 0.12);
+    position: relative;
+}
+
+.microbit-pin-label {
+    position: absolute;
+    bottom: -1.05rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #26301e;
+}
+
+/* Labels / bubbles */
+
+.label-bubble {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem 0.85rem;
+    border-radius: 999px;
+    background: var(--very-light-green);
+    color: var(--primary-green);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+}
+
+/* Section 2: microbit uitleg */
+
+.microbit-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 260px) minmax(260px, 1fr);
+    gap: 2rem;
+    align-items: center;
+}
+
+.microbit-label-list {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.microbit-label-item p {
+    margin: 0.15rem 0 0 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* Section 3: ontvanger symbolen */
+
+.symbols-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.symbol-card {
+    text-align: center;
+}
+
+.symbol-card-title {
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.symbol-card-text {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .items-grid,
+    .microbit-layout {
+        grid-template-columns: 1fr;
     }
 
-    h3 {
-        color: #388e3c;
-        font-weight: 500;
-        margin-top: 25px;
+    .microbit {
+        margin-bottom: 1rem;
     }
-
-    hr {
-        border: none;
-        border-top: 1px solid #c8e6c9;
-        margin: 30px 0;
-    }
-
-    .toc {
-        background: #e8f5e9;
-        padding: 15px;
-        border-radius: 6px;
-        border-left: 4px solid #2e7d32;
-        margin-bottom: 30px;
-    }
-
-    .toc a {
-        text-decoration: none;
-        color: #2e7d32;
-        font-weight: 500;
-    }
-
-    .toc a:hover {
-        text-decoration: underline;
-    }
-
-    .step {
-        background: #e8f5e9;
-        padding: 12px;
-        border-left: 4px solid #2e7d32;
-        border-radius: 4px;
-        margin-bottom: 15px;
-    }
-
-    .image-box {
-        margin: 10px 0;
-        padding: 14px;
-        background: #f5f5f5;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        text-align: center;
-        font-style: italic;
-        color: #555;
-    }
-
-    .sdg-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-        gap: 10px;
-        margin: 15px 0;
-    }
-
-    .sdg-icon {
-        background: #fff;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        padding: 10px;
-        text-align: center;
-        font-size: 14px;
-        color: #333;
-    }
-
-    @media (max-width: 600px) {
-        body {
-            margin: 10px;
-        }
-        .toc {
-            font-size: 0.95rem;
-        }
-    }
+}
 </style>
 
-<h1>📘 Micro:bit Handleiding</h1>
-<p>Deze handleiding legt in eenvoudige taal uit hoe je de micro:bit gebruikt tijdens het lopen door de wijk. De micro:bit zoekt automatisch naar andere micro:bits in dezelfde groep. Je hoeft niets te installeren of technisch te doen.</p>
+<div class="handleiding-page">
 
-<hr>
 
-<div class="toc">
-    <strong>📚 Inhoudsopgave</strong>
-    <ul>
-        <li><a href="#sdg">1. Kies jouw SDG</a></li>
-        <li><a href="#modus">2. Kies: Zender of Ontvanger</a></li>
-        <li><a href="#zender">3. De zender gebruiken</a></li>
-        <li><a href="#ontvanger">4. De ontvanger gebruiken</a></li>
-        <li><a href="#symbolen">5. Afstandssymbolen</a></li>
-        <li><a href="#problemen">6. Problemen oplossen</a></li>
-    </ul>
+    <!-- Uitleg microbit knoppen -->
+    <section class="handleiding-section">
+        <h2>De microbit</h2>
+        <p class="section-intro">
+            Op de voorkant van de microbit ziet u een logo, twee knoppen en 25 LED-lampjes. Hieronder leest u wat ze doen.
+        </p>
+
+        <div class="handleiding-card microbit-layout">
+            <!-- Visual -->
+            <div>
+                <div class="microbit">
+                    <div class="microbit-top-triangle"></div>
+                    <div class="microbit-body">
+                        <div class="microbit-logo"></div>
+
+                        <div class="led-grid">
+                            <!-- 5x5 grid, all off here -->
+                            {% for i in range(25) %}
+                            <div class="led"></div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="microbit-buttons">
+                            <div class="microbit-button">
+                                <div class="microbit-button-label a">A</div>
+                            </div>
+                            <div style="width: 24px;"></div>
+                            <div class="microbit-button">
+                                <div class="microbit-button-label b">B</div>
+                            </div>
+                        </div>
+
+                        <div class="microbit-pins">
+                            <div class="microbit-pin">
+                                <span class="microbit-pin-label">0</span>
+                            </div>
+                            <div class="microbit-pin">
+                                <span class="microbit-pin-label">1</span>
+                            </div>
+                            <div class="microbit-pin">
+                                <span class="microbit-pin-label">GND</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text labels -->
+            <div class="microbit-label-list">
+                <div class="microbit-label-item">
+                    <div class="label-bubble">Logo</div>
+                    <p>Druk op het logo om de microbit aan of uit te zetten.</p>
+                </div>
+                <div class="microbit-label-item">
+                    <div class="label-bubble">A-knop</div>
+                    <p>Druk op deze knop om een SDG groep omlaag te gaan.</p>
+                </div>
+                <div class="microbit-label-item">
+                    <div class="label-bubble">B-knop</div>
+                    <p>Druk op deze knop om een SDG groep omhoog te gaan.</p>
+                </div>
+                <div class="microbit-label-item">
+                    <div class="label-bubble">LED-lampjes</div>
+                    <p>De lampjes laten zien hoe ver iemand van je vandaan is, of je groepsnummer.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ontvanger symbolen -->
+    <section class="handleiding-section">
+        <h2>Ontvanger symbolen</h2>
+        <p class="section-intro">
+            Op het scherm van de microbit verschijnen verschillende symbolen. Zo weet u hoe dichtbij uw groepsmaatje is.
+        </p>
+
+        <div class="handleiding-card">
+            <div class="symbols-grid">
+
+                <!-- Jouw groepsnummer (1 in het midden) -->
+                <div class="symbol-card">
+                    <div class="symbol-card-title">Jouw groepsnummer</div>
+                    <div class="microbit">
+                        <div class="microbit-top-triangle"></div>
+                        <div class="microbit-body">
+                            <div class="microbit-logo"></div>
+                            <div class="led-grid">
+                                {# 5x5 grid for "1" #}
+                                {% set on_indices = [2, 6, 7, 12, 17, 21, 22, 23] %}
+                                {% for i in range(25) %}
+                                    <div class="led {% if i in on_indices %}on{% endif %}"></div>
+                                {% endfor %}
+                            </div>
+                            <div class="microbit-buttons">
+                                <div class="microbit-button"></div>
+                                <div style="width: 24px;"></div>
+                                <div class="microbit-button"></div>
+                            </div>
+                            <div class="microbit-pins">
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">0</span>
+                                </div>
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">1</span>
+                                </div>
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">GND</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="symbol-card-text">
+                        Of je hebt net je groepsnummer aangepast, of iemand met hetzelfde doel staat binnen 5 meter van je, spreek ze aan!
+                    </p>
+                </div>
+
+                <!-- Grote diamand -->
+                <div class="symbol-card">
+                    <div class="symbol-card-title">Een grote diamand</div>
+                    <div class="microbit">
+                        <div class="microbit-top-triangle"></div>
+                        <div class="microbit-body">
+                            <div class="microbit-logo"></div>
+                            <div class="led-grid">
+                                {# large diamond pattern #}
+                                {% set on_indices = [2, 6, 8, 10, 14, 16, 18, 22] %}
+                                {% for i in range(25) %}
+                                    <div class="led {% if i in on_indices %}on{% endif %}"></div>
+                                {% endfor %}
+                            </div>
+                            <div class="microbit-buttons">
+                                <div class="microbit-button"></div>
+                                <div style="width: 24px;"></div>
+                                <div class="microbit-button"></div>
+                            </div>
+                            <div class="microbit-pins">
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">0</span>
+                                </div>
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">1</span>
+                                </div>
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">GND</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="symbol-card-text">
+                        Een grote diamand betekend dat iemand dicht in de buurt is. Kijk goed om je heen voor jou maatje!
+                    </p>
+                </div>
+
+                <!-- Kleine diamand -->
+                <div class="symbol-card">
+                    <div class="symbol-card-title">Een kleine diamand</div>
+                    <div class="microbit">
+                        <div class="microbit-top-triangle"></div>
+                        <div class="microbit-body">
+                            <div class="microbit-logo"></div>
+                            <div class="led-grid">
+                                {# small diamond pattern (center plus 4 diagonals) #}
+                                {% set on_indices = [7, 11, 13, 17] %}
+                                {% for i in range(25) %}
+                                    <div class="led {% if i in on_indices %}on{% endif %}"></div>
+                                {% endfor %}
+                            </div>
+                            <div class="microbit-buttons">
+                                <div class="microbit-button"></div>
+                                <div style="width: 24px;"></div>
+                                <div class="microbit-button"></div>
+                            </div>
+                            <div class="microbit-pins">
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">0</span>
+                                </div>
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">1</span>
+                                </div>
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">GND</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="symbol-card-text">
+                        Een kleine diamand betekend dat iemand net buiten oogzicht is, maar niet heel ver, loop nog even door!
+                    </p>
+                </div>
+
+                <!-- Kleine stip -->
+                <div class="symbol-card">
+                    <div class="symbol-card-title">Een kleine stip</div>
+                    <div class="microbit">
+                        <div class="microbit-top-triangle"></div>
+                        <div class="microbit-body">
+                            <div class="microbit-logo"></div>
+                            <div class="led-grid">
+                                {# single center LED: index 12 #}
+                                {% set on_indices = [12] %}
+                                {% for i in range(25) %}
+                                    <div class="led {% if i in on_indices %}on{% endif %}"></div>
+                                {% endfor %}
+                            </div>
+                            <div class="microbit-buttons">
+                                <div class="microbit-button"></div>
+                                <div style="width: 24px;"></div>
+                                <div class="microbit-button"></div>
+                            </div>
+                            <div class="microbit-pins">
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">0</span>
+                                </div>
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">1</span>
+                                </div>
+                                <div class="microbit-pin">
+                                    <span class="microbit-pin-label">GND</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="symbol-card-text">
+                        Er is wel een signaal, maar deze is erg zwak en dus is jouw groepsmaatje ver weg. Loop rond en misschien kom je wel dichterbij!
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+<!-- Stappenplan -->
+<section class="handleiding-section">
+    <h2>Stappenplan</h2>
+    <p class="section-intro">
+        Volg deze drie stappen om uw microbit goed te gebruiken tijdens het project.
+    </p>
+
+    <div class="handleiding-card">
+        <div class="symbols-grid">
+
+            <!-- Een lege microbit -->
+            <div class="symbol-card">
+                <div class="symbol-card-title">Een lege microbit</div>
+                <div class="microbit">
+                    <div class="microbit-top-triangle"></div>
+                    <div class="microbit-body">
+                        <div class="microbit-logo"></div>
+                        <div class="led-grid">
+                            {% for i in range(25) %}
+                                <div class="led"></div>
+                            {% endfor %}
+                        </div>
+                        <div class="microbit-buttons">
+                            <div class="microbit-button"><span class="microbit-button-label">A</span></div>
+                            <div style="width: 24px;"></div>
+                            <div class="microbit-button"><span class="microbit-button-label">B</span></div>
+                        </div>
+                        <div class="microbit-pins">
+                            <div class="microbit-pin"><span class="microbit-pin-label">0</span></div>
+                            <div class="microbit-pin"><span class="microbit-pin-label">1</span></div>
+                            <div class="microbit-pin"><span class="microbit-pin-label">GND</span></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="symbol-card-text">
+                    Een lege microbit betekent geen signaal, of dat hij uitstaat. Druk op het logo en als er niets verschijnt, is er geen signaal in de buurt.
+                </p>
+            </div>
+
+            <!-- Groep instellen -->
+            <div class="symbol-card">
+                <div class="symbol-card-title">Groep instellen</div>
+                <div class="microbit">
+                    <div class="microbit-top-triangle"></div>
+                    <div class="microbit-body">
+                        <div class="microbit-logo"></div>
+                        <div class="led-grid">
+                            {% set on_indices = [2, 6, 7, 12, 17, 21, 22, 23] %}
+                            {% for i in range(25) %}
+                                <div class="led {% if i in on_indices %}on{% endif %}"></div>
+                            {% endfor %}
+                        </div>
+                        <div class="microbit-buttons">
+                            <div class="microbit-button"><span class="microbit-button-label">A</span></div>
+                            <div style="width: 24px;"></div>
+                            <div class="microbit-button"><span class="microbit-button-label">B</span></div>
+                        </div>
+                        <div class="microbit-pins">
+                            <div class="microbit-pin"><span class="microbit-pin-label">0</span></div>
+                            <div class="microbit-pin"><span class="microbit-pin-label">1</span></div>
+                            <div class="microbit-pin"><span class="microbit-pin-label">GND</span></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="symbol-card-text">
+                    Kies de SDG waar u mee wilt helpen of hulp bij nodig heeft. U kunt dit aanpassen met de A- en B-knoppen.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Lopen maar! (no microbit, full width) -->
+        <div style="margin-top: 2rem;">
+            <div class="symbol-card-title">Lopen maar!</div>
+            <p class="symbol-card-text">
+                Als de SDG is ingesteld en de microbit is verbonden met het batterijpack, kunt u door de wijk lopen om een maatje te vinden. U kunt de microbit veilig in uw zak meenemen. Hij maakt geluid als er een signaal is, en een sneller geluid als het signaal dichterbij komt. Succes met uw project!
+            </p>
+        </div>
+    </div>
+</section>
+
 </div>
-
-<hr>
-
-<h2 id="sdg">🌍 1. Kies jouw SDG</h2>
-<p>Iedere micro:bit hoort bij één van de <strong>17 Sustainable Development Goals (SDG’s)</strong>. Kies de SDG waar jij aan wilt bijdragen, of de SDG die hoort bij het project van iemand anders. (Deze kunt u vinden onder de "wijk projecten" pagina)</p>
-
-<p>Hieronder zie je alle SDG’s:</p>
-
-<ol>
-    <li>Geen armoede</li>
-    <li>Geen honger</li>
-    <li>Goede gezondheid</li>
-    <li>Kwaliteitsonderwijs</li>
-    <li>Gendergelijkheid</li>
-    <li>Schoon water</li>
-    <li>Betaalbare energie</li>
-    <li>Eerlijk werk</li>
-    <li>Innovatie</li>
-    <li>Minder ongelijkheid</li>
-    <li >Duurzame steden</li>
-    <li>Verantwoorde consumptie</li>
-    <li>Klimaatactie</li>
-    <li>Leven in het water</li>
-    <li>Leven op het land</li>
-    <li>Vrede & recht</li>
-    <li>Partnerschappen</li>
-</ol>
-
-<p>De micro:bit die je krijgt kan je zelf instellen op elk moment, hieronder staat dat verder uitgelegd.</p>
-
-<hr>
-
-<h2 id="modus">🔄 2. Kies: Zender of Ontvanger</h2>
-<p>De micro:bit kan twee dingen doen:</p>
-
-<ul>
-    <li>📡 <strong>Zenden</strong> – jouw micro:bit stuurt een signaal uit</li>
-    <li>📶 <strong>Ontvangen</strong> – jouw micro:bit zoekt naar andere micro:bits</li>
-</ul>
-
-<div class="step">
-    <strong>Zo wissel je tussen zender en ontvanger:</strong><br>
-    • Ga naar microbit in het menu.<br>
-    • Kies of je wilt zenden (helpen) of ontvangen (hulp nodig).<br>
-    • De micro:bit is nu klaar voor gebruik!<br>
-    • Als je wilt wisselen, herhaal deze stap en kies dan de andere modus.<br>
-</div>
-
-<p>Iedereen kan dus zelf kiezen wat hij of zij wil doen of nodig heeft.</p>
-
-<hr>
-
-<h2 id="zender">📡 3. De zender gebruiken</h2>
-
-<h3>🎛️ Knoppen</h3>
-<ul>
-    <li><strong>A:</strong> ⬇️ Groep omlaag (1–16)</li>
-    <li><strong>B:</strong> ⬆️ Groep omhoog (1–16)</li>
-    <li><strong>Het logo aanraken:</strong> ▶️ Start / ⏹ Stop zenden</li>
-</ul>
-
-<div class="image-box">
-    🔢 (Hier kun je jouw custom afbeeldingen voor groep 10–16 tonen)
-</div>
-
-<h3>📺 Wat zie je op het scherm?</h3>
-<ul>
-    <li>📡 <strong>Zenden aan:</strong> het groepsnummer wordt getoond</li>
-    <li>⚪ <strong>Zenden uit:</strong> het scherm is leeg</li>
-</ul>
-
-<hr>
-
-<h2 id="ontvanger">📶 4. De ontvanger gebruiken</h2>
-
-<h3>🎛️ Knoppen</h3>
-<ul>
-    <li><strong>A:</strong> ⬇️ Groep omlaag (1–16)</li>
-    <li><strong>B:</strong> ⬆️ Groep omhoog (1–16)</li>
-</ul>
-
-<h3>📺 Wat zie je op het scherm?</h3>
-<ul>
-    <li>🔢 <strong>Groepsnummer:</strong> wordt één keer getoond wanneer je van groep wisselt</li>
-    <li>📡 <strong>Afstandssymbool:</strong> verschijnt wanneer een zender dichtbij is</li>
-    <li>⚪ <strong>Leeg scherm:</strong> als er 3 seconden geen signaal is</li>
-</ul>
-
-<hr>
-
-<h2 id="symbolen">📍 5. Afstandssymbolen</h2>
-<p>De ontvanger laat verschillende symbolen zien afhankelijk van hoe dichtbij een andere micro:bit is:</p>
-
-<ul>
-    <li>🔴 <strong>Dichtbij:</strong> Jouw groepsnummer</li>
-    <li>🟠 <strong>Middel:</strong> een grote diamant</li>
-    <li>🟡 <strong>Ver:</strong> een kleine diamant</li>
-    <li>⚪ <strong>Heel ver:</strong> een klein puntje</li>
-    <li>⚫ <strong>Niet bereikbaar:</strong> een leeg scherm</li>
-    <li>🔊 <strong>Geluid:</strong> Ook hoor je steeds sneller een geluidje als iemand dichterbij komt!</li>
-</ul>
-
-<hr>
-
-<h2 id="problemen">🛠️ 6. Problemen oplossen</h2>
-<ul>
-    <li>❌ Geen signaal? Misschien zijn er geen andere microbits met dezelfde doelstelling in de buurt.</li>
-    <li>⏸ Zender stuurt niets? Tik op het logo om te starten.</li>
-    <li>⚪ Ontvanger blijft leeg? Wacht 3 seconden of loop een stukje verder.</li>
-    <li>❓ Heb je vragen? Neem contact op met uw beheerder.</li>
-</ul>
-
-<hr>
-
-<p><em>Veel plezier tijdens het lopen door de wijk!</em> 🌱</p>
-
-<!-- TOGGLE: Handleiding overslaan -->
-<div style="margin-top: 2rem;">
-    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-        <input type="checkbox" id="skipHandleidingToggle">
-        Handleiding overslaan in de toekomst
-    </label>
-</div>
-
-<!-- HIDDEN FIELD: Wordt meegestuurd naar backend -->
-<input type="hidden" id="skipHandleidingField" name="skipHandleiding" value="false">
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const toggle = document.getElementById("skipHandleidingToggle");
-    const hiddenField = document.getElementById("skipHandleidingField");
-
-    // Als gebruiker eerder heeft gekozen → toggle aanzetten
-    if (localStorage.getItem("skipHandleiding") === "true") {
-        toggle.checked = true;
-        hiddenField.value = "true";   // backend krijgt juiste waarde
-    }
-
-    // Wanneer gebruiker toggelt → opslaan + hidden field updaten
-    toggle.addEventListener("change", () => {
-        if (toggle.checked) {
-            localStorage.setItem("skipHandleiding", "true");
-            hiddenField.value = "true";
-        } else {
-            localStorage.removeItem("skipHandleiding");
-            hiddenField.value = "false";
-        }
-    });
-});
-</script>
-
-</body>
 {% endblock %}
