@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from .models import User, Pdescription
 from datetime import timedelta, datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -12,80 +12,100 @@ from .security_utils import (
 )
 import logging
 
+# Configureer de logger voor deze module
 logger = logging.getLogger(__name__)
 
-# Maak een blueprint voor authenticatie
+# Maak een blueprint voor authenticatie routes
 auth = Blueprint('auth', __name__)
 
-# Route voor inloggen (URL eindigt op /login)
+# Route voor inloggen
 @auth.route('/login', methods=['GET', 'POST'])
 @limiter.limit("5 per minute")
 def login():
+    # Verwerk het inlogformulier
     if request.method == 'POST':
         email = request.form.get('email', '').strip()
         password = request.form.get('password', '')
 
+        # Controleer of alle velden zijn ingevuld
         if not email or not password:
-            flash('Email and password are required.', category='error')
+            flash('E-mail en wachtwoord zijn verplicht.', category='error')
             return render_template("login.html", user=current_user)
 
+        # Controleer of het account tijdelijk is geblokkeerd door teveel foute pogingen
         is_locked, lock_message = check_failed_login_attempts(email)
         if is_locked:
             flash(lock_message, category='error')
             record_login_attempt(email, success=False)
             return render_template("login.html", user=current_user)
 
+        # Zoek de gebruiker in de database
         user = User.query.filter_by(email=email).first()
         if user:
+            # Controleer of het wachtwoord correct is
             if check_password_hash(user.password, password):
+                # Update login gegevens
                 user.last_login = datetime.utcnow()
                 user.is_locked = False
                 user.locked_until = None
                 db.session.commit()
                 
-                flash('Ingelogd!', category='success')
-                login_user(user, remember=True, duration=timedelta(days=7))
+                # Log de gebruiker in en stel de sessie in op permanent (24 uur)
+                flash('Succesvol ingelogd!', category='success')
+                session.permanent = True
+                login_user(user, remember=True, duration=timedelta(days=1))
+                
+                # Registreer de login poging en audit event
                 record_login_attempt(email, success=True)
                 log_audit_event(user.id, 'LOGIN', 'USER', user.id)
-                logger.info(f'Successful login: {email}')
+                logger.info(f'Succesvolle login: {email}')
                 return redirect(url_for('views.home'))
             else:
-                logger.warning(f'Failed login attempt for email: {email}')
+                # Wachtwoord onjuist
+                logger.warning(f'Foutieve wachtwoord poging voor: {email}')
                 record_login_attempt(email, success=False)
-                flash('Invalid email or password.', category='error')
+                flash('Ongeldig e-mailadres of wachtwoord.', category='error')
         else:
-            logger.warning(f'Login attempt with non-existent email: {email}')
+            # Gebruiker niet gevonden
+            logger.warning(f'Login poging met niet-bestaand e-mailadres: {email}')
             record_login_attempt(email, success=False)
-            flash('Invalid email or password.', category='error')
+            flash('Ongeldig e-mailadres of wachtwoord.', category='error')
+    
     return render_template("login.html", user=current_user)
 
+# Route voor registreren
 @auth.route('/sign-up', methods=['GET', 'POST'])
 @limiter.limit("3 per minute")
 def signup():
+    # Verwerk het registratieformulier
     if request.method == 'POST':
         email = request.form.get('email', '').strip()
         first_name = request.form.get('firstName', '').strip()
         password1 = request.form.get('password1', '')
         password2 = request.form.get('password2', '')
         
+        # Controleer of de gebruiker al bestaat
         user = User.query.filter_by(email=email).first()
         if user:
-            flash("Email bestaat al. Probeer in te loggen of gebruik een ander email adres.", category='error')
+            flash("E-mailadres bestaat al. Probeer in te loggen.", category='error')
             return render_template("sign_up.html", user=current_user, password_requirements=get_password_requirements())
 
+        # Valideer invoerlengte
         if len(email) < 4:
-            flash("Email moet langer zijn dan 4 karakters.", category='error')
+            flash("E-mail moet langer zijn dan 4 karakters.", category='error')
         elif len(first_name) < 2:
             flash("Voornaam moet langer zijn dan 2 karakters.", category='error')
         elif password1 != password2:
             flash("Wachtwoorden komen niet overeen.", category='error')
         else:
+            # Valideer wachtwoordcomplexiteit
             is_valid, error_msg = validate_password_complexity(password1)
             if not is_valid:
                 flash(error_msg, category='error')
                 return render_template("sign_up.html", user=current_user, password_requirements=get_password_requirements())
             
             try:
+                # Maak nieuwe gebruiker aan met gehasht wachtwoord
                 new_user = User(
                     email=email, 
                     first_name=first_name, 
@@ -93,40 +113,43 @@ def signup():
                 )
                 db.session.add(new_user)
                 db.session.commit()
+                
+                # Log de nieuwe gebruiker direct in
+                session.permanent = True
                 login_user(new_user, remember=True)
                 log_audit_event(new_user.id, 'SIGNUP', 'USER', new_user.id)
-                logger.info(f'New account created: {email}')
-                flash("Account aangemaakt!", category='success')
+                logger.info(f'Nieuw account aangemaakt: {email}')
+                flash("Account succesvol aangemaakt!", category='success')
                 return redirect(url_for('views.account'))
             except IntegrityError:
                 db.session.rollback()
-                logger.warning(f'Duplicate email signup attempt: {email}')
-                flash("Email bestaat al. Probeer in te loggen of gebruik een ander email adres.", category='error')
+                flash("E-mailadres bestaat al.", category='error')
             except Exception as e:
                 db.session.rollback()
-                logger.error(f'Signup error: {str(e)}')
-                flash("An error occurred during signup. Please try again.", category='error')
+                logger.error(f'Registratiefout: {str(e)}')
+                flash("Er is een fout opgetreden bij de registratie.", category='error')
             
     return render_template("sign_up.html", user=current_user, password_requirements=get_password_requirements())
 
+# Route voor uitloggen
 @auth.route('/logout')
 @login_required
 def logout():
     log_audit_event(current_user.id, 'LOGOUT', 'USER', current_user.id)
-    logger.info(f'User logout: {current_user.email}')
+    logger.info(f'Gebruiker uitgelogd: {current_user.email}')
     logout_user()
     return redirect(url_for('auth.login'))
 
-#zelfde als hierboven maar dan voor profiel
+# Tijdelijke routes voor profiel en instellingen
 @auth.route('/profile')
 def profile():
-    return "<p>User Profile</p>"
+    return "<p>Gebruikersprofiel</p>"
 
-#zelfde als hierboven maar dan voor instellingen
 @auth.route ('/settings')
 def settings():
-    return "<p>Settings</p>"
+    return "<p>Instellingen</p>"
 
+# Route voor het uploaden van hex-bestanden naar de Microbit
 @auth.route("/upload", methods=["POST"])
 def upload_hex():
     file = request.files.get("hexfile")
@@ -137,12 +160,13 @@ def upload_hex():
 
     skip = request.form.get("skipHandleiding")
 
+    # Bepaal waarheen te redirecten na upload
     if skip == "true":
         return redirect(url_for("views.home"))
     else:
         return redirect(url_for("auth.handleiding"))
 
-
+# Route voor de handleiding pagina
 @auth.route("/handleiding")
 def handleiding():
     return render_template("handleiding.html", user=current_user)
