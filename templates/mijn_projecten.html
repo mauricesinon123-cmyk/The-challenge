@@ -368,6 +368,7 @@
 <script>
 let deleteProjectId = null;
 
+// Schakel de bewerkingsmodus in voor een specifiek project
 function enableEditMode(button, projectId) {
     const deleteButton = button.nextElementSibling;
     deleteButton.classList.add('show');
@@ -375,19 +376,23 @@ function enableEditMode(button, projectId) {
     const viewDiv = document.getElementById('view-' + projectId);
     const editForm = document.getElementById('edit-form-' + projectId);
     
+    // Verberg de weergave en toon het bewerkingsformulier
     button.style.display = 'none';
     viewDiv.style.display = 'none';
     editForm.classList.add('show');
     
+    // Scroll naar het formulier voor betere focus
     setTimeout(() => {
         editForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 50);
 }
 
+// Annuleer de bewerking en herstel de weergave
 function cancelEdit(projectId) {
     const viewDiv = document.getElementById('view-' + projectId);
     const editForm = document.getElementById('edit-form-' + projectId);
-    const editButton = document.querySelector(`button[onclick*="enableEditMode"][onclick*="'${projectId}'"]`);
+    // Zoek de bewerkknop op basis van het data-attribuut
+    const editButton = document.querySelector(`.edit-button[data-project-id="${projectId}"]`);
     const deleteButton = editButton.nextElementSibling;
     
     editButton.style.display = 'inline-block';
@@ -396,16 +401,19 @@ function cancelEdit(projectId) {
     deleteButton.classList.remove('show');
 }
 
+// Sla de wijzigingen van het project op via een POST verzoek
 function saveProject(projectId) {
     const title = document.getElementById('title-' + projectId).value.trim();
     const text = document.getElementById('text-' + projectId).value.trim();
     const group = document.getElementById('group-' + projectId).value;
     
+    // Controleer of alle velden zijn ingevuld
     if (!title || !text || !group) {
         alert('Alle velden zijn verplicht!');
         return;
     }
     
+    // Verstuur de gewijzigde gegevens naar de server
     fetch('/edit-project', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -418,6 +426,7 @@ function saveProject(projectId) {
     }).then(response => response.json())
       .then(data => {
           if (data.success) {
+              // Herlaad de pagina om de wijzigingen te tonen
               location.reload();
           } else {
               alert('Fout: ' + (data.message || 'Project kon niet worden opgeslagen'));
@@ -428,17 +437,20 @@ function saveProject(projectId) {
       });
 }
 
+// Open de bevestigingsmodal voor verwijderen
 function openDeleteModal(projectId, projectTitle) {
     deleteProjectId = projectId;
     document.getElementById('modalProjectTitle').textContent = projectTitle;
     document.getElementById('deleteModal').classList.add('show');
 }
 
+// Sluit de verwijder-modal
 function closeDeleteModal() {
     deleteProjectId = null;
     document.getElementById('deleteModal').classList.remove('show');
 }
 
+// Bevestig de verwijdering van het project
 function confirmDelete() {
     if (deleteProjectId) {
         fetch('/delete-project', {
@@ -457,12 +469,14 @@ function confirmDelete() {
     }
 }
 
+// Sluit modal bij klikken buiten de content
 document.getElementById('deleteModal').addEventListener('click', function(e) {
     if (e.target === this) {
         closeDeleteModal();
     }
 });
 
+// Event delegation voor alle knoppen in de projectenlijst
 document.addEventListener('click', function(e) {
     const editBtn = e.target.closest('.edit-button');
     if (editBtn) {
