@@ -631,5 +631,45 @@
     </div>
 </section>
 
+<div id="skip-toggle-container" style="margin-top: 20px; text-align: center;">
+    <span style="font-size: 16px;">Volgende keer handleiding overslaan?</span>
+    <button id="toggleSkipHandleiding" 
+            style="
+                margin-left: 10px;
+                background-color: #2ecc71;
+                color: white;
+                border: none;
+                padding: 6px 14px;
+                border-radius: 8px;
+                font-size: 16px;
+                cursor: pointer;
+            ">
+        Nee
+    </button>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("toggleSkipHandleiding");
+
+    let skip = localStorage.getItem("skipHandleiding") === "true";
+
+    function updateButton() {
+        btn.textContent = skip ? "Ja" : "Nee";
+        btn.style.backgroundColor = skip ? "#27ae60" : "#2ecc71";
+    }
+
+    updateButton();
+
+    btn.addEventListener("click", () => {
+        skip = !skip;
+        localStorage.setItem("skipHandleiding", skip ? "true" : "false");
+        updateButton();
+    });
+});
+</script>
+
+
 </div>
 {% endblock %}
