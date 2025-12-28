@@ -187,7 +187,14 @@ body.loading-active button {
     #projectsContainer {
         grid-template-columns: 1fr;
     }
+    
 }
+
+#projectsContainer {
+    grid-auto-rows: minmax(min-content, auto);
+    align-items: start;
+}
+
 </style>
 
 <div class="page-header text-center mb-5">
@@ -214,40 +221,73 @@ body.loading-active button {
 {% if projects %}
 <div id="projectsContainer">
     {% for project in projects %}
-    <div class="project-card-wrapper mb-4" 
-         data-project-id="{{ project.id }}" 
-         data-user-id="{{ project.user_id }}" 
-         data-title="{{ project.title }}" 
-         data-group="{{ project.group }}" 
+    <div class="project-card-wrapper mb-4"
+         data-project-id="{{ project.id }}"
+         data-user-id="{{ project.user_id }}"
+         data-title="{{ project.title }}"
+         data-group="{{ project.group }}"
          data-date="{{ project.date.isoformat() }}">
-        <div class="glass-card h-100 p-0 overflow-hidden">
+
+        <div class="glass-card h-100 p-0">
             <div class="card-body {% if project.user_id == user.id %}own-project{% endif %} p-4">
-                <div class="d-flex justify-content-between align-items-center">
+
+                <!-- CLICKABLE HEADER ONLY -->
+                <div class="card-header-click d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center" style="gap: 10px;">
                         {% if project.user.profile_picture_path %}
-                            <img src="{{ url_for('static', filename=project.user.profile_picture_path) }}" alt="Profile" class="profile-picture-small" />
+                            <img src="{{ url_for('static', filename=project.user.profile_picture_path) }}"
+                                 alt="Profile" class="profile-picture-small" />
                         {% else %}
-                            <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #e9ecef; display: flex; align-items: center; justify-content: center; color: #6c757d; font-weight: bold;">{{ project.user.first_name[0].upper() if project.user.first_name else '?' }}</div>
+                            <div style="width: 40px; height: 40px; border-radius: 50%;
+                                        background-color: #e9ecef; display: flex;
+                                        align-items: center; justify-content: center;
+                                        color: #6c757d; font-weight: bold;">
+                                {{ project.user.first_name[0].upper() if project.user.first_name else '?' }}
+                            </div>
                         {% endif %}
+
                         <div>
                             <h5 class="card-title mb-0">{{ project.title }}</h5>
                             <small class="text-muted">
-                                {{ project.user.first_name }} | {{ project.date.strftime('%Y-%m-%d') }} | SDG {{ project.group }}{% if project.user.region %} | {{ project.user.region }}{% endif %}
+                                {{ project.user.first_name }} |
+                                {{ project.date.strftime('%Y-%m-%d') }} |
+                                SDG {{ project.group }}
+                                {% if project.user.region %} | {{ project.user.region }}{% endif %}
                             </small>
                         </div>
                     </div>
-                    <button class="btn btn-link p-0 collapse-button" type="button" data-toggle="collapse" data-target="#desc-{{ project.id }}" aria-expanded="false">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon"><polyline points="6 9 12 15 18 9"></polyline></svg>
+
+                    <button class="btn btn-link p-0 collapse-button"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#desc-{{ project.id }}"
+                            aria-expanded="false"
+                            data-parent="#projectsContainer">
+                        <svg width="20" height="20" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round"
+                             class="chevron-icon">
+                             <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
                     </button>
                 </div>
-                <div class="collapse mt-2" id="desc-{{ project.id }}">
+
+                <!-- COLLAPSE CONTENT -->
+                <div class="collapse mt-2" id="desc-{{ project.id }}" data-parent="#projectsContainer">
                     <p>{{ project.text }}</p>
+
                     {% if project.user_id != user.id %}
-                    <button class="btn btn-primary help-btn" data-group="{{ project.group }}" data-project-id="{{ project.id }}">Help {{ project.user.first_name }}</button>
+                    <button class="btn btn-primary help-btn"
+                            data-group="{{ project.group }}"
+                            data-project-id="{{ project.id }}">
+                        Help {{ project.user.first_name }}
+                    </button>
                     {% endif %}
                 </div>
+
             </div>
         </div>
+
     </div>
     {% endfor %}
 </div>
@@ -259,10 +299,12 @@ body.loading-active button {
 /* noinspection JSUnresolvedVariable */
 const currentUserId = parseInt("{{ user.id or 0 }}");
 
+// Functie om de projectkaarten in de container op te halen
 function getProjectCards() {
     return Array.from(document.querySelectorAll('.project-card-wrapper'));
 }
 
+// Sorteer projecten op datum (nieuwste eerst)
 function sortProjectsByDate(cards) {
     const own = cards.filter(a => parseInt(a.getAttribute('data-user-id')) === currentUserId);
     const notOwn = cards.filter(a => parseInt(a.getAttribute('data-user-id')) !== currentUserId);
@@ -282,6 +324,7 @@ function sortProjectsByDate(cards) {
     return [...notOwn, ...own];
 }
 
+// Sorteer projecten op SDG nummer
 function sortProjectsByGroup(cards) {
     const own = cards.filter(a => parseInt(a.getAttribute('data-user-id')) === currentUserId);
     const notOwn = cards.filter(a => parseInt(a.getAttribute('data-user-id')) !== currentUserId);
@@ -301,6 +344,7 @@ function sortProjectsByGroup(cards) {
     return [...notOwn, ...own];
 }
 
+// Sorteer projecten alfabetisch op titel
 function sortProjectsAlphabetically(cards) {
     const own = cards.filter(a => parseInt(a.getAttribute('data-user-id')) === currentUserId);
     const notOwn = cards.filter(a => parseInt(a.getAttribute('data-user-id')) !== currentUserId);
@@ -320,6 +364,7 @@ function sortProjectsAlphabetically(cards) {
     return [...notOwn, ...own];
 }
 
+// Pas de sortering toe op de interface
 function applySort(sortType) {
     const container = document.getElementById('projectsContainer');
     if (!container) return;
@@ -341,70 +386,85 @@ function applySort(sortType) {
             sortedCards = sortProjectsByDate(cards);
     }
     
+    // Voeg kaarten opnieuw toe in de nieuwe volgorde
     sortedCards.forEach(card => {
         container.appendChild(card);
     });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Start met sorteren op datum
     applySort('date');
-    
+
     const sortSelect = document.getElementById('sortSelect');
     if (sortSelect) {
         sortSelect.addEventListener('change', function(e) {
             applySort(e.target.value);
         });
-        
+
         document.addEventListener('click', function(e) {
             if (e.target !== sortSelect) {
                 sortSelect.blur();
             }
         });
     }
-    
+
+    // Project kaarten interactie
     document.querySelectorAll('.project-card-wrapper').forEach(card => {
         const collapses = card.querySelectorAll('.collapse');
-        const buttons = card.querySelectorAll('.collapse-button');
-        const cardElement = card.querySelector('.card');
-        
-        cardElement.addEventListener('click', function(e) {
-            if (!e.target.closest('.collapse-button') && !e.target.closest('.help-btn')) {
-                const collapseButton = card.querySelector('.collapse-button');
-                if (collapseButton) {
-                    collapseButton.click();
-                }
+        const cardHeader = card.querySelector('.card-header-click');
+
+    // Klik op de header opent de beschrijving
+        cardHeader.addEventListener('click', function(e) {
+        // If the user clicked the collapse button or help button,
+        // let Bootstrap handle it normally.
+            if (e.target.closest('.collapse-button') || e.target.closest('.help-btn')) {
+            return;
+            }
+
+        // Prevent the click from affecting other cards
+            e.stopPropagation();
+
+        // Toggle this card's collapse
+            const collapseButton = card.querySelector('.collapse-button');
+            if (collapseButton) {
+                collapseButton.click();
             }
         });
-        
+    });
+
+        // Beheer het openen/sluiten van de beschrijving (MUST be outside click handler)
         collapses.forEach(collapse => {
             collapse.addEventListener('show.bs.collapse', function() {
                 const button = card.querySelector(`[data-target="#${this.id}"]`);
                 if (button) button.setAttribute('aria-expanded', 'true');
-                
+
+                // Sluit andere openstaande beschrijvingen
                 document.querySelectorAll('.collapse.show').forEach(otherCollapse => {
                     if (otherCollapse !== collapse) {
-                        const collapseInstance = new (window.bootstrap ? window.bootstrap.Collapse : $.fn.collapse.Constructor)(otherCollapse);
-                        collapseInstance.hide();
+                        const id = otherCollapse.getAttribute('id');
+                        $(`#${id}`).collapse('hide');
                     }
                 });
             });
-            
+
             collapse.addEventListener('hide.bs.collapse', function() {
                 const button = card.querySelector(`[data-target="#${this.id}"]`);
                 if (button) button.setAttribute('aria-expanded', 'false');
             });
         });
     });
-    
+
+    // Sluit beschrijvingen bij klikken buiten de projectkaart
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.project-card-wrapper')) {
             document.querySelectorAll('.collapse.show').forEach(collapse => {
-                const collapseInstance = new (window.bootstrap ? window.bootstrap.Collapse : $.fn.collapse.Constructor)(collapse);
-                collapseInstance.hide();
+                const id = collapse.getAttribute('id');
+                $(`#${id}`).collapse('hide');
             });
         }
     });
-    
+    // Logica voor de "Help" knop en Microbit integratie
     document.addEventListener('click', function(e) {
         const helpBtn = e.target.closest('.help-btn');
         if (!helpBtn) return;
@@ -414,41 +474,32 @@ document.addEventListener('DOMContentLoaded', function() {
         const projectId = helpBtn.getAttribute('data-project-id');
         const loadingDiv = document.getElementById('loading');
         
+        // Check of Microbit is aangesloten
         fetch('/check-microbit', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
+            headers: { 'Content-Type': 'application/json' }
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             if (!data.connected) {
-                showAlert('Microbit not connected', 'error');
+                showAlert('Microbit niet gevonden. Sluit de Microbit aan en probeer het opnieuw.', 'error');
                 return;
             }
             
+            // Toon laadscherm en voer de actie uit
             loadingDiv.style.display = 'block';
             document.body.classList.add('loading-active');
             loadingDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
+
+
+            const skip = localStorage.getItem("skipHandleiding") === "true" ? "true" : "false";
+
             fetch('/help', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `mode=help&group=${group}&project_id=${projectId}`
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=help&group=${group}&project_id=${projectId}&skipHandleiding=${skip}`
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     document.getElementById('loading').style.display = 'none';
@@ -456,30 +507,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (data.message) {
                         showAlert(data.message, 'success');
                     }
+                    // Redirect naar de handleiding na succes
                     setTimeout(() => {
-                        window.location.href = '/';
+                        window.location.href = '/handleiding';
                     }, 2000);
                 } else {
                     document.body.classList.remove('loading-active');
-                    if (data.error) {
-                        showAlert(data.error, 'error');
-                    } else {
-                        showAlert('An error occurred. Please try again.', 'error');
-                    }
+                    showAlert(data.error || 'Er is een fout opgetreden.', 'error');
                 }
             })
             .catch(error => {
                 document.body.classList.remove('loading-active');
                 console.error('Error:', error);
-                showAlert('An error occurred. Please try again.', 'error');
+                showAlert('Fout bij het verwerken van het verzoek.', 'error');
             });
         })
         .catch(error => {
             console.error('Error checking microbit:', error);
-            showAlert('Error checking microbit connection.', 'error');
+            showAlert('Kon verbinding met Microbit niet controleren.', 'error');
         });
     });
-});
 </script>
 
 
