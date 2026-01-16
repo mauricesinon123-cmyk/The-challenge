@@ -20,7 +20,7 @@ auth = Blueprint('auth', __name__)
 
 # Route voor inloggen
 @auth.route('/login', methods=['GET', 'POST'])
-@limiter.limit("5 per minute")
+@limiter.limit("200 per minute")
 def login():
     # Verwerk het inlogformulier
     if request.method == 'POST':
@@ -75,7 +75,7 @@ def login():
 
 # Route voor registreren
 @auth.route('/sign-up', methods=['GET', 'POST'])
-@limiter.limit("3 per minute")
+@limiter.limit("100 per minute")
 def signup():
     # Verwerk het registratieformulier
     if request.method == 'POST':
