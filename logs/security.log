@@ -37,3 +37,10 @@ jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was loo
 [2025-12-25 17:07:23] WARNING in auth: Failed login attempt for email: email@gmail.com
 [2025-12-25 17:45:33] WARNING in auth: Failed login attempt for email: email@gmail.com
 [2025-12-26 21:06:47] WARNING in auth: Failed login attempt for email: email@gmail.com
+[2025-12-28 19:56:10] WARNING in auth: Login poging met niet-bestaand e-mailadres: zaproxy@example.com
+[2025-12-29 19:07:33] WARNING in auth: Foutieve wachtwoord poging voor: email@gmail.com
+[2026-01-14 10:37:52] WARNING in auth: Login poging met niet-bestaand e-mailadres: email@gnail.com
+[2026-01-14 10:58:14] WARNING in auth: Foutieve wachtwoord poging voor: email@gmail.com
+[2026-01-14 11:06:56] WARNING in auth: Login poging met niet-bestaand e-mailadres: email@gmail.com
+[2026-01-14 13:51:34] WARNING in auth: Login poging met niet-bestaand e-mailadres: email@gmail.com
+[2026-01-14 18:33:49] WARNING in auth: Foutieve wachtwoord poging voor: mauricesinon@gmail.com
