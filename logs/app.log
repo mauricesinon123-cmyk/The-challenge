@@ -204,3 +204,173 @@ jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja was loo
 [2025-12-26 21:06:53] INFO in auth: Successful login: email@gmail.com
 [2025-12-26 21:40:46] INFO in security_utils: Audit: User 2 DELETE PROJECT 6
 [2025-12-26 21:40:46] INFO in views: Project deleted by email@gmail.com: 6
+[2025-12-28 13:26:16] INFO in logger_config: Application startup
+[2025-12-28 13:26:17] INFO in logger_config: Application startup
+[2025-12-28 13:26:25] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2025-12-28 13:26:25] INFO in auth: Succesvolle login: email@gmail.com
+[2025-12-28 13:26:39] INFO in security_utils: Audit: Gebruiker 2 voerde UPDATE uit op PROJECT 16
+[2025-12-28 13:26:49] INFO in security_utils: Audit: Gebruiker 2 voerde UPDATE uit op PROJECT 15
+[2025-12-28 13:27:22] INFO in security_utils: Audit: Gebruiker 2 voerde DELETE uit op PROJECT 13
+[2025-12-28 13:27:22] INFO in views: Project verwijderd door email@gmail.com: 13
+[2025-12-28 13:27:31] INFO in security_utils: Audit: Gebruiker 2 voerde DELETE uit op PROJECT 12
+[2025-12-28 13:27:31] INFO in views: Project verwijderd door email@gmail.com: 12
+[2025-12-28 13:27:41] INFO in security_utils: Audit: Gebruiker 2 voerde UPDATE uit op PROJECT 15
+[2025-12-28 13:27:51] INFO in security_utils: Audit: Gebruiker 2 voerde UPDATE uit op PROJECT 15
+[2025-12-28 13:29:06] INFO in logger_config: Application startup
+[2025-12-28 13:29:06] INFO in logger_config: Application startup
+[2025-12-28 13:29:12] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2025-12-28 13:29:12] INFO in auth: Succesvolle login: email@gmail.com
+[2025-12-28 13:43:13] INFO in logger_config: Application startup
+[2025-12-28 13:43:14] INFO in logger_config: Application startup
+[2025-12-28 13:50:28] INFO in logger_config: Application startup
+[2025-12-28 13:51:08] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2025-12-28 13:51:08] INFO in auth: Succesvolle login: email@gmail.com
+[2025-12-28 14:27:09] INFO in security_utils: Audit: Gebruiker 2 voerde DELETE uit op PROJECT 21
+[2025-12-28 14:27:09] INFO in views: Project verwijderd door email@gmail.com: 21
+[2025-12-28 14:27:12] INFO in security_utils: Audit: Gebruiker 2 voerde DELETE uit op PROJECT 20
+[2025-12-28 14:27:12] INFO in views: Project verwijderd door email@gmail.com: 20
+[2025-12-28 14:27:15] INFO in security_utils: Audit: Gebruiker 2 voerde DELETE uit op PROJECT 19
+[2025-12-28 14:27:15] INFO in views: Project verwijderd door email@gmail.com: 19
+[2025-12-28 14:27:19] INFO in security_utils: Audit: Gebruiker 2 voerde DELETE uit op PROJECT 18
+[2025-12-28 14:27:19] INFO in views: Project verwijderd door email@gmail.com: 18
+[2025-12-28 14:27:21] INFO in security_utils: Audit: Gebruiker 2 voerde DELETE uit op PROJECT 17
+[2025-12-28 14:27:21] INFO in views: Project verwijderd door email@gmail.com: 17
+[2025-12-28 14:41:45] INFO in logger_config: Application startup
+[2025-12-28 14:41:46] INFO in logger_config: Application startup
+[2025-12-28 14:41:56] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2025-12-28 14:41:56] INFO in auth: Succesvolle login: email@gmail.com
+[2025-12-28 18:13:28] INFO in logger_config: Application startup
+[2025-12-28 18:13:30] INFO in logger_config: Application startup
+[2025-12-28 18:14:54] INFO in security_utils: Audit: Gebruiker 6 voerde SIGNUP uit op USER 6
+[2025-12-28 18:14:54] INFO in auth: Nieuw account aangemaakt: david@gmail.com
+[2025-12-28 18:16:34] INFO in security_utils: Audit: Gebruiker 6 voerde CREATE uit op PROJECT 20
+[2025-12-28 18:19:59] INFO in security_utils: Audit: Gebruiker 6 voerde LOGOUT uit op USER 6
+[2025-12-28 18:19:59] INFO in auth: Gebruiker uitgelogd: david@gmail.com
+[2025-12-28 19:03:28] INFO in logger_config: Application startup
+[2025-12-28 19:03:40] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2025-12-28 19:03:40] INFO in auth: Succesvolle login: email@gmail.com
+[2025-12-28 19:34:24] INFO in logger_config: Application startup
+[2025-12-28 19:55:13] INFO in logger_config: Application startup
+[2025-12-28 19:56:10] WARNING in auth: Login poging met niet-bestaand e-mailadres: zaproxy@example.com
+[2025-12-29 19:07:18] INFO in logger_config: Application startup
+[2025-12-29 19:07:33] WARNING in auth: Foutieve wachtwoord poging voor: email@gmail.com
+[2025-12-29 19:07:38] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2025-12-29 19:07:38] INFO in auth: Succesvolle login: email@gmail.com
+[2026-01-05 18:09:20] INFO in logger_config: Application startup
+[2026-01-05 18:11:32] INFO in security_utils: Audit: Gebruiker 7 voerde SIGNUP uit op USER 7
+[2026-01-05 18:11:32] INFO in auth: Nieuw account aangemaakt: mauri@gmail.com
+[2026-01-05 18:12:42] INFO in security_utils: Audit: Gebruiker 7 voerde CREATE uit op PROJECT 22
+[2026-01-05 18:12:51] INFO in security_utils: Audit: Gebruiker 7 voerde DELETE uit op PROJECT 22
+[2026-01-05 18:12:51] INFO in views: Project verwijderd door mauri@gmail.com: 22
+[2026-01-05 18:13:07] INFO in security_utils: Audit: Gebruiker 7 voerde CREATE uit op PROJECT 22
+[2026-01-05 18:13:14] INFO in security_utils: Audit: Gebruiker 7 voerde UPDATE uit op PROJECT 22
+[2026-01-05 18:14:17] INFO in security_utils: Audit: Gebruiker 7 voerde LOGOUT uit op USER 7
+[2026-01-05 18:14:17] INFO in auth: Gebruiker uitgelogd: mauri@gmail.com
+[2026-01-14 10:30:54] INFO in logger_config: Application startup
+[2026-01-14 10:35:13] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2026-01-14 10:35:13] INFO in auth: Succesvolle login: email@gmail.com
+[2026-01-14 10:35:35] INFO in security_utils: Audit: Gebruiker 2 voerde LOGOUT uit op USER 2
+[2026-01-14 10:35:35] INFO in auth: Gebruiker uitgelogd: email@gmail.com
+[2026-01-14 10:37:20] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2026-01-14 10:37:20] INFO in auth: Succesvolle login: email@gmail.com
+[2026-01-14 10:37:30] INFO in security_utils: Audit: Gebruiker 2 voerde LOGOUT uit op USER 2
+[2026-01-14 10:37:30] INFO in auth: Gebruiker uitgelogd: email@gmail.com
+[2026-01-14 10:37:52] WARNING in auth: Login poging met niet-bestaand e-mailadres: email@gnail.com
+[2026-01-14 10:38:09] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2026-01-14 10:38:09] INFO in auth: Succesvolle login: email@gmail.com
+[2026-01-14 10:38:48] INFO in security_utils: Audit: Gebruiker 2 voerde LOGOUT uit op USER 2
+[2026-01-14 10:38:48] INFO in auth: Gebruiker uitgelogd: email@gmail.com
+[2026-01-14 10:39:05] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2026-01-14 10:39:05] INFO in auth: Succesvolle login: email@gmail.com
+[2026-01-14 10:58:03] INFO in logger_config: Application startup
+[2026-01-14 10:58:14] WARNING in auth: Foutieve wachtwoord poging voor: email@gmail.com
+[2026-01-14 10:58:20] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2026-01-14 10:58:20] INFO in auth: Succesvolle login: email@gmail.com
+[2026-01-14 11:05:31] INFO in logger_config: Application startup
+[2026-01-14 11:05:40] INFO in logger_config: Application startup
+[2026-01-14 11:06:43] INFO in logger_config: Application startup
+[2026-01-14 11:06:56] WARNING in auth: Login poging met niet-bestaand e-mailadres: email@gmail.com
+[2026-01-14 11:07:20] INFO in security_utils: Audit: Gebruiker 1 voerde SIGNUP uit op USER 1
+[2026-01-14 11:07:20] INFO in auth: Nieuw account aangemaakt: mauricesinon@gmail.com
+[2026-01-14 13:26:11] INFO in logger_config: Application startup
+[2026-01-14 13:40:37] INFO in logger_config: Application startup
+[2026-01-14 13:44:47] INFO in logger_config: Application startup
+[2026-01-14 13:47:40] INFO in logger_config: Application startup
+[2026-01-14 13:51:34] WARNING in auth: Login poging met niet-bestaand e-mailadres: email@gmail.com
+[2026-01-14 13:51:48] INFO in security_utils: Audit: Gebruiker 1 voerde LOGIN uit op USER 1
+[2026-01-14 13:51:48] INFO in auth: Succesvolle login: mauricesinon@gmail.com
+[2026-01-14 13:54:22] INFO in security_utils: Audit: Gebruiker 2 voerde SIGNUP uit op USER 2
+[2026-01-14 13:54:22] INFO in auth: Nieuw account aangemaakt: 25037102@student.hhs.nl
+[2026-01-14 13:59:12] INFO in security_utils: Audit: Gebruiker 1 voerde CREATE uit op PROJECT 1
+[2026-01-14 14:01:37] INFO in security_utils: Audit: Gebruiker 2 voerde CREATE uit op PROJECT 2
+[2026-01-14 14:05:37] INFO in logger_config: Application startup
+[2026-01-14 14:06:21] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2026-01-14 14:06:21] INFO in auth: Succesvolle login: 25037102@student.hhs.nl
+[2026-01-14 14:06:41] INFO in security_utils: Audit: Gebruiker 2 voerde LOGOUT uit op USER 2
+[2026-01-14 14:06:41] INFO in auth: Gebruiker uitgelogd: 25037102@student.hhs.nl
+[2026-01-14 14:09:53] INFO in security_utils: Audit: Gebruiker 1 voerde LOGIN uit op USER 1
+[2026-01-14 14:09:53] INFO in auth: Succesvolle login: mauricesinon@gmail.com
+[2026-01-14 14:28:02] INFO in security_utils: Audit: Gebruiker 2 voerde LOGIN uit op USER 2
+[2026-01-14 14:28:02] INFO in auth: Succesvolle login: 25037102@student.hhs.nl
+[2026-01-14 14:29:01] INFO in security_utils: Audit: Gebruiker 2 voerde CREATE uit op PROJECT 3
+[2026-01-14 14:29:46] INFO in security_utils: Audit: Gebruiker 2 voerde UPDATE uit op PROJECT 3
+[2026-01-14 14:31:57] INFO in security_utils: Audit: Gebruiker 2 voerde CREATE uit op PROJECT 4
+[2026-01-14 14:38:21] INFO in security_utils: Audit: Gebruiker 2 voerde CREATE uit op PROJECT 5
+[2026-01-14 14:38:42] INFO in security_utils: Audit: Gebruiker 2 voerde UPDATE uit op PROJECT 5
+[2026-01-14 14:38:56] INFO in security_utils: Audit: Gebruiker 2 voerde UPDATE uit op PROJECT 5
+[2026-01-14 14:40:56] INFO in security_utils: Audit: Gebruiker 1 voerde CREATE uit op PROJECT 6
+[2026-01-14 14:41:22] INFO in security_utils: Audit: Gebruiker 3 voerde SIGNUP uit op USER 3
+[2026-01-14 14:41:22] INFO in auth: Nieuw account aangemaakt: lukegierde@icloud.com
+[2026-01-14 14:41:50] INFO in security_utils: Audit: Gebruiker 2 voerde DELETE uit op PROJECT 5
+[2026-01-14 14:41:50] INFO in views: Project verwijderd door 25037102@student.hhs.nl: 5
+[2026-01-14 14:43:01] INFO in security_utils: Audit: Gebruiker 3 voerde LOGIN uit op USER 3
+[2026-01-14 14:43:01] INFO in auth: Succesvolle login: lukegierde@icloud.com
+[2026-01-14 14:44:11] INFO in security_utils: Audit: Gebruiker 2 voerde UPDATE uit op PROJECT 4
+[2026-01-14 14:44:56] INFO in security_utils: Audit: Gebruiker 3 voerde CREATE uit op PROJECT 7
+[2026-01-14 14:46:15] INFO in security_utils: Audit: Gebruiker 1 voerde UPDATE uit op PROJECT 6
+[2026-01-14 14:48:52] INFO in security_utils: Audit: Gebruiker 3 voerde CREATE uit op PROJECT 8
+[2026-01-14 14:50:35] INFO in security_utils: Audit: Gebruiker 3 voerde LOGOUT uit op USER 3
+[2026-01-14 14:50:35] INFO in auth: Gebruiker uitgelogd: lukegierde@icloud.com
+[2026-01-14 15:45:17] INFO in logger_config: Application startup
+[2026-01-14 15:46:13] INFO in security_utils: Audit: Gebruiker 1 voerde LOGIN uit op USER 1
+[2026-01-14 15:46:13] INFO in auth: Succesvolle login: mauricesinon@gmail.com
+[2026-01-14 15:47:10] INFO in security_utils: Audit: Gebruiker 1 voerde LOGOUT uit op USER 1
+[2026-01-14 15:47:10] INFO in auth: Gebruiker uitgelogd: mauricesinon@gmail.com
+[2026-01-14 15:47:27] INFO in security_utils: Audit: Gebruiker 1 voerde LOGIN uit op USER 1
+[2026-01-14 15:47:27] INFO in auth: Succesvolle login: mauricesinon@gmail.com
+[2026-01-14 15:48:27] INFO in security_utils: Audit: Gebruiker 1 voerde CREATE uit op PROJECT 9
+[2026-01-14 15:49:13] INFO in security_utils: Audit: Gebruiker 1 voerde LOGOUT uit op USER 1
+[2026-01-14 15:49:13] INFO in auth: Gebruiker uitgelogd: mauricesinon@gmail.com
+[2026-01-14 18:32:52] INFO in logger_config: Application startup
+[2026-01-14 18:33:49] WARNING in auth: Foutieve wachtwoord poging voor: mauricesinon@gmail.com
+[2026-01-14 18:34:04] INFO in security_utils: Audit: Gebruiker 1 voerde LOGIN uit op USER 1
+[2026-01-14 18:34:04] INFO in auth: Succesvolle login: mauricesinon@gmail.com
+[2026-01-14 18:34:42] INFO in security_utils: Audit: Gebruiker 1 voerde CREATE uit op PROJECT 10
+[2026-01-14 18:36:00] INFO in security_utils: Audit: Gebruiker 1 voerde DELETE uit op PROJECT 10
+[2026-01-14 18:36:00] INFO in views: Project verwijderd door mauricesinon@gmail.com: 10
+[2026-01-14 18:36:31] INFO in security_utils: Audit: Gebruiker 1 voerde LOGOUT uit op USER 1
+[2026-01-14 18:36:31] INFO in auth: Gebruiker uitgelogd: mauricesinon@gmail.com
+[2026-01-14 18:36:38] INFO in security_utils: Audit: Gebruiker 1 voerde LOGIN uit op USER 1
+[2026-01-14 18:36:38] INFO in auth: Succesvolle login: mauricesinon@gmail.com
+[2026-01-14 18:36:57] INFO in security_utils: Audit: Gebruiker 1 voerde LOGOUT uit op USER 1
+[2026-01-14 18:36:57] INFO in auth: Gebruiker uitgelogd: mauricesinon@gmail.com
+[2026-01-14 18:37:54] INFO in security_utils: Audit: Gebruiker 4 voerde SIGNUP uit op USER 4
+[2026-01-14 18:37:54] INFO in auth: Nieuw account aangemaakt: maurice.sinon@gmail.com
+[2026-01-14 18:38:46] INFO in security_utils: Audit: Gebruiker 4 voerde CREATE uit op PROJECT 10
+[2026-01-14 18:39:46] INFO in security_utils: Audit: Gebruiker 4 voerde LOGOUT uit op USER 4
+[2026-01-14 18:39:46] INFO in auth: Gebruiker uitgelogd: maurice.sinon@gmail.com
+[2026-01-14 19:23:39] INFO in logger_config: Application startup
+[2026-01-14 19:26:02] INFO in security_utils: Audit: Gebruiker 5 voerde SIGNUP uit op USER 5
+[2026-01-14 19:26:02] INFO in auth: Nieuw account aangemaakt: maurice.sinon123@gmail.com
+[2026-01-14 19:27:01] INFO in security_utils: Audit: Gebruiker 5 voerde CREATE uit op PROJECT 11
+[2026-01-14 19:28:16] INFO in security_utils: Audit: Gebruiker 5 voerde LOGOUT uit op USER 5
+[2026-01-14 19:28:16] INFO in auth: Gebruiker uitgelogd: maurice.sinon123@gmail.com
+[2026-01-16 16:01:46] INFO in logger_config: Application startup
+[2026-01-16 16:01:59] INFO in security_utils: Audit: Gebruiker 5 voerde LOGIN uit op USER 5
+[2026-01-16 16:01:59] INFO in auth: Succesvolle login: maurice.sinon123@gmail.com
+[2026-01-16 16:03:04] INFO in security_utils: Audit: Gebruiker 5 voerde CREATE uit op PROJECT 12
+[2026-01-16 16:10:55] INFO in logger_config: Application startup
+[2026-01-16 16:11:03] INFO in security_utils: Audit: Gebruiker 5 voerde LOGIN uit op USER 5
+[2026-01-16 16:11:03] INFO in auth: Succesvolle login: maurice.sinon123@gmail.com
+[2026-01-16 16:11:52] INFO in security_utils: Audit: Gebruiker 5 voerde LOGOUT uit op USER 5
+[2026-01-16 16:11:52] INFO in auth: Gebruiker uitgelogd: maurice.sinon123@gmail.com
