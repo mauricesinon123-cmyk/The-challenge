@@ -1,47 +1,55 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+"""Flask application factory and extension initialization."""
+
 import os
-from flask_login import LoginManager
 import secrets
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
-from .logger_config import setup_logging
 from datetime import timedelta
 
-# Initialiseer de database en de rate limiter
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+from .logger_config import setup_logging
+
+# Initialize extensions (no app bound yet)
 db = SQLAlchemy()
-limiter = Limiter(key_func=get_remote_address)
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=["500 per minute"]
+)
+
 DB_NAME = "database.db"
 
 
 def create_app():
-    # Maak de Flask applicatie aan
+    """Create and configure the Flask application."""
     app = Flask(__name__)
-    
-    # Beveiligings- en sessieconfiguratie
+
+    # Security & session configuration
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or secrets.token_hex(32)
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-    
-    # Stel de sessie-looptijd in op 24 uur (86400 seconden)
     app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
-    
+
+    # Upload limits
     app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
-    app.config['WTF_CSRF_ENABLED'] = False
-    
-    # Configureer de database paden
+    app.config['WTF_CSRF_ENABLED'] = False  # You may enable this later
+
+    # Database path
     app.instance_path = os.path.join(os.path.dirname(__file__), 'instance')
     os.makedirs(app.instance_path, exist_ok=True)
+
     db_path = os.path.join(app.instance_path, DB_NAME)
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
-    # Initialiseer extensies met de app
+
+    # Initialize extensions
     db.init_app(app)
     limiter.init_app(app)
-    
-    # Voeg beveiligingsheaders toe aan elk antwoord
+
+    # Security headers
     @app.after_request
     def set_response_headers(response):
         response.headers['X-Content-Type-Options'] = 'nosniff'
@@ -56,38 +64,41 @@ def create_app():
             "connect-src 'self'; "
             "img-src 'self' data:"
         )
+        response.headers["Server"] = ""
+        response.headers["cache-control"] = "no-store"
         return response
 
-    # Configureer logging
+    # Logging
     setup_logging(app)
-    
-    # Importeer en registreer blueprints
+
+    # Import blueprints INSIDE the factory to avoid cyclic imports
     from .views import views
     from .auth import auth
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    # Importeer modellen en maak de database aan
-    from .models import User, Pdescription, AuditLog, LoginAttempt
+    # Create database tables
     create_database(app)
 
-    # Configureer de login manager
+    # Login manager
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
-    # Functie om de gebruiker te laden op basis van ID
     @login_manager.user_loader
-    def load_user(id):
-        return User.query.get(int(id))
+    def load_user(user_id):
+        """Load user by ID."""
+        from .models import User  # Local import avoids cyclic dependency
+        return User.query.get(int(user_id))
 
     return app
 
+
 def create_database(app):
-    # Controleer of de database al bestaat, anders maak deze aan
+    """Create the SQLite database if it does not exist."""
     db_path = os.path.join(app.instance_path, DB_NAME)
     if not os.path.exists(db_path):
         with app.app_context():
             db.create_all()
-        print('Created Database!')
+        print("Created Database!")
