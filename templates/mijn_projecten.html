@@ -295,11 +295,28 @@
         <textarea class="form-control" id="projectText" name="projectText" rows="3" required></textarea>
     </div>
     <div class="form-group">
-        <label for="projectGroup">SDG (1-16)</label>
+        <label for="projectGroup">Kies de meest passende SDG (1-17)</label>
         <select class="form-control" id="projectGroup" name="projectGroup" required>
-            {% for i in range(1, 17) %}
-            <option value="{{ i }}">{{ i }}</option>
-            {% endfor %}
+            
+            <option value="1">SDG 1 - Armoede</option>
+            <option value="2">SDG 2 - Honger</option>
+            <option value="3">SDG 3 - Goede Gezondheid en Welzijn</option>
+            <option value="4">SDG 4 - Kwaliteitsonderwijs</option>
+            <option value="5">SDG 5 - Gendergelijkheid</option>
+            <option value="6">SDG 6 - Schoon Water en Sanitair</option>
+            <option value="7">SDG 7 - Betaalbare en Schone Energie</option>
+            <option value="8">SDG 8 - Waardig Werk en Economische Groei</option>
+            <option value="9">SDG 9 - Industrie, Innovatie en Infrastructuur</option>
+            <option value="10">SDG 10 - Ongelijkheid Verminderen</option>
+            <option value="11">SDG 11 - Duurzame Steden en Gemeenschappen</option>
+            <option value="12">SDG 12 - Verantwoorde Consumptie en Productie</option>
+            <option value="13">SDG 13 - Klimaatactie</option>
+            <option value="14">SDG 14 - Leven in het Water</option>
+            <option value="15">SDG 15 - Leven op het Land</option>
+            <option value="16">SDG 16 - Vrede, Justitie en Sterke Instellingen</option>
+            <option value="17">SDG 17 - Samenwerking</option>
+
+            
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Voeg project toe</button>
