@@ -1,3 +1,4 @@
+// Verwijdert een project via de server en laadt daarna een andere pagina.
 function deleteProject(projectId){
 	fetch("/delete-project", {
 		method: "POST",
@@ -8,3 +9,4 @@ function deleteProject(projectId){
 	}
 	);
 }
+
