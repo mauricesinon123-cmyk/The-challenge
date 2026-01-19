@@ -1,13 +1,29 @@
+# ============================
+# Python cache files
+# ============================
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
+
+# ============================
+# Virtual environments
+# Do NOT commit these
+# ============================
 env/
 venv/
 .venv
+
+# ============================
+# Pip / package logs
+# ============================
 pip-log.txt
 pip-delete-this-directory.txt
+
+# ============================
+# Testing & coverage files
+# ============================
 .tox/
 .coverage
 .coverage.*
@@ -18,25 +34,48 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+# ============================
+# Flask instance folder
+# Contains secrets & local config
+# ============================
 instance/
+
 .webassets-cache
+
+# ============================
+# Local databases
+# ============================
 *.db
 *.sqlite
 *.sqlite3
 
+# ============================
+# Environment variables
+# NEVER commit secrets
+# ============================
 .env
 .env.local
 .env.*.local
 
+# ============================
+# OS & editor files
+# ============================
 .DS_Store
 *.swp
 *.swo
 *~
 .idea/
 .vscode/
+
 *.sublime-project
 *.sublime-workspace
 
+# ============================
+# User uploads
+# ============================
 static/profile_pictures/
 
+# ============================
+# Git credentials (VERY IMPORTANT)
+# ============================
 .git-credentials
